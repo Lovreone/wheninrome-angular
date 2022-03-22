@@ -1,0 +1,6 @@
+<form [formGroup]="landmarkForm">
+    Name: <input type="text" formControlName="name"> <br>
+    Description: <input type="text" formControlName="description"> <br>
+    Entrance fee: <input type="number" formControlName="entranceFee"> <br>
+    <button (click)="saveLandmark()">{{ isNew ? 'Create' : 'Modify' }}</button>
+</form>

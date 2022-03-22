@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+/* FIXME: All below is temporary, delete later*/
+td {
+    text-align: center;
+}
+table, th, td {
+    border: 1px solid;
+}
+table {
+    width: 100%;
+}
