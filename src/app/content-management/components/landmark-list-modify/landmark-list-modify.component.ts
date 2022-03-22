@@ -21,11 +21,11 @@ export class LandmarkListModifyComponent implements OnInit {
     this.landmarkService.getLandmarks().subscribe(res => this.landmarks = res);
   }
 
-  viewItem(landmark: Landmark) {
+  viewItem(landmark: Landmark): void  {
     this.router.navigateByUrl(`/portal/landmarks/view/${landmark.id}`);
   }
 
-  modifyItem(landmark: Landmark) {
+  modifyItem(landmark: Landmark): void  {
     this.router.navigateByUrl(`/admin/landmarks/modify/${landmark.id}`);
   }
 
