@@ -1,1 +1,10 @@
-<p>landmark-list-view works!</p>
+<ul *ngFor="let landmark of landmarks">
+    <li>
+        <p>
+            <b>Name:</b> {{ landmark.name }}<br>
+            <b>Description:</b> {{ landmark.description }}<br>
+            <b>Entrance:</b> {{ landmark.entranceFee }}<br>
+            <button (click)="viewItem(landmark)">Details</button>
+        </p>
+    </li>
+</ul>
