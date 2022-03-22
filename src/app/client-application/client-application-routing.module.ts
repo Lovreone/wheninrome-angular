@@ -6,8 +6,14 @@ import { LandmarksViewComponent } from './pages/landmarks-view/landmarks-view.co
 
 const routes: Routes = [
     { path: '', redirectTo: 'landmarks', pathMatch: 'full' },
-    { path: 'landmarks', component: LandmarksViewComponent },
-    { path: 'landmarks/view/:landmarkId', component: LandmarkViewComponent },
+    { path: 'landmarks',
+      children: [
+        { path: '', component: LandmarksViewComponent },
+        { path: 'view/:landmarkId', component: LandmarkViewComponent }
+      ]
+    },
+    // { path: 'landmarks', component: LandmarksViewComponent },
+    // { path: 'landmarks/view/:landmarkId', component: LandmarkViewComponent },
 ];
 
 @NgModule({
