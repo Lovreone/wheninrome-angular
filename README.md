@@ -1,5 +1,5 @@
 # wheninrome-angular
-TBD - Angular app
+TBD - Angular Portal & CMS app for WhenInRome project
 
 ## WheninromeAngular
 
