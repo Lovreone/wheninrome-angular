@@ -12,8 +12,6 @@ const routes: Routes = [
         { path: 'view/:landmarkId', component: LandmarkViewComponent }
       ]
     },
-    // { path: 'landmarks', component: LandmarksViewComponent },
-    // { path: 'landmarks/view/:landmarkId', component: LandmarkViewComponent },
 ];
 
 @NgModule({

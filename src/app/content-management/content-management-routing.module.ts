@@ -14,9 +14,6 @@ const routes: Routes = [
             { path: 'modify/:landmarkId', component: LandmarkManageComponent },
       ]
     },
-    // { path: 'landmarks', component: LandmarksManageComponent },
-    // { path: 'landmarks/create', component: LandmarkManageComponent },
-    // { path: 'landmarks/modify/:landmarkId', component: LandmarkManageComponent },
 ];
 
 @NgModule({
