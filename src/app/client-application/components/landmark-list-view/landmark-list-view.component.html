@@ -1,3 +1,5 @@
+Search: <input #searchTerm type="text" (keyup)="search(searchTerm.value)">
+<hr>
 <ul *ngFor="let landmark of landmarks">
     <li>
         <p>

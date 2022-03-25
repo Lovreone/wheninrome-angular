@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./landmark-list-view.component.css']
 })
 export class LandmarkListViewComponent implements OnInit {
-
+  landmarksAll: Landmark[] = [];
   landmarks: Landmark[] = [];
 
   constructor(
@@ -18,10 +18,19 @@ export class LandmarkListViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.landmarkService.getLandmarks().subscribe(res => this.landmarks = res);
+    this.landmarkService.getLandmarks().subscribe((res) => {
+      this.landmarksAll = res;
+      this.landmarks = this.landmarksAll;
+    });   
   }
 
   viewItem(landmark: Landmark): void {
     this.router.navigateByUrl(`/portal/landmarks/view/${landmark.id}`);
+  }
+
+  search(searchTerm: string) : void {
+    this.landmarks = searchTerm ? 
+      this.landmarksAll.filter((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase())) :
+      this.landmarksAll;
   }
 }
