@@ -27,9 +27,8 @@ export class LandmarkItemModifyComponent implements OnInit {
     this.landmarkId = extractedId ? extractedId : '';
     this.isNew = !this.landmarkId;
 
-
-    this.fillForm();
     this.createForm();
+    this.fillForm();
   }
 
   createForm(): void {
@@ -37,7 +36,7 @@ export class LandmarkItemModifyComponent implements OnInit {
       name: new FormControl('', Validators.required),
       description: new FormControl(''),
       entranceFee: new FormControl('')
-    })
+    });
   }
 
   fillForm(): void {
