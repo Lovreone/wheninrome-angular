@@ -33,9 +33,9 @@ export class LandmarkItemModifyComponent implements OnInit {
 
   createForm(): void {
     this.landmarkForm = new FormGroup({
-      name: new FormControl('', Validators.required),
-      description: new FormControl(''),
-      entranceFee: new FormControl('')
+      name: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
+      description: new FormControl(undefined),
+      entranceFee: new FormControl(undefined)
     });
   }
 
@@ -77,4 +77,8 @@ export class LandmarkItemModifyComponent implements OnInit {
       });
   }
 
+  /** Getters used for cleaner access from Template */
+  get name() { return this.landmarkForm.get('name'); }
+  get description() { return this.landmarkForm.get('description'); }
+  get entranceFee() { return this.landmarkForm.get('entranceFee'); }
 }

@@ -1,6 +1,33 @@
+<!-- TODO: Clean-up comments when finished -->
 <form [formGroup]="landmarkForm">
-    Name: <input type="text" formControlName="name"> <br>
-    Description: <input type="text" formControlName="description"> <br>
-    Entrance fee: <input type="number" formControlName="entranceFee"> <br>
-    <button (click)="saveLandmark()" [disabled]="!landmarkForm.valid">{{ isNew ? 'Create' : 'Modify' }}</button>
+
+    <!-- NAME field -->
+    <label for="name">Landmark name*: </label><br>
+    <input type="text" id="name" required 
+        formControlName="name"
+        [ngClass]="{ 'field-invalid': name?.invalid && (name?.dirty || name?.touched) }"><br>
+
+    <!-- NAME field validation messages -->
+    <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="error-message">
+        <div *ngIf="name?.errors?.required">
+            Landmark name is required.
+        </div>
+        <div *ngIf="name?.errors?.minlength">
+            Landmark name must be at least {{ name?.errors?.minlength?.requiredLength }} characters long.
+        </div>
+    </div>
+
+    <!-- DESCRIPTION field -->
+    <label for="description">Landmark description: </label><br>
+    <textarea id="description" rows="3"
+        formControlName="description"></textarea><br>
+
+    <!-- ENTRANCE-FEE field -->
+    <label for="entranceFee">Entrance fee: </label><br>
+    <input type="number" id="entranceFee" 
+        formControlName="entranceFee"><br><br>
+
+    <button (click)="saveLandmark()" [disabled]="!landmarkForm.valid">
+        {{ isNew ? 'Create' : 'Modify' }}
+    </button>
 </form>
