@@ -5,3 +5,8 @@
 .error-message {
     color: red;
 }
+
+textarea { 
+    resize: vertical; 
+    min-height: 20px;
+}

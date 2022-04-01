@@ -24,7 +24,7 @@
 
     <!-- ENTRANCE-FEE field -->
     <label for="entranceFee">Entrance fee: </label><br>
-    <input type="number" id="entranceFee" 
+    <input type="number" id="entranceFee" min="0"
         formControlName="entranceFee"><br><br>
 
     <button (click)="saveLandmark()" [disabled]="!landmarkForm.valid">
