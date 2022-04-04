@@ -1,3 +1,8 @@
+<!-- Pure CSS Loader https://loading.io/css/ -->
+<div *ngIf="isLoading" class="lds-default">
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+</div>
 <p *ngIf="landmark">
     <b>name: </b>{{landmark.name}} <br>
     <b>description: </b>{{landmark.description}} <br>

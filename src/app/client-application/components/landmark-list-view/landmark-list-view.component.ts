@@ -11,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class LandmarkListViewComponent implements OnInit {
   landmarksAll: Landmark[] = [];
   landmarks: Landmark[] = [];
+  isLoading = true;
 
   constructor(
     private landmarkService: LandmarkService,
@@ -18,10 +19,16 @@ export class LandmarkListViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.landmarkService.getLandmarks().subscribe((res) => {
-      this.landmarksAll = res;
-      this.landmarks = this.landmarksAll;
-    });   
+    // TODO: Remove mock timeout (used to test Loader gif)
+    setTimeout(()=> {
+      this.landmarkService.getLandmarks().subscribe((res) => {
+        if(res) {
+          this.landmarksAll = res;
+          this.landmarks = this.landmarksAll;
+          this.isLoading = false;
+        }
+      });   
+    }, 1000);
   }
 
   viewItem(landmark: Landmark): void {

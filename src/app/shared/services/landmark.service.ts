@@ -21,7 +21,8 @@ export class LandmarkService {
 
   constructor(private http: HttpClient) { }
 
-  // TODO: post getLandmarks(category)
+  // TODO: post getLandmarks(city);
+  // TODO: post getLandmarks(city, category);
 
   public getLandmarks(): Observable<Landmark[]> {
     return this.http.get<Landmark[]>(this.apiUrl);

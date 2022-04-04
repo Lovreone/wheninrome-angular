@@ -1,5 +1,10 @@
 Search: <input #searchTerm type="text" (keyup)="search(searchTerm.value)">
 <hr>
+<!-- Pure CSS Loader https://loading.io/css/ -->
+<div *ngIf="isLoading" class="lds-default">
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+</div>
 <ul *ngFor="let landmark of landmarks">
     <li>
         <p>

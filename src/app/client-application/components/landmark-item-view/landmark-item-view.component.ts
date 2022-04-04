@@ -12,8 +12,9 @@ import { ActivatedRoute } from '@angular/router';
 export class LandmarkItemViewComponent implements OnInit {
 
   @Input('landmarkId') landmarkId!: string;
-  
+
   landmark!: Landmark;
+  isLoading = true;
 
   constructor(
     private landmarkService: LandmarkService,
@@ -27,7 +28,11 @@ export class LandmarkItemViewComponent implements OnInit {
   }
 
   private initLandmark(id: string): void {
-    this.landmarkService.getLandmarkById(id)
-      .subscribe(res => this.landmark = res);
+    // TODO: Remove mock timeout (used to test Loader gif)
+    setTimeout(()=> {
+      this.landmarkService.getLandmarkById(id)
+        .subscribe(res => this.landmark = res);
+      this.isLoading = false;
+    }, 1000);
   } 
 }
