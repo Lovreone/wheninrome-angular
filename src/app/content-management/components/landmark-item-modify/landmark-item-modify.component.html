@@ -1,5 +1,10 @@
-<!-- TODO: Clean-up comments when finished -->
-<form [formGroup]="landmarkForm">
+<!-- TODO: Clean-up unnecessary comments when finished -->
+<!-- Pure CSS Loader https://loading.io/css/ -->
+<div *ngIf="isLoading" class="lds-default">
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+</div>
+<form *ngIf="!isLoading" [formGroup]="landmarkForm">
 
     <!-- NAME field -->
     <label for="name">Landmark name*: </label><br>

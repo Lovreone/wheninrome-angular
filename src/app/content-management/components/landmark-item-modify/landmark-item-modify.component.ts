@@ -16,6 +16,7 @@ export class LandmarkItemModifyComponent implements OnInit {
   @Input() isNew!: boolean;
 
   landmarkForm!: FormGroup;
+  isLoading!: boolean;
 
   constructor(
     private landmarkService: LandmarkService,
@@ -26,6 +27,7 @@ export class LandmarkItemModifyComponent implements OnInit {
     const extractedId = this.route.snapshot.paramMap.get('landmarkId');
     this.landmarkId = extractedId ? extractedId : '';
     this.isNew = !this.landmarkId;
+    this.isLoading = !this.isNew;
 
     this.createForm();
     this.fillForm();
@@ -41,12 +43,16 @@ export class LandmarkItemModifyComponent implements OnInit {
 
   fillForm(): void {
     if (!this.isNew) {
-      this.landmarkService.getLandmarkById(this.landmarkId)
-        .subscribe(res => {
-          this.landmarkForm.get('name')?.setValue(res.name);
-          this.landmarkForm.get('description')?.setValue(res.description);
-          this.landmarkForm.get('entranceFee')?.setValue(res.entranceFee);
-        });
+      // TODO: Remove mock timeout (used to test Loader gif)
+      setTimeout(() => {
+        this.landmarkService.getLandmarkById(this.landmarkId)
+          .subscribe(res => {
+            this.landmarkForm.get('name')?.setValue(res.name);
+            this.landmarkForm.get('description')?.setValue(res.description);
+            this.landmarkForm.get('entranceFee')?.setValue(res.entranceFee);
+          });
+      this.isLoading = false
+      }, 1000);
     } else { 
       this.landmarkForm?.reset();
     }

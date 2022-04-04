@@ -1,20 +1,27 @@
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Entrance fee</th>
-        <th colspan="2">Actions</th>
-    </tr>
-    <tr *ngFor="let landmark of landmarks">
-        <td>{{landmark.id}}</td>
-        <td>{{landmark.name}}</td>
-        <td>{{landmark.description}}</td>
-        <td>{{landmark.entranceFee}}</td>
-        <td>
-            <button (click)="viewItem(landmark)">View</button>
-            <button (click)="modifyItem(landmark)">Modify</button>
-            <button (click)="deleteItem(landmark)">Delete</button>
-        </td>
-    </tr>       
-</table>
+<!-- Pure CSS Loader https://loading.io/css/ -->
+<div *ngIf="isLoading; else landmarkList" class="lds-default">
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+</div>
+<ng-template #landmarkList>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Entrance fee</th>
+            <th colspan="2">Actions</th>
+        </tr>
+        <tr *ngFor="let landmark of landmarks">
+            <td>{{landmark.id}}</td>
+            <td>{{landmark.name}}</td>
+            <td>{{landmark.description}}</td>
+            <td>{{landmark.entranceFee}}</td>
+            <td>
+                <button (click)="viewItem(landmark)">View</button>
+                <button (click)="modifyItem(landmark)">Modify</button>
+                <button (click)="deleteItem(landmark)">Delete</button>
+            </td>
+        </tr>       
+    </table>
+</ng-template>
