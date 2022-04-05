@@ -37,7 +37,7 @@ export class LandmarkItemModifyComponent implements OnInit {
     this.landmarkForm = new FormGroup({
       name: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
       description: new FormControl(undefined),
-      entranceFee: new FormControl(undefined)
+      entranceFee: new FormControl(undefined, [Validators.required, Validators.min(0)])
     });
   }
 

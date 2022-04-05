@@ -20,7 +20,7 @@
         <div *ngIf="name?.errors?.minlength">
             Landmark name must be at least {{ name?.errors?.minlength?.requiredLength }} characters long.
         </div>
-    </div>
+    </div><br>
 
     <!-- DESCRIPTION field -->
     <label for="description">Landmark description: </label><br>
@@ -28,9 +28,22 @@
         formControlName="description"></textarea><br>
 
     <!-- ENTRANCE-FEE field -->
-    <label for="entranceFee">Entrance fee: </label><br>
-    <input type="number" id="entranceFee" min="0"
-        formControlName="entranceFee"><br><br>
+    <label for="entranceFee">Entrance fee*: </label><br>
+    <input type="number" id="entranceFee" required
+        formControlName="entranceFee"
+        [ngClass]="{ 'field-invalid': entranceFee?.invalid && (entranceFee?.dirty || entranceFee?.touched) }"><br>
+
+    <!-- ENTRANCE-FEE field validation messages -->
+    <div *ngIf="entranceFee?.invalid && (entranceFee?.dirty || entranceFee?.touched)" class="error-message">
+        <div *ngIf="entranceFee?.errors?.required">
+            Entrance fee is required.
+        </div>
+        <div *ngIf="entranceFee?.errors?.min">
+            Entrance fee minimum value is {{ entranceFee?.errors?.min?.min }}.
+        </div>
+    </div><br>
+
+
 
     <button (click)="saveLandmark()" [disabled]="!landmarkForm.valid">
         {{ isNew ? 'Create' : 'Modify' }}
