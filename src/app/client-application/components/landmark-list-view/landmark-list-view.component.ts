@@ -1,3 +1,4 @@
+import { LOADER_TIME } from './../../../../utils/enum';
 import { Landmark } from './../../../shared/models/landmark.model';
 import { Router } from '@angular/router';
 import { LandmarkService } from './../../../shared/services/landmark.service';
@@ -28,14 +29,14 @@ export class LandmarkListViewComponent implements OnInit {
           this.isLoading = false;
         }
       });   
-    }, 1000);
+    }, LOADER_TIME);
   }
 
   viewItem(landmark: Landmark): void {
-    this.router.navigateByUrl(`/portal/landmarks/view/${landmark.id}`);
+    this.router.navigateByUrl(`/portal/landmarks/view/${landmark.slug}`);
   }
 
-  search(searchTerm: string) : void {
+  search(searchTerm: string): void {
     this.landmarks = searchTerm ? 
       this.landmarksAll.filter((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase())) :
       this.landmarksAll;

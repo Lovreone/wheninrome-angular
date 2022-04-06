@@ -33,6 +33,11 @@ export class LandmarkService {
     return this.http.get<Landmark>(url);
   }
 
+  public getLandmarkBySlug(slug: string): Observable<Landmark> {
+    const url = `${this.apiUrl}/by-slug/${slug}`;
+    return this.http.get<Landmark>(url);
+  }
+
   public createLandmark(data: Landmark): Observable<Landmark> {
     return this.http.post<Landmark>(this.apiUrl, data, this.httpOptions);;
   }

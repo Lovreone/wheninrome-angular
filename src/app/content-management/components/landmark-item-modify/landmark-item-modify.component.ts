@@ -1,3 +1,4 @@
+import { LOADER_TIME } from './../../../../utils/enum';
 import { LandmarkService } from '../../../shared/services/landmark.service';
 import { ActivatedRoute } from '@angular/router';
 import { Landmark } from '../../../shared/models/landmark.model';
@@ -17,6 +18,7 @@ export class LandmarkItemModifyComponent implements OnInit {
 
   landmarkForm!: FormGroup;
   isLoading!: boolean;
+  serverResponseMessages!: Array<string>;
 
   constructor(
     private landmarkService: LandmarkService,
@@ -36,6 +38,7 @@ export class LandmarkItemModifyComponent implements OnInit {
   createForm(): void {
     this.landmarkForm = new FormGroup({
       name: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
+      slug: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
       description: new FormControl(undefined),
       entranceFee: new FormControl(undefined, [Validators.required, Validators.min(0)])
     });
@@ -48,11 +51,12 @@ export class LandmarkItemModifyComponent implements OnInit {
         this.landmarkService.getLandmarkById(this.landmarkId)
           .subscribe(res => {
             this.landmarkForm.get('name')?.setValue(res.name);
+            this.landmarkForm.get('slug')?.setValue(res.slug);
             this.landmarkForm.get('description')?.setValue(res.description);
             this.landmarkForm.get('entranceFee')?.setValue(res.entranceFee);
           });
       this.isLoading = false
-      }, 1000);
+      }, LOADER_TIME);
     } else { 
       this.landmarkForm?.reset();
     }
@@ -66,25 +70,34 @@ export class LandmarkItemModifyComponent implements OnInit {
   saveNew(data: Landmark): void {
     const newLandmark: Landmark = data;
     this.landmarkService.createLandmark(newLandmark)
-      .subscribe((res) => {
-        newLandmark.id = res.id;
-        console.warn('New Landmark created', res); // FIXME: Remove
-        // TODO: Reset form & show success message || redirect to list
-      });
+      .subscribe(
+        (res) => {
+          newLandmark.id = res.id;
+          console.warn('New Landmark created', res); // FIXME: Remove
+          // TODO: Reset form & show success message || redirect to list 
+        }, 
+        (err) => {
+          this.serverResponseMessages = err.error.message;
+        });
   }
 
   saveModified(data: Landmark): void {
     const modifiedLandmark: Landmark = data;
     modifiedLandmark.id = this.landmarkId;
     this.landmarkService.updateLandmark(modifiedLandmark)
-      .subscribe((res) => {
+      .subscribe(
+        (res) => {
         console.warn('Landmark was updated', res); // FIXME: Remove
         // TODO: Reset form & show success message || redirect to list
-      });
+        },
+        (err) => {
+          this.serverResponseMessages = err.error.message;
+        });
   }
 
   /** Getters used for cleaner access from Template */
   get name() { return this.landmarkForm.get('name'); }
+  get slug() { return this.landmarkForm.get('slug'); }
   get description() { return this.landmarkForm.get('description'); }
   get entranceFee() { return this.landmarkForm.get('entranceFee'); }
 }

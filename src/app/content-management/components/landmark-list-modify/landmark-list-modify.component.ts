@@ -1,3 +1,4 @@
+import { LOADER_TIME } from './../../../../utils/enum';
 import { LandmarkService } from '../../../shared/services/landmark.service';
 import { Landmark } from '../../../shared/models/landmark.model';
 import { Component, OnInit } from '@angular/core';
@@ -24,11 +25,11 @@ export class LandmarkListModifyComponent implements OnInit {
       this.landmarkService.getLandmarks()
         .subscribe(res => this.landmarks = res);
       this.isLoading = false;
-    }, 1000);
+    }, LOADER_TIME);
   }
 
   viewItem(landmark: Landmark): void  {
-    this.router.navigateByUrl(`/portal/landmarks/view/${landmark.id}`);
+    this.router.navigateByUrl(`/portal/landmarks/view/${landmark.slug}`);
   }
 
   modifyItem(landmark: Landmark): void  {

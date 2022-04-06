@@ -22,6 +22,22 @@
         </div>
     </div><br>
 
+    <!-- SLUG field -->
+    <label for="slug">Landmark slug*: </label><br>
+    <input type="text" id="slug"
+        formControlName="slug"
+        [ngClass]="{ 'field-invalid': slug?.invalid && (slug?.dirty || slug?.touched) }"><br>
+
+    <!-- SLUG field validation messages -->
+    <div *ngIf="slug?.invalid && (slug?.dirty || slug?.touched)" class="error-message">
+        <div *ngIf="slug?.errors?.required">
+            Landmark slug is required.
+        </div>
+        <div *ngIf="slug?.errors?.minlength">
+            Landmark slug must be at least {{ slug?.errors?.minlength?.requiredLength }} characters long.
+        </div>
+    </div><br>
+
     <!-- DESCRIPTION field -->
     <label for="description">Landmark description: </label><br>
     <textarea id="description" rows="3"
@@ -43,9 +59,15 @@
         </div>
     </div><br>
 
-
-
     <button (click)="saveLandmark()" [disabled]="!landmarkForm.valid">
         {{ isNew ? 'Create' : 'Modify' }}
     </button>
 </form>
+
+<div *ngIf="serverResponseMessages">
+    <p>Error messages:</p>
+    <ul>
+        <!-- FIXME: Use class instead of style -->
+        <li *ngFor="let message of serverResponseMessages" style="color:red">{{ message }}</li> 
+    </ul>
+</div>
