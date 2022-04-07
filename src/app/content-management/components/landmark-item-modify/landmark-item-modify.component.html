@@ -10,10 +10,10 @@
     <label for="name">Landmark name*: </label><br>
     <input type="text" id="name" required 
         formControlName="name"
-        [ngClass]="{ 'field-invalid': name?.invalid && (name?.dirty || name?.touched) }"><br>
+        [ngClass]="{ 'field-invalid': isFieldInvalid('name') }"><br>
 
     <!-- NAME field validation messages -->
-    <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="error-message">
+    <div *ngIf="isFieldInvalid('name')" class="error-message">
         <div *ngIf="name?.errors?.required">
             Landmark name is required.
         </div>
@@ -26,10 +26,10 @@
     <label for="slug">Landmark slug*: </label><br>
     <input type="text" id="slug"
         formControlName="slug"
-        [ngClass]="{ 'field-invalid': slug?.invalid && (slug?.dirty || slug?.touched) }"><br>
+        [ngClass]="{ 'field-invalid': isFieldInvalid('slug') }"><br>
 
     <!-- SLUG field validation messages -->
-    <div *ngIf="slug?.invalid && (slug?.dirty || slug?.touched)" class="error-message">
+    <div *ngIf="isFieldInvalid('slug')" class="error-message">
         <div *ngIf="slug?.errors?.required">
             Landmark slug is required.
         </div>
@@ -47,10 +47,10 @@
     <label for="entranceFee">Entrance fee*: </label><br>
     <input type="number" id="entranceFee" required
         formControlName="entranceFee"
-        [ngClass]="{ 'field-invalid': entranceFee?.invalid && (entranceFee?.dirty || entranceFee?.touched) }"><br>
+        [ngClass]="{ 'field-invalid': isFieldInvalid('entranceFee') }"><br>
 
     <!-- ENTRANCE-FEE field validation messages -->
-    <div *ngIf="entranceFee?.invalid && (entranceFee?.dirty || entranceFee?.touched)" class="error-message">
+    <div *ngIf="isFieldInvalid('entranceFee')" class="error-message">
         <div *ngIf="entranceFee?.errors?.required">
             Entrance fee is required.
         </div>
@@ -60,7 +60,7 @@
     </div><br>
 
     <button (click)="saveLandmark()" [disabled]="!landmarkForm.valid">
-        {{ isNew ? 'Create' : 'Modify' }}
+        {{ isNew ? 'Create Landmark' : 'Update Landmark' }}
     </button>
 </form>
 

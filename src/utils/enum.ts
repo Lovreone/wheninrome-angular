@@ -1,8 +1,8 @@
 export enum LandmarkFormTooltips {
     // TODO: TBD text and implement later
-    NAME = '',
+    NAME = `Officially used name for the landmark. Example: 'Eiffel Tower'`,
     SLUG = 'Should contain a user friendly url. Example: eiffel-tower',
-    DESC = '',
+    DESC = 'Plain text description for the landmark.',
     FEE = `0 indicates 'Free entrance', >0 indicates 'Paid entrance' value`, // <0 for unknown?
 }
 

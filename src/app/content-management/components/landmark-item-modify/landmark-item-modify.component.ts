@@ -17,8 +17,8 @@ export class LandmarkItemModifyComponent implements OnInit {
   @Input() isNew!: boolean;
 
   landmarkForm!: FormGroup;
-  isLoading!: boolean;
   serverResponseMessages!: Array<string>;
+  isLoading!: boolean;
 
   constructor(
     private landmarkService: LandmarkService,
@@ -93,6 +93,13 @@ export class LandmarkItemModifyComponent implements OnInit {
         (err) => {
           this.serverResponseMessages = err.error.message;
         });
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const formControl = this.landmarkForm.get(fieldName);
+    return formControl ?
+      formControl?.invalid && (formControl?.dirty || formControl?.touched) :
+      false;
   }
 
   /** Getters used for cleaner access from Template */
