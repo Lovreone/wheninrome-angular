@@ -46,5 +46,4 @@ export class LandmarkListModifyComponent implements OnInit {
         });
     }
   }
-
 }

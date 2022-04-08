@@ -54,5 +54,4 @@ export class LandmarkService {
       catchError(() => of(false))
     );
   }
-
 }
