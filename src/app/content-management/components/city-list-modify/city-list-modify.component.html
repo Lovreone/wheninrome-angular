@@ -1,1 +1,31 @@
-<p>city-list-modify works!</p>
+<!-- Pure CSS Loader https://loading.io/css/ -->
+<div *ngIf="isLoading; else cityList" class="lds-default">
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+</div>
+<ng-template #cityList>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Slug</th>
+            <th>Country</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th colspan="2">Actions</th>
+        </tr>
+        <tr *ngFor="let city of cities">
+            <td>{{city.id}}</td>
+            <td>{{city.name}}</td>
+            <td>{{city.slug}}</td>
+            <td>{{city.country}}</td>
+            <td>{{city.description}}</td>
+            <td><img [src]="city.image" [alt]="city.name + ' image'"></td>
+            <td>
+                <button (click)="viewItem(city)">View</button>
+                <button (click)="modifyItem(city)">Modify</button>
+                <button (click)="deleteItem(city)">Delete</button>
+            </td>
+        </tr>       
+    </table>
+</ng-template>
