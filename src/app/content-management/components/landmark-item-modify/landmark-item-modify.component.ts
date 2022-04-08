@@ -1,9 +1,9 @@
 import { LOADER_TIME } from './../../../../utils/enum';
 import { LandmarkService } from '../../../shared/services/landmark.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Landmark } from '../../../shared/models/landmark.model';
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -13,21 +13,20 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class LandmarkItemModifyComponent implements OnInit {
 
-  @Input() landmarkId!: string;
-  @Input() isNew!: boolean;
-
   landmarkForm!: FormGroup;
-  serverResponseMessages!: Array<string>;
+  serverErrors!: Array<string>;
+  landmarkId!: string;
+  isNew!: boolean;
   isLoading!: boolean;
 
   constructor(
     private landmarkService: LandmarkService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    const extractedId = this.route.snapshot.paramMap.get('landmarkId');
-    this.landmarkId = extractedId ? extractedId : '';
+    this.landmarkId = this.route.snapshot.paramMap.get('landmarkId') || '';
     this.isNew = !this.landmarkId;
     this.isLoading = !this.isNew;
 
@@ -49,12 +48,19 @@ export class LandmarkItemModifyComponent implements OnInit {
       // TODO: Remove mock timeout (used to test Loader gif)
       setTimeout(() => {
         this.landmarkService.getLandmarkById(this.landmarkId)
-          .subscribe(res => {
-            this.landmarkForm.get('name')?.setValue(res.name);
-            this.landmarkForm.get('slug')?.setValue(res.slug);
-            this.landmarkForm.get('description')?.setValue(res.description);
-            this.landmarkForm.get('entranceFee')?.setValue(res.entranceFee);
-          });
+          .subscribe(
+            (res) => {
+              this.landmarkForm.get('name')?.setValue(res.name);
+              this.landmarkForm.get('slug')?.setValue(res.slug);
+              this.landmarkForm.get('description')?.setValue(res.description);
+              this.landmarkForm.get('entranceFee')?.setValue(res.entranceFee);
+            },
+            (err) => {
+              /* FIXME: 
+              Is there is a better way to redirect to NotFound then pointing to a non-existing route? 
+              Use case: User changed mongo id in urlPath to an invalid one */
+              this.router.navigate(['landmark-not-found'], { relativeTo: this.route.parent }); 
+            });
       this.isLoading = false
       }, LOADER_TIME);
     } else { 
@@ -77,7 +83,7 @@ export class LandmarkItemModifyComponent implements OnInit {
           // TODO: Reset form & show success message || redirect to list 
         }, 
         (err) => {
-          this.serverResponseMessages = err.error.message;
+          this.serverErrors = err.error.message;
         });
   }
 
@@ -91,7 +97,7 @@ export class LandmarkItemModifyComponent implements OnInit {
         // TODO: Reset form & show success message || redirect to list
         },
         (err) => {
-          this.serverResponseMessages = err.error.message;
+          this.serverErrors = err.error.message;
         });
   }
 

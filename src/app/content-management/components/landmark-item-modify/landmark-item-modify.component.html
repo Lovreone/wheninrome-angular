@@ -4,6 +4,7 @@
     <div></div><div></div><div></div><div></div><div></div><div></div>
     <div></div><div></div><div></div><div></div><div></div><div></div>
 </div>
+
 <form *ngIf="!isLoading" [formGroup]="landmarkForm">
 
     <!-- NAME field -->
@@ -64,10 +65,10 @@
     </button>
 </form>
 
-<div *ngIf="serverResponseMessages">
+<div *ngIf="serverErrors">
     <p>Error messages:</p>
     <ul>
         <!-- FIXME: Use class instead of style -->
-        <li *ngFor="let message of serverResponseMessages" style="color:red">{{ message }}</li> 
+        <li *ngFor="let error of serverErrors" style="color:red">{{ error }}</li> 
     </ul>
 </div>
