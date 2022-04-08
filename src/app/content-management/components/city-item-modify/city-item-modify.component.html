@@ -1,1 +1,58 @@
-<p>city-item-modify works!</p>
+<!-- TODO: Clean-up unnecessary comments when finished -->
+<!-- Pure CSS Loader https://loading.io/css/ -->
+<div *ngIf="isLoading" class="lds-default">
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+</div>
+
+<form *ngIf="!isLoading" [formGroup]="cityForm">
+    <!-- NAME field -->
+    <label for="name">City name*: </label><br>
+    <input type="text" id="name" required 
+        formControlName="name"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('name') }"><br>
+
+    <!-- NAME field validation messages -->
+    <div *ngIf="isFieldInvalid('name')" class="error-message">
+        <div *ngIf="name?.errors?.required">
+            City name is required.
+        </div>
+        <div *ngIf="name?.errors?.minlength">
+            City name must be at least {{ name?.errors?.minlength?.requiredLength }} characters long.
+        </div>
+    </div><br>
+
+    <!-- SLUG field -->
+    <label for="slug">City slug*: </label><br>
+    <input type="text" id="slug"
+        formControlName="slug"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('slug') }"><br>
+
+    <!-- SLUG field validation messages -->
+    <div *ngIf="isFieldInvalid('slug')" class="error-message">
+        <div *ngIf="slug?.errors?.required">
+            City slug is required.
+        </div>
+        <div *ngIf="slug?.errors?.minlength">
+            City slug must be at least {{ slug?.errors?.minlength?.requiredLength }} characters long.
+        </div>
+    </div><br>
+
+    <!-- DESCRIPTION field -->
+    <label for="description">City description: </label><br>
+    <textarea id="description" rows="3"
+        formControlName="description"></textarea><br>
+
+    <button (click)="saveCity()" [disabled]="!cityForm.valid">
+        {{ isNew ? 'Create City' : 'Update City' }}
+    </button>
+
+</form>
+
+<div *ngIf="serverErrors">
+    <p>Error messages:</p>
+    <ul>
+        <!-- FIXME: Use class instead of style -->
+        <li *ngFor="let error of serverErrors" style="color:red">{{ error }}</li> 
+    </ul>
+</div>

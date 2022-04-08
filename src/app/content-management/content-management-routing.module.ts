@@ -21,7 +21,7 @@ const routes: Routes = [
       children: [
         { path: '', component: CitiesManageComponent }, 
         { path: 'create', component: CityManageComponent },
-        { path: 'modify/:landmarkId', component: CityManageComponent }
+        { path: 'modify/:cityId', component: CityManageComponent }
       ]
     }
 ];
