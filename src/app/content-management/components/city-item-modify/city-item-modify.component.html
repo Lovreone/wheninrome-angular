@@ -56,20 +56,20 @@
     <label for="image">Image: </label><br>
     <input type="text" id="image"
         formControlName="image"
-        [ngClass]="{ 'field-invalid': isFieldInvalid('image') }"><br> 
+        [ngClass]="{ 'field-invalid': isFieldInvalid('image') }"><br><br> 
 
     <!-- DESCRIPTION field -->
     <label for="description">City description: </label><br>
     <textarea id="description" rows="3"
-        formControlName="description"></textarea><br>
+        formControlName="description"></textarea><br><br>
 
-    <button (click)="saveCity()" [disabled]="!cityForm.valid">
+    <button (click)="saveCity()" [disabled]="!(cityForm.valid && cityForm.dirty)">
         {{ isNew ? 'Create City' : 'Update City' }}
     </button>
 
 </form>
 
-<div *ngIf="serverErrors">
+<div *ngIf="serverErrors && serverErrors.length">
     <p>Error messages:</p>
     <ul>
         <!-- FIXME: Use class instead of style -->

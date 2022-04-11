@@ -65,7 +65,7 @@ export class CityItemModifyComponent implements OnInit {
       }, LOADER_TIME);
     } else { 
       this.cityForm?.reset();
-    }   
+    }      
   }
 
   saveCity(): void {
@@ -80,7 +80,8 @@ export class CityItemModifyComponent implements OnInit {
         (res) => {
           newCity.id = res.id;
           console.warn('New City created', res); // FIXME: Remove
-          // TODO: Reset form & show success message || redirect to list 
+          // TODO: Reset form & show success message || redirect to list
+          this.serverErrors = []; 
         }, 
         (err) => {
           this.serverErrors = err.error.message;
@@ -93,8 +94,9 @@ export class CityItemModifyComponent implements OnInit {
     this.cityService.updateCity(modifiedCity)
       .subscribe(
         (res) => {
-        console.warn('City was updated', res); // FIXME: Remove
-        // TODO: Reset form & show success message || redirect to list
+          console.warn('City was updated', res); // FIXME: Remove
+          // TODO: Reset form & show success message || redirect to list
+          this.serverErrors = []; 
         },
         (err) => {
           this.serverErrors = err.error.message;
