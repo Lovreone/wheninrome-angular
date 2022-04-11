@@ -38,6 +38,26 @@
         </div>
     </div><br>
 
+    <!-- COUNTRY field -->
+    <label for="country">Country: </label><br>
+    <input type="text" id="country"
+        formControlName="country"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('country') }"><br>
+
+    <!-- COUNTRY field validation messages -->
+    <div *ngIf="isFieldInvalid('country')" class="error-message">
+        <div *ngIf="country?.errors?.minlength">
+            Country must be at least {{ country?.errors?.minlength?.requiredLength }} characters long.
+        </div>
+    </div><br>
+
+    <!-- TODO: Rework to be an Image upload element later -->
+    <!-- IMAGE field -->
+    <label for="image">Image: </label><br>
+    <input type="text" id="image"
+        formControlName="image"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('image') }"><br> 
+
     <!-- DESCRIPTION field -->
     <label for="description">City description: </label><br>
     <textarea id="description" rows="3"

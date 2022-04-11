@@ -6,21 +6,19 @@
 <ng-template #cityList>
     <table>
         <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Slug</th>
             <th>Country</th>
-            <th>Description</th>
             <th>Image</th>
+            <th>Description</th> 
             <th colspan="2">Actions</th>
         </tr>
         <tr *ngFor="let city of cities">
-            <td>{{city.id}}</td>
             <td>{{city.name}}</td>
             <td>{{city.slug}}</td>
             <td>{{city.country}}</td>
+            <td><img width="60px" [src]="city.image" [alt]="city.name + ' image'"></td>
             <td>{{city.description}}</td>
-            <td><img [src]="city.image" [alt]="city.name + ' image'"></td>
             <td>
                 <button (click)="viewItem(city)">View</button>
                 <button (click)="modifyItem(city)">Modify</button>

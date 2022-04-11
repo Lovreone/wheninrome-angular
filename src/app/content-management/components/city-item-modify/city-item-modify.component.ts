@@ -34,8 +34,10 @@ export class CityItemModifyComponent implements OnInit {
 
   createForm(): void {
     this.cityForm = new FormGroup({
-      name: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
+      name: new FormControl(undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
       slug: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
+      country: new FormControl(undefined, [Validators.minLength(3)]),
+      image: new FormControl(undefined),
       description: new FormControl(undefined),
     });
   }
@@ -49,6 +51,8 @@ export class CityItemModifyComponent implements OnInit {
             (res) => {
               this.cityForm.get('name')?.setValue(res.name);
               this.cityForm.get('slug')?.setValue(res.slug);
+              this.cityForm.get('country')?.setValue(res.country);
+              this.cityForm.get('image')?.setValue(res.image);
               this.cityForm.get('description')?.setValue(res.description);
             },
             (err) => {
@@ -61,7 +65,7 @@ export class CityItemModifyComponent implements OnInit {
       }, LOADER_TIME);
     } else { 
       this.cityForm?.reset();
-    }
+    }   
   }
 
   saveCity(): void {
@@ -107,5 +111,7 @@ export class CityItemModifyComponent implements OnInit {
     /** Getters used for cleaner access from Template */
     get name() { return this.cityForm.get('name'); }
     get slug() { return this.cityForm.get('slug'); }
+    get country() { return this.cityForm.get('country'); }
+    get image() { return this.cityForm.get('image'); }
     get description() { return this.cityForm.get('description'); }
 }
