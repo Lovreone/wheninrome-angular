@@ -81,6 +81,7 @@ export class LandmarkItemModifyComponent implements OnInit {
           newLandmark.id = res.id;
           console.warn('New Landmark created', res); // FIXME: Remove
           // TODO: Reset form & show success message || redirect to list 
+          this.serverErrors = [];
         }, 
         (err) => {
           this.serverErrors = err.error.message;
@@ -93,8 +94,9 @@ export class LandmarkItemModifyComponent implements OnInit {
     this.landmarkService.updateLandmark(modifiedLandmark)
       .subscribe(
         (res) => {
-        console.warn('Landmark was updated', res); // FIXME: Remove
-        // TODO: Reset form & show success message || redirect to list
+          console.warn('Landmark was updated', res); // FIXME: Remove
+          // TODO: Reset form & show success message || redirect to list
+          this.serverErrors = [];
         },
         (err) => {
           this.serverErrors = err.error.message;

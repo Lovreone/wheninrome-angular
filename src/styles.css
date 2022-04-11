@@ -84,6 +84,20 @@
 
   
 /* FIXME: All below is temporary, delete later*/
+.field-invalid {
+  border-color: red;
+}
+
+.error-message {
+  color: red;
+}
+
+textarea { 
+  resize: vertical; 
+  min-height: 20px;
+}
+
+
 td {
     text-align: center;
 }

@@ -42,7 +42,7 @@
     <!-- DESCRIPTION field -->
     <label for="description">Landmark description: </label><br>
     <textarea id="description" rows="3"
-        formControlName="description"></textarea><br>
+        formControlName="description"></textarea><br><br>
 
     <!-- ENTRANCE-FEE field -->
     <label for="entranceFee">Entrance fee*: </label><br>
@@ -60,12 +60,12 @@
         </div>
     </div><br>
 
-    <button (click)="saveLandmark()" [disabled]="!landmarkForm.valid">
+    <button (click)="saveLandmark()" [disabled]="!(landmarkForm.valid && landmarkForm.dirty)">
         {{ isNew ? 'Create Landmark' : 'Update Landmark' }}
     </button>
 </form>
 
-<div *ngIf="serverErrors">
+<div *ngIf="serverErrors && serverErrors.length">
     <p>Error messages:</p>
     <ul>
         <!-- FIXME: Use class instead of style -->
