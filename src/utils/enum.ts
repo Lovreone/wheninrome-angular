@@ -7,3 +7,9 @@ export enum LandmarkFormTooltips {
 }
 
 export const LOADER_TIME = 300;
+
+// Helper interface for Select box options
+export interface SelectOption {
+    id: string;
+    value: string
+}

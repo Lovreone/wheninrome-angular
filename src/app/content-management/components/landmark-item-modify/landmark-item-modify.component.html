@@ -60,6 +60,23 @@
         </div>
     </div><br>
 
+    <!-- CITY field -->
+    <label for="city">Select a City*:</label><br>
+    <select id="city" 
+        formControlName="city"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('city') }">
+        <option [ngValue]="null" disabled>Select a city</option>
+        <option *ngFor="let city of citySelectOptions" [ngValue]="city.id">{{city.value}}</option>
+    </select><br><br>
+
+    <!-- CITY field validation messages -->
+    <div *ngIf="isFieldInvalid('city')" class="error-message">
+        <div *ngIf="city?.errors?.required">
+            City is required.
+        </div>
+    </div><br>
+
+
     <button (click)="saveLandmark()" [disabled]="!(landmarkForm.valid && landmarkForm.dirty)">
         {{ isNew ? 'Create Landmark' : 'Update Landmark' }}
     </button>

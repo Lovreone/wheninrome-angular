@@ -4,4 +4,10 @@ export interface Landmark {
     slug: string;
     description: string;
     entranceFee: number;
+    city: NestedCity;
+}
+
+export interface NestedCity {
+    id: string;
+    name: string;
 }

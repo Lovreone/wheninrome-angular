@@ -1,10 +1,12 @@
-import { LOADER_TIME } from './../../../../utils/enum';
-import { LandmarkService } from '../../../shared/services/landmark.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Landmark } from '../../../shared/models/landmark.model';
-
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { LOADER_TIME, SelectOption } from './../../../../utils/enum';
+import { Landmark, NestedCity } from '../../../shared/models/landmark.model';
+import { LandmarkService } from '../../../shared/services/landmark.service';
+import { CityService } from './../../../shared/services/city.service';
+
 
 @Component({
   selector: 'app-landmark-item-modify',
@@ -16,11 +18,13 @@ export class LandmarkItemModifyComponent implements OnInit {
   landmarkForm!: FormGroup;
   serverErrors!: Array<string>;
   landmarkId!: string;
+  citySelectOptions!: Array<SelectOption>;
   isNew!: boolean;
   isLoading!: boolean;
 
   constructor(
     private landmarkService: LandmarkService,
+    private cityService: CityService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -29,7 +33,8 @@ export class LandmarkItemModifyComponent implements OnInit {
     this.landmarkId = this.route.snapshot.paramMap.get('landmarkId') || '';
     this.isNew = !this.landmarkId;
     this.isLoading = !this.isNew;
-
+    this.getCityOptions();
+    
     this.createForm();
     this.fillForm();
   }
@@ -39,7 +44,8 @@ export class LandmarkItemModifyComponent implements OnInit {
       name: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
       slug: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
       description: new FormControl(undefined),
-      entranceFee: new FormControl(undefined, [Validators.required, Validators.min(0)])
+      entranceFee: new FormControl(undefined, [Validators.required, Validators.min(0)]),
+      city: new FormControl(undefined, Validators.required)
     });
   }
 
@@ -54,6 +60,7 @@ export class LandmarkItemModifyComponent implements OnInit {
               this.landmarkForm.get('slug')?.setValue(res.slug);
               this.landmarkForm.get('description')?.setValue(res.description);
               this.landmarkForm.get('entranceFee')?.setValue(res.entranceFee);
+              this.landmarkForm.get('city')?.setValue(res.city.id);
             },
             (err) => {
               /* FIXME: 
@@ -68,8 +75,29 @@ export class LandmarkItemModifyComponent implements OnInit {
     }
   }
 
+  getCityOptions(): void {
+    this.cityService.getCities().subscribe((cities) => {
+      this.citySelectOptions = cities.map(city => ({
+        id: city.id,
+        value: city.name
+      }));
+    })
+  }
+
   saveLandmark(): void {
-    const landmark = this.landmarkForm.getRawValue() as Landmark;
+    const formValue = this.landmarkForm.getRawValue(); 
+    const landmarkCity: NestedCity = {
+      id: formValue.city,
+      name: this.citySelectOptions.find(city => city.id === formValue.city)?.value || ''
+    }
+    const landmark: Landmark = {
+      id: formValue.id,
+      name: formValue.name,
+      slug: formValue.slug,
+      description: formValue.description,
+      entranceFee: formValue.entranceFee,
+      city: landmarkCity
+    }
     this.isNew ? this.saveNew(landmark) : this.saveModified(landmark);
   }
 
@@ -115,4 +143,5 @@ export class LandmarkItemModifyComponent implements OnInit {
   get slug() { return this.landmarkForm.get('slug'); }
   get description() { return this.landmarkForm.get('description'); }
   get entranceFee() { return this.landmarkForm.get('entranceFee'); }
+  get city() { return this.landmarkForm.get('city'); }
 }
