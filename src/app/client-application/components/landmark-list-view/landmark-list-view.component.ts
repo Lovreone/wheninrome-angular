@@ -1,3 +1,4 @@
+import { LOADER_TIME } from './../../../../utils/enum';
 import { Landmark } from './../../../shared/models/landmark.model';
 import { Router } from '@angular/router';
 import { LandmarkService } from './../../../shared/services/landmark.service';
@@ -9,8 +10,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./landmark-list-view.component.css']
 })
 export class LandmarkListViewComponent implements OnInit {
-
+  landmarksAll: Landmark[] = [];
   landmarks: Landmark[] = [];
+  isLoading = true;
 
   constructor(
     private landmarkService: LandmarkService,
@@ -18,10 +20,25 @@ export class LandmarkListViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.landmarkService.getLandmarks().subscribe(res => this.landmarks = res);
+    // TODO: Remove mock timeout (used to test Loader gif)
+    setTimeout(()=> {
+      this.landmarkService.getLandmarks().subscribe((res) => {
+        if(res) {
+          this.landmarksAll = res;
+          this.landmarks = this.landmarksAll;
+          this.isLoading = false;
+        }
+      });   
+    }, LOADER_TIME);
   }
 
   viewItem(landmark: Landmark): void {
-    this.router.navigateByUrl(`/portal/landmarks/view/${landmark.id}`);
+    this.router.navigateByUrl(`/portal/landmarks/view/${landmark.slug}`);
+  }
+
+  search(searchTerm: string): void {
+    this.landmarks = searchTerm ? 
+      this.landmarksAll.filter((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase())) :
+      this.landmarksAll;
   }
 }

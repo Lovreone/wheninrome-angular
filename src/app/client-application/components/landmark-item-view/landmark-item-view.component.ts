@@ -1,3 +1,4 @@
+import { LOADER_TIME } from './../../../../utils/enum';
 import { LandmarkService } from '../../../shared/services/landmark.service';
 import { Landmark } from '../../../shared/models/landmark.model';
 
@@ -11,9 +12,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LandmarkItemViewComponent implements OnInit {
 
-  @Input('landmarkId') landmarkId!: string;
-  
+  @Input('landmarkSlug') landmarkSlug!: string;
+
   landmark!: Landmark;
+  isLoading = true;
 
   constructor(
     private landmarkService: LandmarkService,
@@ -21,13 +23,17 @@ export class LandmarkItemViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const extractedId = this.route.snapshot.paramMap.get('landmarkId');
-    this.landmarkId = extractedId ? extractedId : '';
-    this.initLandmark(this.landmarkId);
+    const extractedSlug = this.route.snapshot.paramMap.get('landmarkSlug');
+    this.landmarkSlug = extractedSlug ? extractedSlug : '';
+    this.initLandmark(this.landmarkSlug);
   }
 
-  private initLandmark(id: string): void {
-    this.landmarkService.getLandmarkById(id)
-      .subscribe(res => this.landmark = res);
+  private initLandmark(slug: string): void {
+    // TODO: Remove mock timeout (used to test Loader gif)
+    setTimeout(()=> {
+      this.landmarkService.getLandmarkBySlug(slug)
+        .subscribe(res => this.landmark = res);
+      this.isLoading = false;
+    }, LOADER_TIME);
   } 
 }

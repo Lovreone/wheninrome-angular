@@ -1,0 +1,18 @@
+<!-- Pure CSS Loader https://loading.io/css/ -->
+<div *ngIf="isLoading; else cityList" class="lds-default">
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+</div>
+<ng-template #cityList>
+    <ul *ngFor="let city of cities">
+        <li>
+            <!-- FIXME: Use class instead of style -->
+            <h3 style="margin-bottom: 0px;">{{ city.name | uppercase }}, {{ city.country | uppercase }}</h3>
+            <p style="margin-top: 0px;">
+                {{ city.description }}<br>
+                <img [src]="city.image" [alt]="city.name + ' image'" width="150px"><br>
+                <button (click)="viewItem(city)">View Landmarks</button>
+            </p>
+        </li>
+    </ul>
+</ng-template>

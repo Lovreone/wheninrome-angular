@@ -1,6 +1,91 @@
-<form [formGroup]="landmarkForm">
-    Name: <input type="text" formControlName="name"> <br>
-    Description: <input type="text" formControlName="description"> <br>
-    Entrance fee: <input type="number" formControlName="entranceFee"> <br>
-    <button (click)="saveLandmark()">{{ isNew ? 'Create' : 'Modify' }}</button>
+<!-- TODO: Clean-up unnecessary comments when finished -->
+<!-- Pure CSS Loader https://loading.io/css/ -->
+<div *ngIf="isLoading" class="lds-default">
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div></div><div></div><div></div><div></div>
+</div>
+
+<form *ngIf="!isLoading" [formGroup]="landmarkForm">
+
+    <!-- NAME field -->
+    <label for="name">Landmark name*: </label><br>
+    <input type="text" id="name" required 
+        formControlName="name"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('name') }"><br>
+
+    <!-- NAME field validation messages -->
+    <div *ngIf="isFieldInvalid('name')" class="error-message">
+        <div *ngIf="name?.errors?.required">
+            Landmark name is required.
+        </div>
+        <div *ngIf="name?.errors?.minlength">
+            Landmark name must be at least {{ name?.errors?.minlength?.requiredLength }} characters long.
+        </div>
+    </div><br>
+
+    <!-- SLUG field -->
+    <label for="slug">Landmark slug*: </label><br>
+    <input type="text" id="slug"
+        formControlName="slug"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('slug') }"><br>
+
+    <!-- SLUG field validation messages -->
+    <div *ngIf="isFieldInvalid('slug')" class="error-message">
+        <div *ngIf="slug?.errors?.required">
+            Landmark slug is required.
+        </div>
+        <div *ngIf="slug?.errors?.minlength">
+            Landmark slug must be at least {{ slug?.errors?.minlength?.requiredLength }} characters long.
+        </div>
+    </div><br>
+
+    <!-- DESCRIPTION field -->
+    <label for="description">Landmark description: </label><br>
+    <textarea id="description" rows="3"
+        formControlName="description"></textarea><br><br>
+
+    <!-- ENTRANCE-FEE field -->
+    <label for="entranceFee">Entrance fee*: </label><br>
+    <input type="number" id="entranceFee" required
+        formControlName="entranceFee"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('entranceFee') }"><br>
+
+    <!-- ENTRANCE-FEE field validation messages -->
+    <div *ngIf="isFieldInvalid('entranceFee')" class="error-message">
+        <div *ngIf="entranceFee?.errors?.required">
+            Entrance fee is required.
+        </div>
+        <div *ngIf="entranceFee?.errors?.min">
+            Entrance fee minimum value is {{ entranceFee?.errors?.min?.min }}.
+        </div>
+    </div><br>
+
+    <!-- CITY field -->
+    <label for="city">Select a City*:</label><br>
+    <select id="city" 
+        formControlName="city"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('city') }">
+        <option [ngValue]="null" disabled>Select a city</option>
+        <option *ngFor="let city of citySelectOptions" [ngValue]="city.id">{{city.value}}</option>
+    </select><br><br>
+
+    <!-- CITY field validation messages -->
+    <div *ngIf="isFieldInvalid('city')" class="error-message">
+        <div *ngIf="city?.errors?.required">
+            City is required.
+        </div>
+    </div><br>
+
+
+    <button (click)="saveLandmark()" [disabled]="!(landmarkForm.valid && landmarkForm.dirty)">
+        {{ isNew ? 'Create Landmark' : 'Update Landmark' }}
+    </button>
 </form>
+
+<div *ngIf="serverErrors && serverErrors.length">
+    <p>Error messages:</p>
+    <ul>
+        <!-- FIXME: Use class instead of style -->
+        <li *ngFor="let error of serverErrors" style="color:red">{{ error }}</li> 
+    </ul>
+</div>

@@ -1,3 +1,4 @@
+import { LOADER_TIME } from './../../../../utils/enum';
 import { LandmarkService } from '../../../shared/services/landmark.service';
 import { Landmark } from '../../../shared/models/landmark.model';
 import { Component, OnInit } from '@angular/core';
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 export class LandmarkListModifyComponent implements OnInit {
 
   landmarks: Landmark[] = [];
+  isLoading = true;
 
   constructor(
     private landmarkService: LandmarkService,
@@ -18,11 +20,16 @@ export class LandmarkListModifyComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.landmarkService.getLandmarks().subscribe(res => this.landmarks = res);
+    // TODO: Remove mock timeout (used to test Loader gif)
+    setTimeout(() => {
+      this.landmarkService.getLandmarks()
+        .subscribe(res => this.landmarks = res);
+      this.isLoading = false;
+    }, LOADER_TIME);
   }
 
   viewItem(landmark: Landmark): void  {
-    this.router.navigateByUrl(`/portal/landmarks/view/${landmark.id}`);
+    this.router.navigateByUrl(`/portal/landmarks/view/${landmark.slug}`);
   }
 
   modifyItem(landmark: Landmark): void  {
@@ -39,5 +46,4 @@ export class LandmarkListModifyComponent implements OnInit {
         });
     }
   }
-
 }
