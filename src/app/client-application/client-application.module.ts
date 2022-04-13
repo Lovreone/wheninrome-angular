@@ -8,7 +8,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderPortalComponent } from './components/header-portal/header-portal.component';
 import { FooterPortalComponent } from './components/footer-portal/footer-portal.component';
-
+import { CitiesViewComponent } from './pages/cities-view/cities-view.component';
+import { CityListViewComponent } from './components/city-list-view/city-list-view.component';
 
 
 @NgModule({
@@ -19,6 +20,8 @@ import { FooterPortalComponent } from './components/footer-portal/footer-portal.
     LandmarkViewComponent,
     HeaderPortalComponent,
     FooterPortalComponent,
+    CitiesViewComponent,
+    CityListViewComponent
   ],
   imports: [
     CommonModule,
