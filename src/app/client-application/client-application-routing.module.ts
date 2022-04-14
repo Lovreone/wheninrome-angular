@@ -16,7 +16,6 @@ const routes: Routes = [
   },
   { path: 'landmarks',
     children: [
-      { path: '', component: LandmarksViewComponent },
       { path: 'view/:landmarkSlug', component: LandmarkViewComponent }
     ]
   },
