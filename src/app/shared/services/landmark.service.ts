@@ -2,7 +2,6 @@ import { Landmark } from './../models/landmark.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -21,11 +20,15 @@ export class LandmarkService {
 
   constructor(private http: HttpClient) { }
 
-  // TODO: post getLandmarks(city);
   // TODO: post getLandmarks(city, category);
 
   public getLandmarks(): Observable<Landmark[]> {
     return this.http.get<Landmark[]>(this.apiUrl);
+  }
+
+  public getLandmarksByCity(cityId: string): Observable<Landmark[]> {
+    const url = `${this.apiUrl}/by-city/${cityId}`;
+    return this.http.get<Landmark[]>(url);
   }
 
   public getLandmarkById(id: string): Observable<Landmark> {
