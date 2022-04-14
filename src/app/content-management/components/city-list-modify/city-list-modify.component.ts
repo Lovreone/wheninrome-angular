@@ -30,7 +30,7 @@ export class CityListModifyComponent implements OnInit {
 
   viewItem(city: City): void  {
     // FIXME: TBD path structure on Portal
-    this.router.navigateByUrl(`/portal/cities/view/${city.slug}`);
+    this.router.navigateByUrl(`/portal/cities/${city.slug}`);
   }
 
   modifyItem(city: City): void  {

@@ -92,11 +92,24 @@
   color: red;
 }
 
+/* Locks resizing of textarea, sets minheight*/
 textarea { 
   resize: vertical; 
   min-height: 20px;
 }
 
+/* Shortens long text to # of rows */
+.shortened-text {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* Arranges child divs side buy side*/
+.inline-flex-parent {
+  display: inline-flex;
+}
 
 td {
     text-align: center;

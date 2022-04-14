@@ -18,7 +18,7 @@
             <td>{{city.slug}}</td>
             <td>{{city.country}}</td>
             <td><img *ngIf="city.image" width="60px" [src]="city.image" [alt]="city.name + ' image'"></td>
-            <td>{{city.description}}</td>
+            <td><p class="shortened-text">{{city.description}}</p></td>
             <td>
                 <button (click)="viewItem(city)">View</button>
                 <button (click)="modifyItem(city)">Modify</button>
