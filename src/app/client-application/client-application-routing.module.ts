@@ -1,3 +1,4 @@
+import { HomePageComponent } from './pages/home-page/home-page.component';
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from '@angular/router';
 
@@ -6,7 +7,8 @@ import { LandmarkViewComponent } from './pages/landmark-view/landmark-view.compo
 import { LandmarksViewComponent } from './pages/landmarks-view/landmarks-view.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'cities', pathMatch: 'full' },
+  { path: '', redirectTo: 'about', pathMatch: 'full' },
+  { path: 'about', component: HomePageComponent },
   { path: 'cities', 
     children: [
       { path: '', component: CitiesViewComponent },

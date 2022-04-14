@@ -10,6 +10,7 @@ import { HeaderPortalComponent } from './components/header-portal/header-portal.
 import { FooterPortalComponent } from './components/footer-portal/footer-portal.component';
 import { CitiesViewComponent } from './pages/cities-view/cities-view.component';
 import { CityListViewComponent } from './components/city-list-view/city-list-view.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { CityListViewComponent } from './components/city-list-view/city-list-vie
     HeaderPortalComponent,
     FooterPortalComponent,
     CitiesViewComponent,
-    CityListViewComponent
+    CityListViewComponent,
+    HomePageComponent
   ],
   imports: [
     CommonModule,
