@@ -33,4 +33,8 @@ export class CityListViewComponent implements OnInit {
   viewItem(city: City): void {
     this.router.navigateByUrl(`/portal/cities/${city.slug}`);
   }
+
+  getCityThumbnail(cityImgPath: string): string {
+    return cityImgPath || '/assets/images/placeholder-thumb-city.png'
+  }
 }

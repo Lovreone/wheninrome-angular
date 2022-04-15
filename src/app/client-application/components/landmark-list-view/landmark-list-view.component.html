@@ -4,6 +4,15 @@
     <div></div><div></div><div></div><div></div><div></div><div></div>
 </div>
 <ng-template #landmarksList>
+
+    <!-- FIXME: Use class instead of style -->
+    <h3 style="margin-bottom: 0px;">{{ city.name | uppercase }}, {{ city.country | uppercase }}</h3>
+    <p style="margin-top: 0px;">
+        {{ city.description }}<br>
+        <img [src]="city.image" [alt]="city.name + ' image'" width="150px"><br>
+    </p>
+    <hr>
+
     Search: <input #searchTerm type="text" (keyup)="search(searchTerm.value)">
     <hr>
     <ul *ngFor="let landmark of landmarks">
@@ -16,4 +25,7 @@
             </p>
         </li>
     </ul>
+    <p *ngIf="!landmarks.length">
+        No landmarks found
+    </p>
 </ng-template>

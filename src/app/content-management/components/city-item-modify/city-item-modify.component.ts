@@ -14,6 +14,7 @@ export class CityItemModifyComponent implements OnInit {
 
   cityForm!: FormGroup;
   serverErrors!: Array<string>;
+  city!: City;
   cityId!: string;
   isLoading!: boolean;
   isNew!: boolean;
@@ -39,6 +40,7 @@ export class CityItemModifyComponent implements OnInit {
       country: new FormControl(undefined, [Validators.minLength(3)]),
       image: new FormControl(undefined),
       description: new FormControl(undefined),
+      isActive: new FormControl(undefined, Validators.required),
     });
   }
 
@@ -49,11 +51,13 @@ export class CityItemModifyComponent implements OnInit {
         this.cityService.getCityById(this.cityId)
           .subscribe(
             (res) => {
+              this.city = res;
               this.cityForm.get('name')?.setValue(res.name);
               this.cityForm.get('slug')?.setValue(res.slug);
               this.cityForm.get('country')?.setValue(res.country);
               this.cityForm.get('image')?.setValue(res.image);
               this.cityForm.get('description')?.setValue(res.description);
+              this.cityForm.get('isActive')?.setValue(res.isActive);
             },
             (err) => {
               /* FIXME: 
@@ -65,6 +69,7 @@ export class CityItemModifyComponent implements OnInit {
       }, LOADER_TIME);
     } else { 
       this.cityForm?.reset();
+      this.cityForm.get('visibility')?.setValue(true);
     }      
   }
 
@@ -110,10 +115,11 @@ export class CityItemModifyComponent implements OnInit {
       false;
   }
 
-    /** Getters used for cleaner access from Template */
-    get name() { return this.cityForm.get('name'); }
-    get slug() { return this.cityForm.get('slug'); }
-    get country() { return this.cityForm.get('country'); }
-    get image() { return this.cityForm.get('image'); }
-    get description() { return this.cityForm.get('description'); }
+  /** Getters used for cleaner access from Template */
+  get name() { return this.cityForm.get('name'); }
+  get slug() { return this.cityForm.get('slug'); }
+  get country() { return this.cityForm.get('country'); }
+  get image() { return this.cityForm.get('image'); }
+  get description() { return this.cityForm.get('description'); }
+  get isActive() { return this.cityForm.get('isActive'); }
 }

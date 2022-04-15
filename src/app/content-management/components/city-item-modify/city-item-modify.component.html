@@ -6,12 +6,15 @@
 </div>
 
 <form *ngIf="!isLoading" [formGroup]="cityForm">
+  
+    <p *ngIf="city?.createdAt">Created: {{ city.createdAt | date:'fullDate' }}</p>
+    <p *ngIf="city?.modifiedAt">Modified: {{ city.modifiedAt | date:'fullDate' }}</p>
+        
     <!-- NAME field -->
     <label for="name">City name*: </label><br>
     <input type="text" id="name" required 
         formControlName="name"
         [ngClass]="{ 'field-invalid': isFieldInvalid('name') }"><br>
-
     <!-- NAME field validation messages -->
     <div *ngIf="isFieldInvalid('name')" class="error-message">
         <div *ngIf="name?.errors?.required">
@@ -26,8 +29,7 @@
     <label for="slug">City slug*: </label><br>
     <input type="text" id="slug"
         formControlName="slug"
-        [ngClass]="{ 'field-invalid': isFieldInvalid('slug') }"><br>
-
+        [ngClass]="{ 'field-invalid': isFieldInvalid('slug') }">
     <!-- SLUG field validation messages -->
     <div *ngIf="isFieldInvalid('slug')" class="error-message">
         <div *ngIf="slug?.errors?.required">
@@ -38,12 +40,30 @@
         </div>
     </div><br>
 
+    <!-- VISIBILITY field -->
+    <p>Visibility options:</p>
+    <div>
+        <input type="radio" id="public" name="isActive" [value]="true"
+            formControlName="isActive"                >
+        <label for="public">Public</label>
+    </div>
+    <div>
+        <input type="radio" id="private" name="isActive" [value]="false"
+            formControlName="isActive">
+        <label for="private">Private</label>
+    </div>
+    <!-- VISIBILITY field validation messages -->
+    <div *ngIf="isFieldInvalid('isActive')" class="error-message">
+        <div *ngIf="isActive?.errors?.required">
+            Visibility options selection is required.
+        </div>
+    </div><br>
+
     <!-- COUNTRY field -->
     <label for="country">Country: </label><br>
     <input type="text" id="country"
         formControlName="country"
         [ngClass]="{ 'field-invalid': isFieldInvalid('country') }"><br>
-
     <!-- COUNTRY field validation messages -->
     <div *ngIf="isFieldInvalid('country')" class="error-message">
         <div *ngIf="country?.errors?.minlength">

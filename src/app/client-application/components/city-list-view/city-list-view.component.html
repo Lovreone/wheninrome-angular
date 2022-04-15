@@ -5,14 +5,20 @@
 </div>
 <ng-template #cityList>
     <ul *ngFor="let city of cities">
-        <li>
-            <!-- FIXME: Use class instead of style -->
-            <h3 style="margin-bottom: 0px;">{{ city.name | uppercase }}, {{ city.country | uppercase }}</h3>
-            <p style="margin-top: 0px;">
-                {{ city.description }}<br>
-                <img [src]="city.image" [alt]="city.name + ' image'" width="150px"><br>
-                <button (click)="viewItem(city)">View Landmarks</button>
-            </p>
+        <!-- FIXME: Use classes instead of styles!!! -->     
+        <li style="list-style: none">     
+            <div class='parent inline-flex-parent'>
+                <div class='child'>
+                    <img [src]="getCityThumbnail(city.image)" [alt]="city.name + ' image'" width="150px"><br>
+                </div>
+                <div class='child' style="padding-left: 10px;">
+                    <h3 style="margin-bottom: 0px; margin-block-start: 0px">
+                        {{ city.name | uppercase }}, {{ city.country | uppercase }}
+                        &nbsp; <button (click)="viewItem(city)">View Landmarks</button>
+                    </h3>
+                    <p class="shortened-text" style="margin-top: 0px; margin-block-end: 5px;">{{ city.description }}</p>             
+                </div>
+            </div>
         </li>
     </ul>
 </ng-template>

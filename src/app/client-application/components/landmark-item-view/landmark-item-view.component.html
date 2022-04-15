@@ -6,5 +6,6 @@
 <p *ngIf="landmark">
     <b>name: </b>{{landmark.name}} <br>
     <b>description: </b>{{landmark.description}} <br>
-    <b>entranceFee: </b>{{landmark.entranceFee}}
+    <b>entranceFee: </b>{{landmark.entranceFee}} <br>
 </p>
+<button *ngIf="city" (click)="goBack()">Back to {{city.name}}</button>
