@@ -38,7 +38,7 @@ export class CityListModifyComponent implements OnInit {
   }
 
   deleteItem(city: City): void {
-    // FIXME: TBD if I will allow Hard delete or have a Soft delete (deactivate/reactivate)
+    // TODO: Temporary (Development only) functionality, disable for Prod
     if (confirm('Are you sure you want to delete this City?')) {
       this.cityService.deleteCity(city)
         .subscribe(res => {

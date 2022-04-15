@@ -13,7 +13,8 @@
             <th>Description</th> 
             <th colspan="2">Actions</th>
         </tr>
-        <tr *ngFor="let city of cities">
+        <!-- FIXME: Rework style to class, move to CSS file -->
+        <tr *ngFor="let city of cities" [ngStyle]="{ 'background-color' : !city.isActive ? '#cdcdcd' : 'white' }">
             <td>{{city.name}}</td>
             <td>{{city.slug}}</td>
             <td>{{city.country}}</td>

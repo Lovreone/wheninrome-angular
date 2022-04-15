@@ -5,7 +5,9 @@ export interface City {
     country: string;
     image: string;
     description: string;
-    landmark: Array<Object>; // FIXME: Array of mongo ObjectId's
+    isActive: boolean;
+    createdAt: Date;
+    modifiedAt: Date;
     // https://mongoosejs.com/docs/schematypes.html
     // https://stackoverflow.com/questions/22244421/how-to-create-mongoose-schema-with-array-of-object-ids
     // https://stackoverflow.com/questions/59349305/populate-in-nodejs-with-type-schema-types-objectid-return-null
