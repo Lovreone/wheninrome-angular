@@ -21,7 +21,7 @@ export class CityListViewComponent implements OnInit {
   ngOnInit(): void {
     // TODO: Remove mock timeout (used to test Loader gif)
     setTimeout(()=> {
-      this.cityService.getCities().subscribe((res) => {
+      this.cityService.getActiveCities().subscribe((res) => {
         if(res) {
           this.cities = res;
           this.isLoading = false;

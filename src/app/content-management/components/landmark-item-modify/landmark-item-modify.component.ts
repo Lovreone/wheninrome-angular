@@ -76,7 +76,7 @@ export class LandmarkItemModifyComponent implements OnInit {
   }
 
   getCityOptions(): void {
-    this.cityService.getCities().subscribe((cities) => {
+    this.cityService.getAllCities().subscribe((cities) => {
       this.citySelectOptions = cities.map(city => ({
         id: city.id,
         value: city.name

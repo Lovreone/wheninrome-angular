@@ -17,8 +17,12 @@ export class CityService {
 
   constructor(private http: HttpClient) { }
 
-  public getCities(): Observable<City[]> {
+  public getAllCities(): Observable<City[]> {
     return this.http.get<City[]>(this.apiUrl);
+  }
+
+  public getActiveCities(): Observable<City[]> {
+    return this.http.get<City[]>(`${this.apiUrl}/active`);
   }
 
   public getCityById(id: string): Observable<City> {

@@ -22,7 +22,7 @@ export class CityListModifyComponent implements OnInit {
   ngOnInit(): void {
     // TODO: Remove mock timeout (used to test Loader gif)
     setTimeout(() => {
-      this.cityService.getCities()
+      this.cityService.getAllCities()
         .subscribe(res => this.cities = res);
       this.isLoading = false;
     }, LOADER_TIME);
