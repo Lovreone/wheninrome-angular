@@ -41,10 +41,14 @@ export class LandmarkItemViewComponent implements OnInit {
     // TODO: Remove mock timeout (used to test Loader gif)
     setTimeout(()=> {
       this.landmarkService.getLandmarkBySlug(slug)
-        .subscribe((res) => {
-          this.landmark = res
-          this.initCity(res.city.id);
-        });
+        .subscribe(
+          (res) => {
+            this.landmark = res
+            this.initCity(res.city.id);
+          },
+          (err) => {
+            this.router.navigateByUrl('not-found');
+          });
       this.isLoading = false;
     }, LOADER_TIME);
   } 
