@@ -36,8 +36,7 @@ export class LandmarkListViewComponent implements OnInit {
           this.getCityLandmarks(city.id)
         },
         (err) => {
-          // TODO: Find an optimal solution, Error only happens if user messes with the city slug in url
-          this.router.navigateByUrl('**'); 
+          this.router.navigateByUrl('not-found');
         });
     }, LOADER_TIME);
   }
