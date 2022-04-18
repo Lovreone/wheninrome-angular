@@ -10,4 +10,5 @@ export interface Landmark {
 export interface NestedCity {
     id: string;
     name: string;
+    isActive: boolean;
 }

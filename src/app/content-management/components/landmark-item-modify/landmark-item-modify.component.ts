@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { LOADER_TIME, SelectOption } from './../../../../utils/enum';
 import { Landmark, NestedCity } from '../../../shared/models/landmark.model';
+import { City } from './../../../shared/models/city.model';
 import { LandmarkService } from '../../../shared/services/landmark.service';
 import { CityService } from './../../../shared/services/city.service';
 
@@ -18,6 +19,7 @@ export class LandmarkItemModifyComponent implements OnInit {
   landmarkForm!: FormGroup;
   serverErrors!: Array<string>;
   landmarkId!: string;
+  cities!: Array<City>;
   citySelectOptions!: Array<SelectOption>;
   isNew!: boolean;
   isLoading!: boolean;
@@ -77,6 +79,7 @@ export class LandmarkItemModifyComponent implements OnInit {
 
   getCityOptions(): void {
     this.cityService.getAllCities().subscribe((cities) => {
+      this.cities = cities;
       this.citySelectOptions = cities.map(city => ({
         id: city.id,
         value: city.name
@@ -86,9 +89,12 @@ export class LandmarkItemModifyComponent implements OnInit {
 
   saveLandmark(): void {
     const formValue = this.landmarkForm.getRawValue(); 
-    const landmarkCity: NestedCity = {
+    const landmarkCity = this.cities
+      .find(city => city.id === formValue.city);
+    const nestedCityData: NestedCity = {
       id: formValue.city,
-      name: this.citySelectOptions.find(city => city.id === formValue.city)?.value || ''
+      name: landmarkCity?.name!,
+      isActive: landmarkCity?.isActive!
     }
     const landmark: Landmark = {
       id: formValue.id,
@@ -96,7 +102,7 @@ export class LandmarkItemModifyComponent implements OnInit {
       slug: formValue.slug,
       description: formValue.description,
       entranceFee: formValue.entranceFee,
-      city: landmarkCity
+      city: nestedCityData
     }
     this.isNew ? this.saveNew(landmark) : this.saveModified(landmark);
   }
