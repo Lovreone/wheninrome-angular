@@ -4,6 +4,12 @@ export interface Landmark {
     slug: string;
     description: string;
     entranceFee: number;
+    officialWebsite?: string;
+    featuredImage?: string;
+    howToArrive?: string;
+    workingDays?: string;
+    workingHours?: string;
+    coordinates?: string;
     city: NestedCity;
     isActive: boolean;
     createdAt?: Date;

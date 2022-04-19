@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { LOADER_TIME, SelectOption } from './../../../../utils/enum';
+import { LOADER_TIME, SelectOption, URL_REGEX } from './../../../../utils/enum';
 import { Landmark, NestedCity } from '../../../shared/models/landmark.model';
 import { City } from './../../../shared/models/city.model';
 import { LandmarkService } from '../../../shared/services/landmark.service';
@@ -48,6 +48,12 @@ export class LandmarkItemModifyComponent implements OnInit {
       slug: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
       description: new FormControl(undefined),
       entranceFee: new FormControl(undefined, [Validators.required, Validators.min(0)]),
+      officialWebsite: new FormControl(undefined, Validators.pattern(URL_REGEX)),
+      featuredImage: new FormControl(undefined),
+      howToArrive: new FormControl(undefined),
+      workingDays: new FormControl(undefined),
+      workingHours: new FormControl(undefined),
+      coordinates: new FormControl(undefined),
       city: new FormControl(undefined, Validators.required),
       isActive: new FormControl(undefined, Validators.required)
     });
@@ -65,6 +71,12 @@ export class LandmarkItemModifyComponent implements OnInit {
               this.landmarkForm.get('slug')?.setValue(res.slug);
               this.landmarkForm.get('description')?.setValue(res.description);
               this.landmarkForm.get('entranceFee')?.setValue(res.entranceFee);
+              this.landmarkForm.get('officialWebsite')?.setValue(res.officialWebsite);
+              this.landmarkForm.get('featuredImage')?.setValue(res.featuredImage);
+              this.landmarkForm.get('howToArrive')?.setValue(res.howToArrive);
+              this.landmarkForm.get('workingDays')?.setValue(res.workingDays);
+              this.landmarkForm.get('workingHours')?.setValue(res.workingHours);
+              this.landmarkForm.get('coordinates')?.setValue(res.coordinates);
               this.landmarkForm.get('city')?.setValue(res.city.id);
               this.landmarkForm.get('isActive')?.setValue(res.isActive);
             },
@@ -106,6 +118,12 @@ export class LandmarkItemModifyComponent implements OnInit {
       slug: formValue.slug,
       description: formValue.description,
       entranceFee: formValue.entranceFee,
+      officialWebsite: formValue.officialWebsite,
+      featuredImage: formValue.featuredImage,
+      howToArrive: formValue.howToArrive,
+      workingDays: formValue.workingDays,
+      workingHours: formValue.workingHours,
+      coordinates: formValue.coordinates,
       city: nestedCityData,
       isActive: formValue.isActive
     }
@@ -154,6 +172,12 @@ export class LandmarkItemModifyComponent implements OnInit {
   get slug() { return this.landmarkForm.get('slug'); }
   get description() { return this.landmarkForm.get('description'); }
   get entranceFee() { return this.landmarkForm.get('entranceFee'); }
+  get officialWebsite() { return this.landmarkForm.get('officialWebsite'); }
+  get featuredImage() { return this.landmarkForm.get('featuredImage'); }
+  get howToArrive() { return this.landmarkForm.get('howToArrive'); }
+  get workingDays() { return this.landmarkForm.get('workingDays'); }
+  get workingHours() { return this.landmarkForm.get('workingHours'); }
+  get coordinates() { return this.landmarkForm.get('coordinates'); }
   get city() { return this.landmarkForm.get('city'); }
   get isActive() { return this.landmarkForm.get('isActive'); }
 }
