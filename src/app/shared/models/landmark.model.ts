@@ -5,6 +5,9 @@ export interface Landmark {
     description: string;
     entranceFee: number;
     city: NestedCity;
+    isActive: boolean;
+    createdAt?: Date;
+    modifiedAt?: Date;
 }
 
 export interface NestedCity {

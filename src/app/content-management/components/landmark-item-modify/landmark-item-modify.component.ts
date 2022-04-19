@@ -19,6 +19,7 @@ export class LandmarkItemModifyComponent implements OnInit {
   landmarkForm!: FormGroup;
   serverErrors!: Array<string>;
   landmarkId!: string;
+  landmark!: Landmark;
   cities!: Array<City>;
   citySelectOptions!: Array<SelectOption>;
   isNew!: boolean;
@@ -47,7 +48,8 @@ export class LandmarkItemModifyComponent implements OnInit {
       slug: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
       description: new FormControl(undefined),
       entranceFee: new FormControl(undefined, [Validators.required, Validators.min(0)]),
-      city: new FormControl(undefined, Validators.required)
+      city: new FormControl(undefined, Validators.required),
+      isActive: new FormControl(undefined, Validators.required)
     });
   }
 
@@ -58,11 +60,13 @@ export class LandmarkItemModifyComponent implements OnInit {
         this.landmarkService.getLandmarkById(this.landmarkId)
           .subscribe(
             (res) => {
+              this.landmark = res;
               this.landmarkForm.get('name')?.setValue(res.name);
               this.landmarkForm.get('slug')?.setValue(res.slug);
               this.landmarkForm.get('description')?.setValue(res.description);
               this.landmarkForm.get('entranceFee')?.setValue(res.entranceFee);
               this.landmarkForm.get('city')?.setValue(res.city.id);
+              this.landmarkForm.get('isActive')?.setValue(res.isActive);
             },
             (err) => {
               /* FIXME: 
@@ -102,7 +106,8 @@ export class LandmarkItemModifyComponent implements OnInit {
       slug: formValue.slug,
       description: formValue.description,
       entranceFee: formValue.entranceFee,
-      city: nestedCityData
+      city: nestedCityData,
+      isActive: formValue.isActive
     }
     this.isNew ? this.saveNew(landmark) : this.saveModified(landmark);
   }
@@ -150,4 +155,5 @@ export class LandmarkItemModifyComponent implements OnInit {
   get description() { return this.landmarkForm.get('description'); }
   get entranceFee() { return this.landmarkForm.get('entranceFee'); }
   get city() { return this.landmarkForm.get('city'); }
+  get isActive() { return this.landmarkForm.get('isActive'); }
 }

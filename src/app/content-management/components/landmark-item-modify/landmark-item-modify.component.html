@@ -7,6 +7,9 @@
 
 <form *ngIf="!isLoading" [formGroup]="landmarkForm">
 
+    <p *ngIf="landmark?.createdAt">Created: {{ landmark.createdAt | date:'fullDate' }}</p>
+    <p *ngIf="landmark?.modifiedAt">Modified: {{ landmark.modifiedAt | date:'fullDate' }}</p>
+
     <!-- NAME field -->
     <label for="name">Landmark name*: </label><br>
     <input type="text" id="name" required 
@@ -36,6 +39,25 @@
         </div>
         <div *ngIf="slug?.errors?.minlength">
             Landmark slug must be at least {{ slug?.errors?.minlength?.requiredLength }} characters long.
+        </div>
+    </div><br>
+
+    <!-- VISIBILITY field -->
+    <p>Visibility options:</p>
+    <div>
+        <input type="radio" id="public" name="isActive" [value]="true"
+            formControlName="isActive"                >
+        <label for="public">Public</label>
+    </div>
+    <div>
+        <input type="radio" id="private" name="isActive" [value]="false"
+            formControlName="isActive">
+        <label for="private">Private</label>
+    </div>
+    <!-- VISIBILITY field validation messages -->
+    <div *ngIf="isFieldInvalid('isActive')" class="error-message">
+        <div *ngIf="isActive?.errors?.required">
+            Visibility options selection is required.
         </div>
     </div><br>
 
