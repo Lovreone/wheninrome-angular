@@ -15,7 +15,7 @@
     <input type="text" id="name" required 
         formControlName="name"
         [ngClass]="{ 'field-invalid': isFieldInvalid('name') }"><br>
-    <!-- NAME field validation messages -->
+    <!-- NAME validation messages -->
     <div *ngIf="isFieldInvalid('name')" class="error-message">
         <div *ngIf="name?.errors?.required">
             City name is required.
@@ -30,7 +30,7 @@
     <input type="text" id="slug"
         formControlName="slug"
         [ngClass]="{ 'field-invalid': isFieldInvalid('slug') }">
-    <!-- SLUG field validation messages -->
+    <!-- SLUG validation messages -->
     <div *ngIf="isFieldInvalid('slug')" class="error-message">
         <div *ngIf="slug?.errors?.required">
             City slug is required.
@@ -52,7 +52,7 @@
             formControlName="isActive">
         <label for="private">Private</label>
     </div>
-    <!-- VISIBILITY field validation messages -->
+    <!-- VISIBILITY validation messages -->
     <div *ngIf="isFieldInvalid('isActive')" class="error-message">
         <div *ngIf="isActive?.errors?.required">
             Visibility options selection is required.
@@ -64,7 +64,7 @@
     <input type="text" id="country"
         formControlName="country"
         [ngClass]="{ 'field-invalid': isFieldInvalid('country') }"><br>
-    <!-- COUNTRY field validation messages -->
+    <!-- COUNTRY validation messages -->
     <div *ngIf="isFieldInvalid('country')" class="error-message">
         <div *ngIf="country?.errors?.minlength">
             Country must be at least {{ country?.errors?.minlength?.requiredLength }} characters long.
