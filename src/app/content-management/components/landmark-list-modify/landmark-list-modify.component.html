@@ -14,12 +14,13 @@
             <th colspan="2">Actions</th>       
         </tr>
         <!-- FIXME: Rework style to class, move to CSS file -->
-        <tr *ngFor="let landmark of landmarks" [ngStyle]="{ 'background-color' : !landmark.isActive ? '#cdcdcd' : 'white' }">
+        <tr *ngFor="let landmark of landmarks" 
+            [ngStyle]="{ 'background-color' : !landmark.isActive ? '#cdcdcd' : 'white' }">
             <td>{{landmark.name}}</td>
             <td>{{landmark.slug}}</td>
             <td>{{landmark.description}}</td>
             <td>{{landmark.entranceFee}}</td>
-            <td>{{landmark.city?.name}}</td>
+            <td [ngStyle]="{ 'background-color' : !landmark.city.isActive ? '#cdcdcd' : 'white' }">{{landmark.city?.name}}</td>
             <td>
                 <button (click)="viewItem(landmark)">View</button>
                 <button (click)="modifyItem(landmark)">Modify</button>
