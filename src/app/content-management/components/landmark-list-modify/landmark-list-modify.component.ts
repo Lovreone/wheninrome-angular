@@ -29,7 +29,7 @@ export class LandmarkListModifyComponent implements OnInit {
   }
 
   viewItem(landmark: Landmark): void  {
-    this.router.navigateByUrl(`/portal/landmarks/view/${landmark.slug}`);
+    this.router.navigateByUrl(`/portal/landmarks/${landmark.slug}`);
   }
 
   modifyItem(landmark: Landmark): void  {
