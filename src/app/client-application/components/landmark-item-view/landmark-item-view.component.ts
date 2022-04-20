@@ -6,6 +6,7 @@ import { Landmark } from '../../../shared/models/landmark.model';
 
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-landmark-item-view',
@@ -19,12 +20,14 @@ export class LandmarkItemViewComponent implements OnInit {
   landmark!: Landmark;
   city!: City;
   isLoading = true;
+  googleMapEmbed!: SafeHtml;
 
   constructor(
     private landmarkService: LandmarkService,
     private cityService: CityService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +40,12 @@ export class LandmarkItemViewComponent implements OnInit {
     this.router.navigateByUrl(`portal/cities/${this.city.slug}`);
   }
 
+
+  getGoogleMapsUrl(): string {
+    const latLngArr = this.landmark.coordinates?.split(', ') || [];
+    return `https://maps.google.com/?q=${latLngArr[0]},${latLngArr[1]}`;
+  }
+
   private initLandmark(slug: string): void {
     // TODO: Remove mock timeout (used to test Loader gif)
     setTimeout(()=> {
@@ -45,6 +54,10 @@ export class LandmarkItemViewComponent implements OnInit {
           (res) => {
             this.landmark = res
             this.initCity(res.city.id);
+            if (res.coordinates) {
+              this.getGoogleMapsUrl()
+              this.generateGoogleMap(res.coordinates);
+            }
           },
           (err) => {
             this.router.navigateByUrl('not-found');
@@ -57,5 +70,20 @@ export class LandmarkItemViewComponent implements OnInit {
     this.cityService.getCityById(cityId).subscribe((city) => {
       this.city = city;
     })
+  }
+
+  // FIXME: Repack later if necessary, for now keep for eazier customization
+  private generateGoogleMap(coordinates: string): void {
+    const zoomLevel = 16;
+    const satelliteView = '&t=k'
+    const src = `https://maps.google.com/maps?q=${coordinates}&z=${zoomLevel}&output=embed${satelliteView}`
+    const width = 360;
+    const height = 270;
+    const frameborder = 0;
+    const style = 'border:0';
+    const unsafeHTML = 
+      `<iframe src="${src}" width="${width}" height="${height}" `+ 
+      `frameborder="${frameborder}" style="${style}"></iframe>`;
+    this.googleMapEmbed = this.sanitizer.bypassSecurityTrustHtml(unsafeHTML);
   }
 }

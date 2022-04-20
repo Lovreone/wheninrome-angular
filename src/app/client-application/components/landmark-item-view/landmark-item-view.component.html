@@ -3,9 +3,48 @@
     <div></div><div></div><div></div><div></div><div></div><div></div>
     <div></div><div></div><div></div><div></div><div></div><div></div>
 </div>
-<p *ngIf="landmark">
-    <b>name: </b>{{landmark.name}} <br>
-    <b>description: </b>{{landmark.description}} <br>
-    <b>entranceFee: </b>{{landmark.entranceFee}} <br>
-</p>
+<div *ngIf="landmark">
+    <h3>{{ landmark.name | uppercase }}</h3>
+    
+    <p>
+        <a routerLink="/portal" routerLinkActive="active">Home</a> / 
+        <a routerLink="/portal/cities" routerLinkActive="active">Cities</a> / 
+        <a [routerLink]="'/portal/cities/' + city?.slug" routerLinkActive="active">{{landmark.city?.name}}</a> / 
+        {{ landmark.name }}
+    </p>
+
+    <p *ngIf="landmark?.modifiedAt">
+        Last modified: {{ landmark.modifiedAt | date:'fullDate' }}
+    </p>
+    
+    <p *ngIf="landmark.featuredImage">
+        <img [src]="landmark.featuredImage" [alt]="landmark.name + ' image'" width="300px">
+    </p>
+    <p *ngIf="landmark.officialWebsite">
+        <b>Official website: </b>
+        <a [href]="landmark.officialWebsite" target="_blank">{{landmark.officialWebsite}}</a>  
+    </p>
+    <p *ngIf="landmark.coordinates">
+        <b>Location: </b>
+        <a [href]="getGoogleMapsUrl()" target="_blank">Find on Google maps</a>
+    </p>
+    <p *ngIf="landmark.entranceFee">
+        <b>Entrance fee: </b>{{landmark.entranceFee}}
+    </p>
+    <p *ngIf="landmark.workingDays">
+        <b>How to arrive: </b>{{landmark.howToArrive}}
+    </p>
+    <p *ngIf="landmark.workingDays">
+        <b>Working days: </b>{{landmark.workingDays}}
+    </p>
+    <p *ngIf="landmark.workingHours">
+        <b>Working hours: </b>{{landmark.workingHours}}
+    </p>
+    <p *ngIf="landmark.description">
+        <b>Description: </b>{{landmark.description}}
+    </p>
+
+    <div *ngIf="googleMapEmbed" [innerHTML]="googleMapEmbed"></div>
+
+</div>
 <button *ngIf="city" (click)="goBack()">Back to {{city.name}}</button>
