@@ -1,0 +1,21 @@
+<nav> 
+    <a routerLink="/portal" routerLinkActive="active">Home</a>
+
+    <span> / 
+        <a *ngIf="isLandmarkPage || isCityPage; else plainCities" 
+            routerLink="/portal/cities" 
+            routerLinkActive="active">Cities</a>
+        <ng-template #plainCities>Cities</ng-template>  
+    </span>
+
+    <span *ngIf="isCityPage || isLandmarkPage"> / 
+        <a *ngIf="isLandmarkPage; else plainCity" 
+            [routerLink]="'/portal/cities/' + citySlug" 
+            routerLinkActive="active">{{cityName}}</a> 
+        <ng-template #plainCity>{{cityName}}</ng-template>
+    </span>
+
+    <span *ngIf="isLandmarkPage"> / 
+        {{landmarkName}}
+    </span>
+</nav>

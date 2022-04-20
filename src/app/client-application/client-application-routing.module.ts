@@ -13,10 +13,9 @@ const routes: Routes = [
     children: [
       { path: '', component: CitiesViewComponent },
       { path: ':citySlug', component: LandmarksViewComponent },
-      // { path: ':citySlug/:landmarkSlug', component: LandmarkViewComponent } // TODO: Rethink if necessary or delete
+      { path: ':citySlug/:landmarkSlug', component: LandmarkViewComponent }
     ]
   },
-  { path: 'landmarks/:landmarkSlug', component: LandmarkViewComponent },
 ];
 
 @NgModule({

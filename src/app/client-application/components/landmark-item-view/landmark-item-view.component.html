@@ -6,17 +6,10 @@
 <div *ngIf="landmark">
     <h3>{{ landmark.name | uppercase }}</h3>
     
-    <p>
-        <a routerLink="/portal" routerLinkActive="active">Home</a> / 
-        <a routerLink="/portal/cities" routerLinkActive="active">Cities</a> / 
-        <a [routerLink]="'/portal/cities/' + city?.slug" routerLinkActive="active">{{landmark.city?.name}}</a> / 
-        {{ landmark.name }}
-    </p>
-
     <p *ngIf="landmark?.modifiedAt">
         Last modified: {{ landmark.modifiedAt | date:'fullDate' }}
     </p>
-    
+
     <p *ngIf="landmark.featuredImage">
         <img [src]="landmark.featuredImage" [alt]="landmark.name + ' image'" width="300px">
     </p>

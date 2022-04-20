@@ -52,7 +52,7 @@ export class LandmarkListViewComponent implements OnInit {
   }
 
   viewItem(landmark: Landmark): void {
-    this.router.navigateByUrl(`/portal/landmarks/${landmark.slug}`);
+    this.router.navigateByUrl(`/portal/cities/${this.city.slug}/${landmark.slug}`);
   }
 
   search(searchTerm: string): void {

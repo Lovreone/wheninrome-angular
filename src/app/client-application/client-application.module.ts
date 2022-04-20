@@ -11,6 +11,7 @@ import { FooterPortalComponent } from './components/footer-portal/footer-portal.
 import { CitiesViewComponent } from './pages/cities-view/cities-view.component';
 import { CityListViewComponent } from './components/city-list-view/city-list-view.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
+import { BreadcrumbsMenuComponent } from './components/breadcrumbs-menu/breadcrumbs-menu.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
     FooterPortalComponent,
     CitiesViewComponent,
     CityListViewComponent,
-    HomePageComponent
+    HomePageComponent,
+    BreadcrumbsMenuComponent
   ],
   imports: [
     CommonModule,
