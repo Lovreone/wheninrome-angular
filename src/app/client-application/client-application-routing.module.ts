@@ -1,10 +1,11 @@
-import { HomePageComponent } from './pages/home-page/home-page.component';
+
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from '@angular/router';
 
+import { HomePageComponent } from './pages/home-page/home-page.component';
 import { CitiesPageComponent } from './pages/cities-page/cities-page.component';
-import { LandmarkPageComponent } from './pages/landmark-page/landmark-page.component';
 import { CityPageComponent } from './pages/city-page/city-page.component';
+import { LandmarkPageComponent } from './pages/landmark-page/landmark-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'about', pathMatch: 'full' },

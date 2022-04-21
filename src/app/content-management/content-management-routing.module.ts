@@ -2,8 +2,8 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from '@angular/router';
 
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
-import { CityManageComponent } from './pages/city-manage/city-manage.component';
 import { CitiesManageComponent } from './pages/cities-manage/cities-manage.component';
+import { CityManageComponent } from './pages/city-manage/city-manage.component';
 import { LandmarksManageComponent } from './pages/landmarks-manage/landmarks-manage.component';
 import { LandmarkManageComponent } from './pages/landmark-manage/landmark-manage.component';
 
