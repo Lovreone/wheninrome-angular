@@ -1,4 +1,5 @@
-<nav> 
+<nav *ngIf="!isLoading">
+    <hr>
     <a routerLink="/portal" routerLinkActive="active">Home</a>
 
     <span> / 
@@ -18,4 +19,5 @@
     <span *ngIf="isLandmarkPage"> / 
         {{landmarkName}}
     </span>
+    <hr>
 </nav>

@@ -1,26 +1,29 @@
-import { CityService } from './../../../shared/services/city.service';
-import { LandmarkService } from './../../../shared/services/landmark.service';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+
+import { City } from './../../../shared/models/city.model';
+import { Landmark } from './../../../shared/models/landmark.model';
 
 @Component({
   selector: 'app-breadcrumbs-menu',
   templateUrl: './breadcrumbs-menu.component.html',
   styleUrls: ['./breadcrumbs-menu.component.css']
 })
-export class BreadcrumbsMenuComponent implements OnInit {
+export class BreadcrumbsMenuComponent implements OnInit, OnChanges {
 
-  isLandmarkPage!: boolean;
-  isCityPage!: boolean;
+  @Input() landmark?: Landmark;
+  @Input() city?: City; 
+  @Input() isLoading = true;
+
   citySlug!: string;
   cityName!: string;
   landmarkSlug!: string;
   landmarkName!: string;
+  isLandmarkPage!: boolean;
+  isCityPage!: boolean;
 
-  constructor(   
-    private route: ActivatedRoute,
-    private landmarkService: LandmarkService,
-    private cityService: CityService
+  constructor(
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -30,21 +33,17 @@ export class BreadcrumbsMenuComponent implements OnInit {
     this.isCityPage = 
       routeParams.hasOwnProperty('citySlug') && 
       !routeParams.hasOwnProperty('landmarkSlug')
+  }
 
-    if (this.isLandmarkPage) {
-      this.landmarkService.getLandmarkBySlug(routeParams.landmarkSlug)
-        .subscribe(res => {
-          this.citySlug = routeParams.citySlug;
-          this.landmarkSlug = routeParams.landmarkSlug;
-          this.landmarkName = res.name; 
-          this.cityName = res.city.name;
-        });
-    } else if (this.isCityPage) {
-      this.cityService.getCityBySlug(routeParams.citySlug)
-        .subscribe(res => {
-          this.citySlug = routeParams.citySlug;
-          this.cityName = res.name; 
-        });
+  ngOnChanges(): void {
+    if (this.isLandmarkPage && this.landmark) {
+      this.landmarkName = this.landmark.name;
+      this.landmarkSlug = this.landmark.slug;
+      this.cityName = this.landmark.city.name;
+      this.citySlug = this.landmark.city.slug;
+    } else if (this.isCityPage && this.city) {
+      this.cityName = this.city.name;
+      this.citySlug = this.city.slug;
     }
   }
 }

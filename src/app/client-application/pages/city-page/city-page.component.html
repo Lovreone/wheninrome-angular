@@ -2,7 +2,10 @@
 <h2 *ngIf="fullCityName">
     {{fullCityName}}
 </h2>
-<app-breadcrumbs-menu></app-breadcrumbs-menu>
+<app-breadcrumbs-menu
+    [city]="city"
+    [isLoading]="isLoading"
+></app-breadcrumbs-menu>
 <app-landmark-list-view
     [city]="city"
     [landmarks]="landmarks" 

@@ -2,7 +2,10 @@
 <h2 *ngIf="fullLandmarkName">
     {{fullLandmarkName}}
 </h2> 
-<app-breadcrumbs-menu></app-breadcrumbs-menu>
+<app-breadcrumbs-menu
+    [landmark]="landmark" 
+    [isLoading]="isLoading"
+></app-breadcrumbs-menu>
 <app-landmark-item-view 
     [landmark]="landmark" 
     [isLoading]="isLoading">
