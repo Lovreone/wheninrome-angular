@@ -2,18 +2,18 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from '@angular/router';
 
-import { CitiesViewComponent } from './pages/cities-view/cities-view.component';
-import { LandmarkViewComponent } from './pages/landmark-view/landmark-view.component';
-import { LandmarksViewComponent } from './pages/landmarks-view/landmarks-view.component';
+import { CitiesPageComponent } from './pages/cities-page/cities-page.component';
+import { LandmarkPageComponent } from './pages/landmark-page/landmark-page.component';
+import { CityPageComponent } from './pages/city-page/city-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'about', pathMatch: 'full' },
   { path: 'about', component: HomePageComponent },
   { path: 'cities', 
     children: [
-      { path: '', component: CitiesViewComponent },
-      { path: ':citySlug', component: LandmarksViewComponent },
-      { path: ':citySlug/:landmarkSlug', component: LandmarkViewComponent }
+      { path: '', component: CitiesPageComponent },
+      { path: ':citySlug', component: CityPageComponent },
+      { path: ':citySlug/:landmarkSlug', component: LandmarkPageComponent }
     ]
   },
 ];

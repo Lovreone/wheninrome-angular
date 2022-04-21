@@ -1,19 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CitiesViewComponent } from './cities-view.component';
 
-describe('CitiesViewComponent', () => {
-  let component: CitiesViewComponent;
-  let fixture: ComponentFixture<CitiesViewComponent>;
+import { LandmarkPageComponent } from './landmark-page.component';
+
+describe('LandmarkPageComponent', () => {
+  let component: LandmarkPageComponent;
+  let fixture: ComponentFixture<LandmarkPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CitiesViewComponent ]
+      declarations: [ LandmarkPageComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CitiesViewComponent);
+    fixture = TestBed.createComponent(LandmarkPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
