@@ -1,75 +1,41 @@
-import { CityService } from './../../../shared/services/city.service';
-import { City } from './../../../shared/models/city.model';
-import { LOADER_TIME } from './../../../../utils/enum';
-import { LandmarkService } from '../../../shared/services/landmark.service';
-import { Landmark } from '../../../shared/models/landmark.model';
-
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
+import { Landmark } from '../../../shared/models/landmark.model';
 
 @Component({
   selector: 'app-landmark-item-view',
   templateUrl: './landmark-item-view.component.html',
   styleUrls: ['./landmark-item-view.component.css']
 })
-export class LandmarkItemViewComponent implements OnInit {
+export class LandmarkItemViewComponent implements OnInit, OnChanges {
 
-  @Input('landmarkSlug') landmarkSlug!: string;
+  @Input() landmark!: Landmark;
+  @Input() isLoading = true;
 
-  landmark!: Landmark;
-  city!: City;
-  isLoading = true;
   googleMapEmbed!: SafeHtml;
 
   constructor(
-    private landmarkService: LandmarkService,
-    private cityService: CityService,
-    private route: ActivatedRoute,
     private router: Router,
     private sanitizer: DomSanitizer
   ) { }
 
-  ngOnInit(): void {
-    const extractedSlug = this.route.snapshot.paramMap.get('landmarkSlug');
-    this.landmarkSlug = extractedSlug ? extractedSlug : '';
-    this.initLandmark(this.landmarkSlug);
+  ngOnInit(): void {}
+
+  ngOnChanges(): void {
+    if (this.landmark && this.landmark.coordinates) {
+      this.getGoogleMapsUrl()
+      this.generateGoogleMap(this.landmark.coordinates);
+    }
   }
 
   goBack(): void {
-    this.router.navigateByUrl(`portal/cities/${this.city.slug}`);
+    this.router.navigateByUrl(`portal/cities/${this.landmark.city.slug}`);
   }
-
-
   getGoogleMapsUrl(): string {
     const latLngArr = this.landmark.coordinates?.split(', ') || [];
     return `https://maps.google.com/?q=${latLngArr[0]},${latLngArr[1]}`;
-  }
-
-  private initLandmark(slug: string): void {
-    // TODO: Remove mock timeout (used to test Loader gif)
-    setTimeout(()=> {
-      this.landmarkService.getLandmarkBySlug(slug)
-        .subscribe(
-          (res) => {
-            this.landmark = res
-            this.initCity(res.city.id);
-            if (res.coordinates) {
-              this.getGoogleMapsUrl()
-              this.generateGoogleMap(res.coordinates);
-            }
-          },
-          (err) => {
-            this.router.navigateByUrl('not-found');
-          });
-      this.isLoading = false;
-    }, LOADER_TIME);
-  } 
-
-  private initCity(cityId: string): void {
-    this.cityService.getCityById(cityId).subscribe((city) => {
-      this.city = city;
-    })
   }
 
   // FIXME: Repack later if necessary, for now keep for eazier customization

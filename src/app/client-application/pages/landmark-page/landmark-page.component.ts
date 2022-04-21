@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { LandmarkService } from './../../../shared/services/landmark.service';
+import { Landmark } from './../../../shared/models/landmark.model';
+import { LOADER_TIME } from './../../../../utils/enum';
 
 @Component({
   selector: 'app-landmark-page',
@@ -7,9 +12,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandmarkPageComponent implements OnInit {
 
-  constructor() { }
+  landmarkSlug!: string;
+  landmark!: Landmark;
+  isLoading = true;
+
+  constructor(
+    private landmarkService: LandmarkService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
+    const extractedSlug = this.route.snapshot.paramMap.get('landmarkSlug');
+    this.landmarkSlug = extractedSlug ? extractedSlug : '';
+    this.initLandmark(this.landmarkSlug);
   }
 
+  private initLandmark(slug: string): void {
+    // TODO: Remove mock timeout (used to test Loader gif)
+    setTimeout(()=> {
+      this.landmarkService.getLandmarkBySlug(slug)
+        .subscribe(
+          (res) => {
+            this.landmark = res
+          },
+          (err) => {
+            this.router.navigateByUrl('not-found');
+          });
+      this.isLoading = false;
+    }, LOADER_TIME);
+  } 
 }
