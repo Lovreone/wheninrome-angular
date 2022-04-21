@@ -110,6 +110,7 @@ export class LandmarkItemModifyComponent implements OnInit {
     const nestedCityData: NestedCity = {
       id: formValue.city,
       name: landmarkCity?.name!,
+      slug: landmarkCity?.slug!,
       isActive: landmarkCity?.isActive!
     }
     const landmark: Landmark = {
