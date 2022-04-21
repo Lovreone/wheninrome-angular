@@ -1,3 +1,4 @@
+import { Placeholders } from './../../../../utils/enum';
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -38,6 +39,14 @@ export class LandmarkListViewComponent implements OnInit, OnChanges {
       this.landmarks;
   }
   
+  getCityThumbnail(city: City): string {
+    return city.image || Placeholders.CITY_IMAGE;
+  }
+
+  getLandmarkThumbnail(landmark: Landmark): string {
+    return landmark.featuredImage || Placeholders.LANDMARK_IMAGE;
+  }
+
   getAltText(cityName: string): string {
     return cityName + ' image';
   }

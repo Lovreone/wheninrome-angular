@@ -5,23 +5,33 @@
 </div>
 
 <ng-template #landmarksList>
-    <p>
-        {{ city.description }}<br>
-        <img [src]="city.image" [alt]="getAltText(city.name)" width="150px"><br>
-    </p>
-    <hr>
+    <div class='parent inline-flex-parent'>
+        <div class='child'>
+            <img [src]="getCityThumbnail(city)" [alt]="getAltText(city.name)" width="150px"><br>
+        </div>
+        <div class='child padding-left-small'>
+            {{ city.description }}
+        </div>
+    </div>
 
+    <hr>
     <input #searchTerm type="text" (keyup)="searchByName(searchTerm.value)" placeholder="Search by name">
     <hr>
     
     <ul *ngFor="let landmark of fileredLandmarks">
         <li>
-            <p>
-                <b>Name:</b> {{ landmark.name }}<br>
-                <b>Description:</b> {{ landmark.description }}<br>
-                <b>Entrance:</b> {{ landmark.entranceFee }}<br>
-                <button (click)="viewItem(landmark)">Details</button>
-            </p>
+            <div class='parent inline-flex-parent'>
+                <div class='child'>
+                    <img [src]="getLandmarkThumbnail(landmark)" 
+                    alt="getAltText(landmark.name)" width="100px">
+                </div>
+                <div class='child padding-left-small'>
+                    <h3>{{landmark.name | uppercase}}</h3>
+                    <p class="shortened-text">{{landmark.description}}</p>
+                    <b>Entrance:</b> {{landmark.entranceFee}}<br>
+                    <button (click)="viewItem(landmark)">Details</button>
+                </div>
+            </div>
         </li>
     </ul>
     <span *ngIf="!fileredLandmarks.length">

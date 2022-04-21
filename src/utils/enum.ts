@@ -7,7 +7,8 @@ export enum LandmarkFormTooltips {
 }
 
 export enum Placeholders {
-    CITY_IMAGE = '/assets/images/placeholder-thumb-city.png'
+    CITY_IMAGE = '/assets/images/placeholder-thumb-city.png',
+    LANDMARK_IMAGE = '/assets/images/placeholder-thumb-landmark.jpg'
 }
 
 export const LOADER_TIME = 300;
