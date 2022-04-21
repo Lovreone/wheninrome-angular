@@ -37,4 +37,8 @@ export class LandmarkListViewComponent implements OnInit, OnChanges {
         item.name.toLowerCase().includes(searchTerm.toLowerCase())) :
       this.landmarks;
   }
+  
+  getAltText(cityName: string): string {
+    return cityName + ' image';
+  }
 }

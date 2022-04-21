@@ -10,7 +10,7 @@
         </p>
     
         <span *ngIf="landmark.featuredImage">
-            <img [src]="landmark.featuredImage" [alt]="landmark.name + ' image'" width="300px">
+            <img [src]="landmark.featuredImage" [alt]="getAltText(landmark.name)" width="300px">
         </span>
 
         <p *ngIf="landmark.officialWebsite">

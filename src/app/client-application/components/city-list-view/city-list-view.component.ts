@@ -31,4 +31,8 @@ export class CityListViewComponent implements OnInit {
   getCityThumbnail(cityImgPath: string): string {
     return cityImgPath || Placeholders.CITY_IMAGE;
   }
+
+  getAltText(cityName: string): string {
+    return cityName + ' image';
+  }
 }

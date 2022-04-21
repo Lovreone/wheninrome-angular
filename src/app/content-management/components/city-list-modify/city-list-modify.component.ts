@@ -48,4 +48,8 @@ export class CityListModifyComponent implements OnInit {
         });
     }
   }
+
+  getAltText(cityName: string): string {
+    return cityName + ' image';
+  }
 }

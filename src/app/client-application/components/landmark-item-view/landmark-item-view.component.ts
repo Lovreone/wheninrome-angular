@@ -21,7 +21,7 @@ export class LandmarkItemViewComponent implements OnInit, OnChanges {
     private sanitizer: DomSanitizer
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngOnChanges(): void {
     if (this.landmark && this.landmark.coordinates) {
@@ -33,9 +33,14 @@ export class LandmarkItemViewComponent implements OnInit, OnChanges {
   goBack(): void {
     this.router.navigateByUrl(`portal/cities/${this.landmark.city.slug}`);
   }
+
   getGoogleMapsUrl(): string {
     const latLngArr = this.landmark.coordinates?.split(', ') || [];
     return `https://maps.google.com/?q=${latLngArr[0]},${latLngArr[1]}`;
+  }
+
+  getAltText(landmarkName: string): string {
+    return landmarkName + ' image';
   }
 
   // FIXME: Repack later if necessary, for now keep for eazier customization

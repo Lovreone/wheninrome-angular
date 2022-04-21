@@ -7,7 +7,7 @@
 <ng-template #landmarksList>
     <p>
         {{ city.description }}<br>
-        <img [src]="city.image" [alt]="city.name + ' image'" width="150px"><br>
+        <img [src]="city.image" [alt]="getAltText(city.name)" width="150px"><br>
     </p>
     <hr>
 
