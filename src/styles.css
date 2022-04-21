@@ -1,3 +1,13 @@
+/* Clean default margins */
+h1, h2, h3, h4, p {
+  margin: 0px;
+}
+
+/* Remove bullet points from all list items */
+li {
+  list-style: none;
+}
+
 /** Pure CSS Loader https://loading.io/css/ */
 .lds-default {
   display: inline-block;
@@ -121,5 +131,7 @@ table {
     width: 100%;
 }
 
-
+.padding-left-small {
+  padding-left: 10px;
+} 
   

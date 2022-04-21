@@ -1,8 +1,7 @@
-import { LOADER_TIME } from './../../../../utils/enum';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CityService } from './../../../shared/services/city.service';
 import { City } from './../../../shared/models/city.model';
-import { Component, OnInit } from '@angular/core';
+import { Placeholders } from './../../../../utils/enum';
 
 @Component({
   selector: 'app-city-list-view',
@@ -10,31 +9,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./city-list-view.component.css']
 })
 export class CityListViewComponent implements OnInit {
-  cities: City[] = [];
-  isLoading = true;
+  @Input() cities: City[] = [];
+  @Input() isLoading = true;
   
   constructor(
-    private cityService: CityService,
     private router: Router
   ) { }
 
-  ngOnInit(): void {
-    // TODO: Remove mock timeout (used to test Loader gif)
-    setTimeout(()=> {
-      this.cityService.getActiveCities().subscribe((res) => {
-        if(res) {
-          this.cities = res;
-          this.isLoading = false;
-        }
-      });   
-    }, LOADER_TIME);
-  }
+  ngOnInit(): void { }
 
   viewItem(city: City): void {
-    this.router.navigateByUrl(`/portal/cities/${city.slug}`);
+    this.router.navigateByUrl(`/portal/cities/${city?.slug}`);
+  }
+
+  getFullCityName(city: City): string {
+    return city.name
+    .concat(', ', city.country)
+    .toUpperCase();
   }
 
   getCityThumbnail(cityImgPath: string): string {
-    return cityImgPath || '/assets/images/placeholder-thumb-city.png'
+    return cityImgPath || Placeholders.CITY_IMAGE;
   }
 }

@@ -4,19 +4,19 @@
     <div></div><div></div><div></div><div></div><div></div><div></div>
 </div>
 <ng-template #cityList>
-    <ul *ngFor="let city of cities">
-        <!-- FIXME: Use classes instead of styles!!! -->     
-        <li style="list-style: none">     
+    <ul *ngFor="let city of cities">   
+        <li>     
             <div class='parent inline-flex-parent'>
                 <div class='child'>
-                    <img [src]="getCityThumbnail(city.image)" [alt]="city.name + ' image'" width="150px"><br>
+                    <img [src]="getCityThumbnail(city.image)" 
+                        [alt]="city.name + ' image'" width="150px">
                 </div>
-                <div class='child' style="padding-left: 10px;">
-                    <h3 style="margin-bottom: 0px; margin-block-start: 0px">
-                        {{ city.name | uppercase }}, {{ city.country | uppercase }}
-                        &nbsp; <button (click)="viewItem(city)">View Landmarks</button>
+                <div class='child padding-left-small'>
+                    <h3>
+                        {{getFullCityName(city)}}
+                        <button (click)="viewItem(city)">View Landmarks</button>
                     </h3>
-                    <p class="shortened-text" style="margin-top: 0px; margin-block-end: 5px;">{{ city.description }}</p>             
+                    <p class="shortened-text">{{city.description}}</p>             
                 </div>
             </div>
         </li>

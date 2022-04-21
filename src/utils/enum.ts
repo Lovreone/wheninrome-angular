@@ -6,6 +6,10 @@ export enum LandmarkFormTooltips {
     FEE = `0 indicates 'Free entrance', >0 indicates 'Paid entrance' value`, // <0 for unknown?
 }
 
+export enum Placeholders {
+    CITY_IMAGE = '/assets/images/placeholder-thumb-city.png'
+}
+
 export const LOADER_TIME = 300;
 
 export const URL_REGEX = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
