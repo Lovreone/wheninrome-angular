@@ -1,10 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { CityService } from './../../../shared/services/city.service';
-import { LandmarkService } from './../../../shared/services/landmark.service';
-
-import { LOADER_TIME } from './../../../../utils/enum';
 import { City } from './../../../shared/models/city.model';
 import { Landmark } from './../../../shared/models/landmark.model';
 
@@ -13,51 +9,32 @@ import { Landmark } from './../../../shared/models/landmark.model';
   templateUrl: './landmark-list-view.component.html',
   styleUrls: ['./landmark-list-view.component.css']
 })
-export class LandmarkListViewComponent implements OnInit {
-  landmarksAll: Landmark[] = [];
-  landmarks: Landmark[] = [];
-  city!: City;
-  isLoading = true;
+export class LandmarkListViewComponent implements OnInit, OnChanges {
 
+  @Input() city!: City;
+  @Input() landmarks: Landmark[] = [];
+  @Input() isLoading = true;
+
+  fileredLandmarks: Landmark[] = [];
+  
   constructor(
-    private landmarkService: LandmarkService,
-    private cityService: CityService,
-    private route: ActivatedRoute,
     private router: Router
   ) { }
 
-  ngOnInit(): void {
-    const extractedSlug = this.route.snapshot.paramMap.get('citySlug') || '';
-    // TODO: Remove mock timeout (used to test Loader gif)
-    setTimeout(()=> {
-      this.cityService.getCityBySlug(extractedSlug).subscribe(
-        (city) => {
-          this.city = city;
-          this.getCityLandmarks(city.id)
-        },
-        (err) => {
-          this.router.navigateByUrl('not-found');
-        });
-    }, LOADER_TIME);
-  }
+  ngOnInit(): void { }
 
-  getCityLandmarks(cityId: string): void {
-    this.landmarkService.getLandmarksByCity(cityId).subscribe((res) => {
-      if(res) {
-        this.landmarksAll = res;
-        this.landmarks = this.landmarksAll;
-        this.isLoading = false;
-      }
-    });   
+  ngOnChanges(): void {
+    this.fileredLandmarks = this.landmarks;
   }
 
   viewItem(landmark: Landmark): void {
-    this.router.navigateByUrl(`/portal/cities/${this.city.slug}/${landmark.slug}`);
+    this.router.navigateByUrl(`/portal/cities/${landmark.city.slug}/${landmark.slug}`);
   }
 
-  search(searchTerm: string): void {
-    this.landmarks = searchTerm ? 
-      this.landmarksAll.filter((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase())) :
-      this.landmarksAll;
+  searchByName(searchTerm: string): void {
+    this.fileredLandmarks = searchTerm ? 
+      this.landmarks.filter((item) => 
+        item.name.toLowerCase().includes(searchTerm.toLowerCase())) :
+      this.landmarks;
   }
 }

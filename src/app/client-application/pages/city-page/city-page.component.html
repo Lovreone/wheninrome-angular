@@ -1,5 +1,11 @@
 <app-header-portal></app-header-portal>
-<h2>PORTAL - LANDMARKS LIST</h2>
+<h2 *ngIf="fullCityName">
+    {{fullCityName}}
+</h2>
 <app-breadcrumbs-menu></app-breadcrumbs-menu>
-<app-landmark-list-view></app-landmark-list-view>
+<app-landmark-list-view
+    [city]="city"
+    [landmarks]="landmarks" 
+    [isLoading]="isLoading"
+></app-landmark-list-view>
 <app-footer-portal></app-footer-portal>
