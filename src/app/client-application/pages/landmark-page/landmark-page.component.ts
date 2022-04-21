@@ -14,6 +14,7 @@ export class LandmarkPageComponent implements OnInit {
 
   landmarkSlug!: string;
   landmark!: Landmark;
+  fullLandmarkName!: string;
   isLoading = true;
 
   constructor(
@@ -35,6 +36,9 @@ export class LandmarkPageComponent implements OnInit {
         .subscribe(
           (res) => {
             this.landmark = res
+            this.fullLandmarkName = res.name
+              .concat(', ', res.city.name)
+              .toUpperCase();
           },
           (err) => {
             this.router.navigateByUrl('not-found');

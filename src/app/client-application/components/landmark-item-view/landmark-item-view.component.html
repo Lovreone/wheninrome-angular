@@ -4,9 +4,7 @@
     <div></div><div></div><div></div><div></div><div></div><div></div>
 </div>
 <ng-template #landmarkItem>
-    <div *ngIf="landmark">
-        <h3>{{ landmark.name | uppercase }}</h3>
-        
+    <div *ngIf="landmark">        
         <p *ngIf="landmark?.modifiedAt">
             Last modified: {{ landmark.modifiedAt | date:'fullDate' }}
         </p>
