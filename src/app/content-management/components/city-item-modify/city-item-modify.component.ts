@@ -39,6 +39,8 @@ export class CityItemModifyComponent implements OnInit {
       slug: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
       country: new FormControl(undefined, [Validators.minLength(3)]),
       featuredImage: new FormControl(undefined),
+      introText: new FormControl(undefined),
+      localCurrency: new FormControl(undefined),
       description: new FormControl(undefined),
       isActive: new FormControl(undefined, Validators.required),
     });
@@ -55,7 +57,9 @@ export class CityItemModifyComponent implements OnInit {
               this.cityForm.get('name')?.setValue(res.name);
               this.cityForm.get('slug')?.setValue(res.slug);
               this.cityForm.get('country')?.setValue(res.country);
-              this.cityForm.get('featuredImage')?.setValue(res.featuredImage);
+              this.cityForm.get('featuredImage')?.setValue(res.featuredImage);    
+              this.cityForm.get('introText')?.setValue(res.introText);
+              this.cityForm.get('localCurrency')?.setValue(res.localCurrency);
               this.cityForm.get('description')?.setValue(res.description);
               this.cityForm.get('isActive')?.setValue(res.isActive);
             },
@@ -120,6 +124,8 @@ export class CityItemModifyComponent implements OnInit {
   get slug() { return this.cityForm.get('slug'); }
   get country() { return this.cityForm.get('country'); }
   get featuredImage() { return this.cityForm.get('featuredImage'); }
+  get introText() { return this.cityForm.get('introText'); }
+  get localCurrency() { return this.cityForm.get('localCurrency'); }
   get description() { return this.cityForm.get('description'); }
   get isActive() { return this.cityForm.get('isActive'); }
 }

@@ -10,7 +10,8 @@
             <th>Slug</th>
             <th>Country</th>
             <th>Image</th>
-            <th>Description</th> 
+            <th>Currency</th>
+            <th>Short desc</th> 
             <th colspan="2">Actions</th>
         </tr>
         <tr *ngFor="let city of cities" 
@@ -22,11 +23,8 @@
                 <img *ngIf="city.featuredImage" width="60px" 
                     [src]="city.featuredImage" [alt]="getAltText(city.name)">
             </td>
-            <td>
-                <p class="shortened-text">
-                    {{city.description}}
-                </p>
-            </td>
+            <td>{{city.localCurrency}}</td>
+            <td>{{city.introText}}</td>
             <td>
                 <button (click)="viewItem(city)">View</button>
                 <button (click)="modifyItem(city)">Modify</button>
