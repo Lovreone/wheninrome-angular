@@ -9,13 +9,16 @@
     <div>
         <img [src]="getCityThumbnail(city)" [alt]="getAltText(city.name)" 
             class="wrappable-image" width="150px">
+        <p><b>{{city.introText}}</b></p>
         <p>{{city.description}}</p>
     </div>
     <!-- Landmark list filters -->
-    <hr>
-    <input #searchTerm type="text" placeholder="Search by name" 
+    <div class="clear-left">
+        <hr>
+        <input #searchTerm type="text" placeholder="Search by name" 
         (keyup)="searchByName(searchTerm.value)">
-    <hr>
+        <hr>
+    </div>
     <!-- Landmark list -->
     <ul *ngFor="let landmark of fileredLandmarks">
         <li>

@@ -12,11 +12,9 @@
                         [alt]="getAltText(city.name)" width="150px">
                 </div>
                 <div class='child padding-left-small'>
-                    <h3>
-                        {{getFullCityName(city)}}
-                        <button (click)="viewItem(city)">View Landmarks</button>
-                    </h3>
-                    <p class="shortened-text">{{city.description}}</p>             
+                    <h3>{{getFullCityName(city)}}</h3>
+                    <p>{{city.introText}}</p>     
+                    <button (click)="viewItem(city)">View Landmarks</button>        
                 </div>
             </div>
         </li>

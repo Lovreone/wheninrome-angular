@@ -140,6 +140,9 @@ img.wrappable-image {
   float: left;
   padding: 0 10px 5px 0;
 }
+div.clear-left {
+  clear: left;
+}
 
 /* CMS Lists - Highlight Private items */
 .inactive-item {
