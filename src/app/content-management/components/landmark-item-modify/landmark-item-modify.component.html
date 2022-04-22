@@ -76,10 +76,17 @@
         </div>
     </div><br>
 
-    <!-- INTORDUCTORY TEXT field -->
-    <label for="introText">Introductory text: </label><br>
+    <!-- INTRODUCTORY TEXT field -->
+    <label for="introText"><b>Introductory text*:</b></label><br>
     <textarea id="introText" rows="3"
-        formControlName="introText"></textarea><br><br>
+        formControlName="introText"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('introText') }"></textarea><br>
+    <!-- INTRODUCTORY TEXT validation messages -->
+    <div *ngIf="isFieldInvalid('introText')" class="error-message">
+        <div *ngIf="introText?.errors?.required">
+            Introductory text is required.
+        </div>
+    </div><br>
 
     <!-- DESCRIPTION field -->
     <label for="description">Landmark description: </label><br>

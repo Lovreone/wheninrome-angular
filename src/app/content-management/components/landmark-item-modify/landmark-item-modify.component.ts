@@ -46,7 +46,7 @@ export class LandmarkItemModifyComponent implements OnInit {
     this.landmarkForm = new FormGroup({
       name: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
       slug: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
-      introText: new FormControl(undefined),
+      introText: new FormControl(undefined, Validators.required),
       description: new FormControl(undefined),
       entranceFee: new FormControl(undefined, [Validators.required, Validators.min(0)]),
       officialWebsite: new FormControl(undefined, Validators.pattern(URL_REGEX)),
