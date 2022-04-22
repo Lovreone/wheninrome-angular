@@ -134,4 +134,9 @@ table {
 .padding-left-small {
   padding-left: 10px;
 } 
-  
+
+/* Wrap text around image */
+img.wrappable-image {
+  float: left;
+  padding: 0 10px 5px 0;
+}

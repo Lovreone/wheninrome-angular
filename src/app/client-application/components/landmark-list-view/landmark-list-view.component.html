@@ -5,13 +5,10 @@
 </div>
 
 <ng-template #landmarksList>
-    <div class='parent inline-flex-parent'>
-        <div class='child'>
-            <img [src]="getCityThumbnail(city)" [alt]="getAltText(city.name)" width="150px"><br>
-        </div>
-        <div class='child padding-left-small'>
-            {{ city.description }}
-        </div>
+    <div>
+        <img [src]="getCityThumbnail(city)" [alt]="getAltText(city.name)" 
+            class="wrappable-image" width="150px">
+        <p>{{city.description}}</p>
     </div>
 
     <hr>
@@ -23,10 +20,10 @@
             <div class='parent inline-flex-parent'>
                 <div class='child'>
                     <img [src]="getLandmarkThumbnail(landmark)" 
-                    alt="getAltText(landmark.name)" width="100px">
+                    alt="getAltText(landmark.name)" width="80px">
                 </div>
                 <div class='child padding-left-small'>
-                    <h3>{{landmark.name | uppercase}}</h3>
+                    <h3>{{landmark.name}}</h3>
                     <p class="shortened-text">{{landmark.description}}</p>
                     <b>Entrance:</b> {{landmark.entranceFee}}<br>
                     <button (click)="viewItem(landmark)">Details</button>
