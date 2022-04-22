@@ -3,7 +3,7 @@ export interface City {
     name: string;
     slug: string;
     country: string;
-    image: string;
+    featuredImage: string;
     description: string;
     isActive: boolean;
     createdAt: Date;

@@ -38,7 +38,7 @@ export class CityItemModifyComponent implements OnInit {
       name: new FormControl(undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
       slug: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
       country: new FormControl(undefined, [Validators.minLength(3)]),
-      image: new FormControl(undefined),
+      featuredImage: new FormControl(undefined),
       description: new FormControl(undefined),
       isActive: new FormControl(undefined, Validators.required),
     });
@@ -55,7 +55,7 @@ export class CityItemModifyComponent implements OnInit {
               this.cityForm.get('name')?.setValue(res.name);
               this.cityForm.get('slug')?.setValue(res.slug);
               this.cityForm.get('country')?.setValue(res.country);
-              this.cityForm.get('image')?.setValue(res.image);
+              this.cityForm.get('featuredImage')?.setValue(res.featuredImage);
               this.cityForm.get('description')?.setValue(res.description);
               this.cityForm.get('isActive')?.setValue(res.isActive);
             },
@@ -119,7 +119,7 @@ export class CityItemModifyComponent implements OnInit {
   get name() { return this.cityForm.get('name'); }
   get slug() { return this.cityForm.get('slug'); }
   get country() { return this.cityForm.get('country'); }
-  get image() { return this.cityForm.get('image'); }
+  get featuredImage() { return this.cityForm.get('featuredImage'); }
   get description() { return this.cityForm.get('description'); }
   get isActive() { return this.cityForm.get('isActive'); }
 }

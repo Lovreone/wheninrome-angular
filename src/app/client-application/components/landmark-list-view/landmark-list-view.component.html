@@ -5,16 +5,18 @@
 </div>
 
 <ng-template #landmarksList>
+    <!-- City details -->
     <div>
         <img [src]="getCityThumbnail(city)" [alt]="getAltText(city.name)" 
             class="wrappable-image" width="150px">
         <p>{{city.description}}</p>
     </div>
-
+    <!-- Landmark list filters -->
     <hr>
-    <input #searchTerm type="text" (keyup)="searchByName(searchTerm.value)" placeholder="Search by name">
+    <input #searchTerm type="text" placeholder="Search by name" 
+        (keyup)="searchByName(searchTerm.value)">
     <hr>
-    
+    <!-- Landmark list -->
     <ul *ngFor="let landmark of fileredLandmarks">
         <li>
             <div class='parent inline-flex-parent'>

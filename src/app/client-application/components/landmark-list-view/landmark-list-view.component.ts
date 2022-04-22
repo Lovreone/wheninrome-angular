@@ -40,7 +40,7 @@ export class LandmarkListViewComponent implements OnInit, OnChanges {
   }
   
   getCityThumbnail(city: City): string {
-    return city.image || Placeholders.CITY_IMAGE;
+    return city.featuredImage || Placeholders.CITY_IMAGE;
   }
 
   getLandmarkThumbnail(landmark: Landmark): string {
