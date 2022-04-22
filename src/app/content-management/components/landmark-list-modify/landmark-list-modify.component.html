@@ -8,7 +8,7 @@
         <tr>
             <th>Name</th>
             <th>Slug</th>
-            <th>Description</th>
+            <th>Short desc</th>
             <th>Entrance fee</th>
             <th>City</th>
             <th colspan="2">Actions</th>       
@@ -17,7 +17,7 @@
             [ngClass]="{'inactive-item': !landmark.isActive}">
             <td>{{landmark.name}}</td>
             <td>{{landmark.slug}}</td>
-            <td>{{landmark.description}}</td>
+            <td>{{landmark.introText}}</td>
             <td>{{landmark.entranceFee}}</td>
             <td [ngClass]="{'inactive-item': !landmark.city.isActive}">
                 {{landmark.city?.name}}

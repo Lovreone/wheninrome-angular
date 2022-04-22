@@ -2,6 +2,7 @@ export interface Landmark {
     id: string;
     name: string;
     slug: string;
+    introText: string;
     description: string;
     entranceFee: number;
     officialWebsite?: string;

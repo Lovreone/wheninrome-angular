@@ -7,11 +7,13 @@
 
 <form *ngIf="!isLoading" [formGroup]="landmarkForm">
 
+    <br>
     <p *ngIf="landmark?.createdAt">Created: {{ landmark.createdAt | date:'fullDate' }}</p>
     <p *ngIf="landmark?.modifiedAt">Modified: {{ landmark.modifiedAt | date:'fullDate' }}</p>
+    <br>
 
     <!-- NAME field -->
-    <label for="name">Landmark name*: </label><br>
+    <label for="name"><b>Landmark name*:</b></label><br>
     <input type="text" id="name" required 
         formControlName="name"
         [ngClass]="{ 'field-invalid': isFieldInvalid('name') }"><br>
@@ -26,7 +28,7 @@
     </div><br>
 
     <!-- SLUG field -->
-    <label for="slug">Landmark slug*: </label><br>
+    <label for="slug"><b>Landmark slug*:</b></label><br>
     <input type="text" id="slug"
         formControlName="slug"
         [ngClass]="{ 'field-invalid': isFieldInvalid('slug') }"><br>
@@ -41,7 +43,7 @@
     </div><br>
 
     <!-- VISIBILITY field -->
-    <p>Visibility options:</p>
+    <p><b>Visibility options:</b></p>
     <div>
         <input type="radio" id="public" name="isActive" [value]="true"
             formControlName="isActive"                >
@@ -58,6 +60,26 @@
             Visibility options selection is required.
         </div>
     </div><br>
+
+    <!-- CITY field -->
+    <label for="city"><b>Select a City*:</b></label><br>
+    <select id="city" 
+        formControlName="city"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('city') }">
+        <option [ngValue]="null" disabled>Select a city</option>
+        <option *ngFor="let city of citySelectOptions" [ngValue]="city.id">{{city.value}}</option>
+    </select><br>
+    <!-- CITY validation messages -->
+    <div *ngIf="isFieldInvalid('city')" class="error-message">
+        <div *ngIf="city?.errors?.required">
+            City is required.
+        </div>
+    </div><br>
+
+    <!-- INTORDUCTORY TEXT field -->
+    <label for="introText">Introductory text: </label><br>
+    <textarea id="introText" rows="3"
+        formControlName="introText"></textarea><br><br>
 
     <!-- DESCRIPTION field -->
     <label for="description">Landmark description: </label><br>
@@ -118,20 +140,7 @@
         formControlName="coordinates"
         [ngClass]="{ 'field-invalid': isFieldInvalid('coordinates') }"><br><br>
 
-    <!-- CITY field -->
-    <label for="city">Select a City*:</label><br>
-    <select id="city" 
-        formControlName="city"
-        [ngClass]="{ 'field-invalid': isFieldInvalid('city') }">
-        <option [ngValue]="null" disabled>Select a city</option>
-        <option *ngFor="let city of citySelectOptions" [ngValue]="city.id">{{city.value}}</option>
-    </select><br><br>
-    <!-- CITY validation messages -->
-    <div *ngIf="isFieldInvalid('city')" class="error-message">
-        <div *ngIf="city?.errors?.required">
-            City is required.
-        </div>
-    </div><br>
+
 
 
     <button (click)="saveLandmark()" [disabled]="!(landmarkForm.valid && landmarkForm.dirty)">
@@ -146,3 +155,4 @@
         <li *ngFor="let error of serverErrors" style="color:red">{{ error }}</li> 
     </ul>
 </div>
+<br>

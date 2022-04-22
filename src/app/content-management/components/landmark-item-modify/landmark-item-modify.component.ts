@@ -46,6 +46,7 @@ export class LandmarkItemModifyComponent implements OnInit {
     this.landmarkForm = new FormGroup({
       name: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
       slug: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
+      introText: new FormControl(undefined),
       description: new FormControl(undefined),
       entranceFee: new FormControl(undefined, [Validators.required, Validators.min(0)]),
       officialWebsite: new FormControl(undefined, Validators.pattern(URL_REGEX)),
@@ -69,6 +70,7 @@ export class LandmarkItemModifyComponent implements OnInit {
               this.landmark = res;
               this.landmarkForm.get('name')?.setValue(res.name);
               this.landmarkForm.get('slug')?.setValue(res.slug);
+              this.landmarkForm.get('introText')?.setValue(res.introText);
               this.landmarkForm.get('description')?.setValue(res.description);
               this.landmarkForm.get('entranceFee')?.setValue(res.entranceFee);
               this.landmarkForm.get('officialWebsite')?.setValue(res.officialWebsite);
@@ -117,6 +119,7 @@ export class LandmarkItemModifyComponent implements OnInit {
       id: formValue.id,
       name: formValue.name,
       slug: formValue.slug,
+      introText: formValue.introText,
       description: formValue.description,
       entranceFee: formValue.entranceFee,
       officialWebsite: formValue.officialWebsite,
@@ -128,7 +131,9 @@ export class LandmarkItemModifyComponent implements OnInit {
       city: nestedCityData,
       isActive: formValue.isActive
     }
-    this.isNew ? this.saveNew(landmark) : this.saveModified(landmark);
+    this.isNew ? 
+      this.saveNew(landmark) :
+      this.saveModified(landmark);
   }
 
   saveNew(data: Landmark): void {
@@ -171,6 +176,7 @@ export class LandmarkItemModifyComponent implements OnInit {
   /** Getters used for cleaner access from Template */
   get name() { return this.landmarkForm.get('name'); }
   get slug() { return this.landmarkForm.get('slug'); }
+  get introText() { return this.landmarkForm.get('introText'); }
   get description() { return this.landmarkForm.get('description'); }
   get entranceFee() { return this.landmarkForm.get('entranceFee'); }
   get officialWebsite() { return this.landmarkForm.get('officialWebsite'); }
