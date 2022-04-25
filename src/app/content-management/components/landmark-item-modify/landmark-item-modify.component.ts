@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { LOADER_TIME, SelectOption, URL_REGEX } from './../../../../utils/enum';
 import { Landmark, NestedCity } from '../../../shared/models/landmark.model';
@@ -13,7 +14,7 @@ import { CityService } from './../../../shared/services/city.service';
   templateUrl: './landmark-item-modify.component.html',
   styleUrls: ['./landmark-item-modify.component.css']
 })
-export class LandmarkItemModifyComponent implements OnInit {
+export class LandmarkItemModifyComponent implements OnInit, OnDestroy {
 
   landmarkForm!: FormGroup;
   serverErrors!: Array<string>;
@@ -21,8 +22,10 @@ export class LandmarkItemModifyComponent implements OnInit {
   landmark!: Landmark;
   cities!: Array<City>;
   citySelectOptions!: Array<SelectOption>;
+  cityLocalCurrency?: String;
   isNew!: boolean;
   isLoading!: boolean;
+  citySelectValChangeSub?: Subscription;
 
   constructor(
     private landmarkService: LandmarkService,
@@ -36,9 +39,17 @@ export class LandmarkItemModifyComponent implements OnInit {
     this.isNew = !this.landmarkId;
     this.isLoading = !this.isNew;
     this.getCityOptions();
-    
     this.createForm();
     this.fillForm();
+    this.citySelectValChangeSub = this.landmarkForm.get('city')?.valueChanges
+      .subscribe(cityId => {
+        const selectedCity = this.cities.find(city => city.id === cityId);
+        this.cityLocalCurrency = selectedCity?.localCurrency;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.citySelectValChangeSub?.unsubscribe(); 
   }
 
   createForm(): void {

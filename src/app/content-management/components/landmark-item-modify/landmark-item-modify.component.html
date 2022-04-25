@@ -106,7 +106,9 @@
         formControlName="description"></textarea><br><br>
 
     <!-- ENTRANCE-FEE field -->
-    <label for="entranceFee">Entrance fee:</label><br>
+    <label for="entranceFee">
+        Entrance fee<span *ngIf="cityLocalCurrency"> ({{cityLocalCurrency}})</span>:
+    </label><br>
     <input type="number" id="entranceFee" placeholder="Entrance fee"
         formControlName="entranceFee" 
         [ngClass]="{ 'field-invalid': isFieldInvalid('entranceFee') }"><br>
