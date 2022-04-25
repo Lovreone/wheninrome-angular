@@ -1,8 +1,9 @@
-import { LOADER_TIME } from './../../../../utils/enum';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { CityService } from './../../../shared/services/city.service';
 import { City } from './../../../shared/models/city.model';
-import { Component, OnInit } from '@angular/core';
+import { LOADER_TIME, Placeholders } from './../../../../utils/enum';
 
 @Component({
   selector: 'app-city-list-modify',
@@ -47,6 +48,10 @@ export class CityListModifyComponent implements OnInit {
           }
         });
     }
+  }
+
+  getCityThumbnail(city: City): string {
+    return city.featuredImage || Placeholders.CITY_IMAGE;
   }
 
   getAltText(cityName: string): string {

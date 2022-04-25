@@ -20,8 +20,7 @@
             <td>{{city.slug}}</td>
             <td>{{city.country}}</td>
             <td>
-                <img *ngIf="city.featuredImage" width="60px" 
-                    [src]="city.featuredImage" [alt]="getAltText(city.name)">
+                <img [src]="getCityThumbnail(city)" [alt]="getAltText(city.name)" width="60px" >
             </td>
             <td>{{city.localCurrency}}</td>
             <td>{{city.introText}}</td>
