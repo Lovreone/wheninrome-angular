@@ -88,6 +88,7 @@
         </div>
     </div><br>
 
+    <!-- TODO: Rework to be an Image upload element later -->
     <!-- FEATURED-IMAGE field -->
     <label for="featuredImage">Featured image:</label><br>
     <input type="text" id="featuredImage" placeholder="PASTE IMAGE URL (TEMP)"
@@ -151,11 +152,13 @@
     </button>
 </form>
 
+<br>
 <div *ngIf="serverErrors && serverErrors.length">
     <p>Error messages:</p>
     <ul>
-        <!-- FIXME: Use class instead of style -->
-        <li *ngFor="let error of serverErrors" style="color:red">{{ error }}</li> 
+        <li *ngFor="let error of serverErrors" class="error-message">
+            {{ error }}
+        </li> 
     </ul>
 </div>
 <br>

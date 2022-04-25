@@ -14,7 +14,7 @@
         
     <!-- NAME field -->
     <label for="name"><b>City name*:</b></label><br>
-    <input type="text" id="name" required 
+    <input type="text" id="name" placeholder="City name" required 
         formControlName="name"
         [ngClass]="{ 'field-invalid': isFieldInvalid('name') }"><br>
     <!-- NAME validation messages -->
@@ -29,7 +29,7 @@
 
     <!-- SLUG field -->
     <label for="slug"><b>City slug*:</b></label><br>
-    <input type="text" id="slug"
+    <input type="text" id="slug" placeholder="City slug" required
         formControlName="slug"
         [ngClass]="{ 'field-invalid': isFieldInvalid('slug') }">
     <!-- SLUG validation messages -->
@@ -45,12 +45,12 @@
     <!-- VISIBILITY field -->
     <p><b>Visibility options*:</b></p>    
     <div>
-        <input type="radio" id="public" name="isActive" [value]="true"
+        <input type="radio" id="public" name="isActive" [value]="true" required
             formControlName="isActive"                >
         <label for="public">Public</label>
     </div>
     <div>
-        <input type="radio" id="private" name="isActive" [value]="false"
+        <input type="radio" id="private" name="isActive" [value]="false" required
             formControlName="isActive">
         <label for="private">Private</label>
     </div>
@@ -61,9 +61,20 @@
         </div>
     </div><br>
 
+    <!-- INTRODUCTORY TEXT field -->
+    <label for="introText"><b>Introductory text*:</b></label><br>
+    <textarea id="introText" rows="3" placeholder="City introductory text" required
+        formControlName="introText"></textarea><br>
+    <!-- INTRODUCTORY TEXT validation messages -->
+    <div *ngIf="isFieldInvalid('introText')" class="error-message">
+        <div *ngIf="introText?.errors?.required">
+            Introductory text is required.
+        </div>
+    </div><br>
+    
     <!-- COUNTRY field -->
-    <label for="country">Country: </label><br>
-    <input type="text" id="country"
+    <label for="country">Country:</label><br>
+    <input type="text" id="country" placeholder="Country"
         formControlName="country"
         [ngClass]="{ 'field-invalid': isFieldInvalid('country') }"><br>
     <!-- COUNTRY validation messages -->
@@ -75,25 +86,20 @@
 
     <!-- TODO: Rework to be an Image upload element later -->
     <!-- FEATURED IMAGE field -->
-    <label for="featuredImage">Featured image: </label><br>
-    <input type="text" id="featuredImage"
+    <label for="featuredImage">Featured image:</label><br>
+    <input type="text" id="featuredImage" placeholder="PASTE IMAGE URL (TEMP)"
         formControlName="featuredImage"
         [ngClass]="{ 'field-invalid': isFieldInvalid('featuredImage') }"><br><br> 
 
-    <!-- INTRODUCTORY TEXT field -->
-    <label for="introText">Introductory text: </label><br>
-    <textarea id="introText" rows="3"
-        formControlName="introText"></textarea><br><br> 
-
     <!-- LOCAL CURRENCY field -->
-    <label for="localCurrency">Local currency: </label><br>
-    <input type="text" id="localCurrency"
+    <label for="localCurrency">Local currency:</label><br>
+    <input type="text" id="localCurrency" placeholder="Local currency"
         formControlName="localCurrency"
         [ngClass]="{ 'field-invalid': isFieldInvalid('localCurrency') }"><br><br> 
 
     <!-- DESCRIPTION field -->
-    <label for="description">City description: </label><br>
-    <textarea id="description" rows="3"
+    <label for="description">City description:</label><br>
+    <textarea id="description" rows="3" placeholder="City description text"
         formControlName="description"></textarea><br><br>
 
     <button (click)="saveCity()" [disabled]="!(cityForm.valid && cityForm.dirty)">
@@ -102,11 +108,13 @@
 
 </form>
 
+<br>
 <div *ngIf="serverErrors && serverErrors.length">
     <p>Error messages:</p>
     <ul>
-        <!-- FIXME: Use class instead of style -->
-        <li *ngFor="let error of serverErrors" style="color:red">{{ error }}</li> 
+        <li *ngFor="let error of serverErrors" class="error-message">
+            {{ error }}
+        </li> 
     </ul>
 </div>
 <br>
