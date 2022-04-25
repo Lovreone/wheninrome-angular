@@ -8,7 +8,6 @@ import { City } from './../../../shared/models/city.model';
 import { LandmarkService } from '../../../shared/services/landmark.service';
 import { CityService } from './../../../shared/services/city.service';
 
-
 @Component({
   selector: 'app-landmark-item-modify',
   templateUrl: './landmark-item-modify.component.html',
@@ -48,7 +47,7 @@ export class LandmarkItemModifyComponent implements OnInit {
       slug: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
       introText: new FormControl(undefined, Validators.required),
       description: new FormControl(undefined),
-      entranceFee: new FormControl(undefined, [Validators.required, Validators.min(0)]),
+      entranceFee: new FormControl(undefined, Validators.min(0)),
       officialWebsite: new FormControl(undefined, Validators.pattern(URL_REGEX)),
       featuredImage: new FormControl(undefined),
       howToArrive: new FormControl(undefined),

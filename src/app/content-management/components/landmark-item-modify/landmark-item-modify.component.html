@@ -14,7 +14,7 @@
 
     <!-- NAME field -->
     <label for="name"><b>Landmark name*:</b></label><br>
-    <input type="text" id="name" required 
+    <input type="text" id="name" placeholder="Landmark name" required
         formControlName="name"
         [ngClass]="{ 'field-invalid': isFieldInvalid('name') }"><br>
     <!-- NAME validation messages -->
@@ -29,7 +29,7 @@
 
     <!-- SLUG field -->
     <label for="slug"><b>Landmark slug*:</b></label><br>
-    <input type="text" id="slug"
+    <input type="text" id="slug" placeholder="Landmark slug" required
         formControlName="slug"
         [ngClass]="{ 'field-invalid': isFieldInvalid('slug') }"><br>
     <!-- SLUG validation messages -->
@@ -43,14 +43,14 @@
     </div><br>
 
     <!-- VISIBILITY field -->
-    <p><b>Visibility options:</b></p>
+    <p><b>Visibility options*:</b></p>
     <div>
-        <input type="radio" id="public" name="isActive" [value]="true"
+        <input type="radio" id="public" name="isActive" [value]="true" required
             formControlName="isActive"                >
         <label for="public">Public</label>
     </div>
     <div>
-        <input type="radio" id="private" name="isActive" [value]="false"
+        <input type="radio" id="private" name="isActive" [value]="false" required
             formControlName="isActive">
         <label for="private">Private</label>
     </div>
@@ -63,7 +63,7 @@
 
     <!-- CITY field -->
     <label for="city"><b>Select a City*:</b></label><br>
-    <select id="city" 
+    <select id="city" required
         formControlName="city"
         [ngClass]="{ 'field-invalid': isFieldInvalid('city') }">
         <option [ngValue]="null" disabled>Select a city</option>
@@ -72,13 +72,13 @@
     <!-- CITY validation messages -->
     <div *ngIf="isFieldInvalid('city')" class="error-message">
         <div *ngIf="city?.errors?.required">
-            City is required.
+            City selection is required.
         </div>
     </div><br>
 
     <!-- INTRODUCTORY TEXT field -->
     <label for="introText"><b>Introductory text*:</b></label><br>
-    <textarea id="introText" rows="3"
+    <textarea id="introText" rows="3" placeholder="Landmark introductory text" required
         formControlName="introText"
         [ngClass]="{ 'field-invalid': isFieldInvalid('introText') }"></textarea><br>
     <!-- INTRODUCTORY TEXT validation messages -->
@@ -88,29 +88,38 @@
         </div>
     </div><br>
 
+    <!-- FEATURED-IMAGE field -->
+    <label for="featuredImage">Featured image:</label><br>
+    <input type="text" id="featuredImage" placeholder="PASTE IMAGE URL (TEMP)"
+        formControlName="featuredImage"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('featuredImage') }"><br><br>
+
+    <!-- COORDINATES field -->
+    <label for="coordinates">Coordinates:</label><br>
+    <input type="text" id="coordinates" placeholder="Landmark coordinates"
+        formControlName="coordinates"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('coordinates') }"><br><br>
+
     <!-- DESCRIPTION field -->
-    <label for="description">Landmark description: </label><br>
-    <textarea id="description" rows="3"
+    <label for="description">Landmark description:</label><br>
+    <textarea id="description" rows="3" placeholder="Landmark description text"
         formControlName="description"></textarea><br><br>
 
     <!-- ENTRANCE-FEE field -->
-    <label for="entranceFee">Entrance fee*: </label><br>
-    <input type="number" id="entranceFee" required
-        formControlName="entranceFee"
+    <label for="entranceFee">Entrance fee:</label><br>
+    <input type="number" id="entranceFee" placeholder="Entrance fee"
+        formControlName="entranceFee" 
         [ngClass]="{ 'field-invalid': isFieldInvalid('entranceFee') }"><br>
     <!-- ENTRANCE-FEE validation messages -->
     <div *ngIf="isFieldInvalid('entranceFee')" class="error-message">
-        <div *ngIf="entranceFee?.errors?.required">
-            Entrance fee is required.
-        </div>
         <div *ngIf="entranceFee?.errors?.min">
             Entrance fee minimum value is {{ entranceFee?.errors?.min?.min }}.
         </div>
     </div><br>
 
     <!-- OFFICIAL-WEBSITE field -->
-    <label for="officialWebsite">Official website: </label><br>
-    <input type="text" id="officialWebsite" 
+    <label for="officialWebsite">Official website:</label><br>
+    <input type="text" id="officialWebsite" placeholder="Landmark official website"
         formControlName="officialWebsite"
         [ngClass]="{ 'field-invalid': isFieldInvalid('officialWebsite') }"><br>
     <!-- OFFICIAL-WEBSITE validation messages -->
@@ -120,35 +129,20 @@
         </div>
     </div><br>
 
-    <!-- FEATURED-IMAGE field -->
-    <label for="featuredImage">Featured image: </label><br>
-    <input type="text" id="featuredImage" 
-        formControlName="featuredImage"
-        [ngClass]="{ 'field-invalid': isFieldInvalid('featuredImage') }"><br><br>
-
-    <!-- HOW-TO-ARRIVE field -->
-    <label for="howToArrive">How to arrive: </label><br>
-    <textarea id="howToArrive" rows="3"
-        formControlName="howToArrive"></textarea><br><br>
-
     <!-- WORKING-DAYS field -->
-    <label for="workingDays">Working days: </label><br>
-    <textarea id="workingDays" rows="3"
+    <label for="workingDays">Working days:</label><br>
+    <textarea id="workingDays" rows="3" placeholder="Landmark working days"
         formControlName="workingDays"></textarea><br><br>
 
     <!-- WORKING-HOURS field -->
-    <label for="workingHours">Working hours: </label><br>
-    <textarea id="workingHours" rows="3"
+    <label for="workingHours">Working hours:</label><br>
+    <textarea id="workingHours" rows="3" placeholder="Landmark working hours"
         formControlName="workingHours"></textarea><br><br>
 
-    <!-- COORDINATES field -->
-    <label for="coordinates">Coordinates: </label><br>
-    <input type="text" id="coordinates" 
-        formControlName="coordinates"
-        [ngClass]="{ 'field-invalid': isFieldInvalid('coordinates') }"><br><br>
-
-
-
+    <!-- HOW-TO-ARRIVE field -->
+    <label for="howToArrive">How to arrive:</label><br>
+    <textarea id="howToArrive" rows="3" placeholder="How to arrive directions"
+        formControlName="howToArrive"></textarea><br><br>
 
     <button (click)="saveLandmark()" [disabled]="!(landmarkForm.valid && landmarkForm.dirty)">
         {{ isNew ? 'Create Landmark' : 'Update Landmark' }}
