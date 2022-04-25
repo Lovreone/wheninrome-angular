@@ -9,16 +9,17 @@
             <th>Name</th>
             <th>Slug</th>
             <th>Short desc</th>
-            <th>Entrance fee</th>
+            <th>Visibility</th>
             <th>City</th>
             <th colspan="2">Actions</th>       
         </tr>
-        <tr *ngFor="let landmark of landmarks" 
-            [ngClass]="{'inactive-item': !landmark.isActive}">
+        <tr *ngFor="let landmark of landmarks">
             <td>{{landmark.name}}</td>
             <td>{{landmark.slug}}</td>
             <td>{{landmark.introText}}</td>
-            <td>{{landmark.entranceFee}}</td>
+            <td [ngClass]="{'inactive-item': !landmark.isActive}">
+                {{landmark.isActive ? 'Public' : 'Private'}}
+            </td>
             <td [ngClass]="{'inactive-item': !landmark.city.isActive}">
                 {{landmark.city?.name}}
             </td>
