@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { CityService } from './../../../shared/services/city.service';
@@ -23,7 +23,6 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private cityService: CityService
   ) { }
 
@@ -44,9 +43,8 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
       introText: new FormControl(undefined, Validators.required),
       localCurrency: new FormControl(undefined),
       description: new FormControl(undefined),
-      isActive: new FormControl(undefined, Validators.required),
+      isActive: new FormControl(true, Validators.required),
     });
-    this.cityForm?.get('isActive')?.setValue(true);
   }
 
   fillForm(): void {
