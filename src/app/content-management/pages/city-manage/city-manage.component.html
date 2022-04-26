@@ -1,5 +1,9 @@
 <app-header-admin></app-header-admin>
 <h2>CMS - SINGLE CITY</h2>
-<app-city-item-modify></app-city-item-modify>
+<app-city-item-modify
+    [city]="city"
+    [isLoading]="isLoading"
+    [isNew]="isNew"
+></app-city-item-modify>
 <p><a routerLink="/admin/cities" routerLinkActive="active">Back to List</a></p>
 <app-footer-admin></app-footer-admin>

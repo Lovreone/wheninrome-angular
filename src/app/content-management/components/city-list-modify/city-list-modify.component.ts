@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CityService } from './../../../shared/services/city.service';
 import { City } from './../../../shared/models/city.model';
 import { Placeholders } from 'src/utils/enum';
-import { mockResDelay } from 'src/utils/utils';
 
 @Component({
   selector: 'app-city-list-modify',
@@ -13,22 +12,15 @@ import { mockResDelay } from 'src/utils/utils';
 })
 export class CityListModifyComponent implements OnInit {
 
-  cities: City[] = [];
-  isLoading = true;
-  mockResDelay = mockResDelay;
+  @Input() cities: City[] = [];
+  @Input() isLoading = true;
 
   constructor(
     private cityService: CityService,
     private router: Router
   ) { }
 
-  ngOnInit(): void {
-    mockResDelay(() => {
-      this.cityService.getAllCities()
-        .subscribe(res => this.cities = res);
-      this.isLoading = false;
-    })
-  }
+  ngOnInit(): void { }
 
   viewItem(city: City): void  {
     this.router.navigateByUrl(`/portal/cities/${city.slug}`);
@@ -50,7 +42,7 @@ export class CityListModifyComponent implements OnInit {
     }
   }
 
-  getCityThumbnail(city: City): string {
+  getCityThumb(city: City): string {
     return city.featuredImage || Placeholders.CITY_IMAGE;
   }
 

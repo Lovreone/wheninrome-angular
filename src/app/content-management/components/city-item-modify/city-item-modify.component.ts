@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { CityService } from './../../../shared/services/city.service';
@@ -11,27 +11,27 @@ import { mockResDelay } from 'src/utils/utils';
   templateUrl: './city-item-modify.component.html',
   styleUrls: ['./city-item-modify.component.css']
 })
-export class CityItemModifyComponent implements OnInit {
+export class CityItemModifyComponent implements OnInit, OnChanges {
+
+  @Input() city!: City;
+  @Input() isLoading!: boolean;
+  @Input() isNew!: boolean;
 
   cityForm!: FormGroup;
   serverErrors!: Array<string>;
-  city!: City;
-  cityId!: string;
-  isLoading!: boolean;
-  isNew!: boolean;
   mockResDelay = mockResDelay;
 
   constructor(
-    private cityService: CityService,
+    private router: Router,
     private route: ActivatedRoute,
-    private router: Router
+    private cityService: CityService
   ) { }
 
   ngOnInit(): void {
-    this.cityId = this.route.snapshot.paramMap.get('cityId') || '';
-    this.isNew = !this.cityId;
-    this.isLoading = !this.isNew;
     this.createForm();
+  }
+
+  ngOnChanges(): void {
     this.fillForm();
   }
 
@@ -46,36 +46,20 @@ export class CityItemModifyComponent implements OnInit {
       description: new FormControl(undefined),
       isActive: new FormControl(undefined, Validators.required),
     });
+    this.cityForm?.get('isActive')?.setValue(true);
   }
 
   fillForm(): void {
-    if (!this.isNew) {
-      mockResDelay(() => {
-        this.cityService.getCityById(this.cityId)
-          .subscribe(
-            (res) => {
-              this.city = res;
-              this.cityForm.get('name')?.setValue(res.name);
-              this.cityForm.get('slug')?.setValue(res.slug);
-              this.cityForm.get('country')?.setValue(res.country);
-              this.cityForm.get('featuredImage')?.setValue(res.featuredImage);    
-              this.cityForm.get('introText')?.setValue(res.introText);
-              this.cityForm.get('localCurrency')?.setValue(res.localCurrency);
-              this.cityForm.get('description')?.setValue(res.description);
-              this.cityForm.get('isActive')?.setValue(res.isActive);
-            },
-            (err) => {
-              /* FIXME: 
-              Is there is a better way to redirect to NotFound then pointing to a non-existing route? 
-              Use case: User changed mongo id in urlPath to an invalid one */
-              this.router.navigate(['city-not-found'], { relativeTo: this.route.parent }); 
-            });
-      this.isLoading = false
-      });
-    } else { 
-      this.cityForm?.reset();
-      this.cityForm.get('visibility')?.setValue(true);
-    }      
+    if (this.city) {
+      this.cityForm.get('name')?.setValue(this.city.name);
+      this.cityForm.get('slug')?.setValue(this.city.slug);
+      this.cityForm.get('country')?.setValue(this.city.country);
+      this.cityForm.get('featuredImage')?.setValue(this.city.featuredImage);    
+      this.cityForm.get('introText')?.setValue(this.city.introText);
+      this.cityForm.get('localCurrency')?.setValue(this.city.localCurrency);
+      this.cityForm.get('description')?.setValue(this.city.description);
+      this.cityForm.get('isActive')?.setValue(this.city.isActive);
+    } 
   }
 
   saveCity(): void {
@@ -89,9 +73,7 @@ export class CityItemModifyComponent implements OnInit {
       .subscribe(
         (res) => {
           newCity.id = res.id;
-          console.warn('New City created', res); // FIXME: Remove
-          // TODO: Reset form & show success message || redirect to list
-          this.serverErrors = []; 
+          this.clearFormAndGoBack();
         }, 
         (err) => {
           this.serverErrors = err.error.message;
@@ -100,17 +82,21 @@ export class CityItemModifyComponent implements OnInit {
 
   saveModified(data: City): void {
     const modifiedCity: City = data;
-    modifiedCity.id = this.cityId;
+    modifiedCity.id = this.city.id;
     this.cityService.updateCity(modifiedCity)
       .subscribe(
         (res) => {
-          console.warn('City was updated', res); // FIXME: Remove
-          // TODO: Reset form & show success message || redirect to list
-          this.serverErrors = []; 
+          this.clearFormAndGoBack();
         },
         (err) => {
           this.serverErrors = err.error.message;
         });
+  }
+
+  clearFormAndGoBack(): void {
+    this.cityForm.reset();
+    this.serverErrors = []; 
+    this.router.navigateByUrl(`admin/cities`);
   }
 
   isFieldInvalid(fieldName: string): boolean {
