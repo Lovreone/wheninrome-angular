@@ -8,6 +8,7 @@ import { Landmark, NestedCity } from '../../../shared/models/landmark.model';
 import { City } from './../../../shared/models/city.model';
 import { LandmarkService } from '../../../shared/services/landmark.service';
 import { CityService } from './../../../shared/services/city.service';
+import { blockForbiddenChars } from 'src/utils/utils';
 
 @Component({
   selector: 'app-landmark-item-modify',
@@ -23,9 +24,12 @@ export class LandmarkItemModifyComponent implements OnInit, OnDestroy {
   cities!: Array<City>;
   citySelectOptions!: Array<SelectOption>;
   cityLocalCurrency?: String;
+
+  citySelectValChangeSub?: Subscription;
+  blockForbiddenChars = blockForbiddenChars;
+
   isNew!: boolean;
   isLoading!: boolean;
-  citySelectValChangeSub?: Subscription;
 
   constructor(
     private landmarkService: LandmarkService,

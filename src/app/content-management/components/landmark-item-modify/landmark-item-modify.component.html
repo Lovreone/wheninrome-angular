@@ -112,6 +112,7 @@
     </label><br>
     <input type="number" id="entranceFee" placeholder="Entrance fee"
         formControlName="entranceFee" 
+        (keydown)="blockForbiddenChars($event)"
         [ngClass]="{ 'field-invalid': isFieldInvalid('entranceFee') }"><br>
     <!-- ENTRANCE-FEE validation messages -->
     <div *ngIf="isFieldInvalid('entranceFee')" class="error-message">
