@@ -1,8 +1,9 @@
-import { LOADER_TIME } from './../../../../utils/enum';
-import { LandmarkService } from '../../../shared/services/landmark.service';
-import { Landmark } from '../../../shared/models/landmark.model';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { LandmarkService } from '../../../shared/services/landmark.service';
+import { Landmark } from '../../../shared/models/landmark.model';
+import { LOADER_TIME } from 'src/utils/enum';
 
 @Component({
   selector: 'app-landmark-list-modify',

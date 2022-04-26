@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { CityService } from './../../../shared/services/city.service';
 import { City } from './../../../shared/models/city.model';
-import { LOADER_TIME, Placeholders } from './../../../../utils/enum';
+import { LOADER_TIME, Placeholders } from 'src/utils/enum';
 
 @Component({
   selector: 'app-city-list-modify',

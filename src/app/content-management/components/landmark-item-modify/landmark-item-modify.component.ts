@@ -3,12 +3,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { LOADER_TIME, SelectOption, URL_REGEX } from './../../../../utils/enum';
 import { Landmark, NestedCity } from '../../../shared/models/landmark.model';
 import { City } from './../../../shared/models/city.model';
 import { LandmarkService } from '../../../shared/services/landmark.service';
 import { CityService } from './../../../shared/services/city.service';
-import { blockForbiddenChars } from 'src/utils/utils';
+import { LOADER_TIME, URL_REGEX } from 'src/utils/enum';
+import { blockForbiddenChars, SelectOption } from 'src/utils/utils';
 
 @Component({
   selector: 'app-landmark-item-modify',

@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { City } from './../../../shared/models/city.model';
-import { Placeholders } from './../../../../utils/enum';
+import { Placeholders } from 'src/utils/enum';
 
 @Component({
   selector: 'app-city-list-view',

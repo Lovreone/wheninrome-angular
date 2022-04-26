@@ -1,9 +1,10 @@
-import { City } from './../../../shared/models/city.model';
-import { LOADER_TIME } from './../../../../utils/enum';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CityService } from './../../../shared/services/city.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
+import { CityService } from './../../../shared/services/city.service';
+import { City } from './../../../shared/models/city.model';
+import { LOADER_TIME } from 'src/utils/enum';
 
 @Component({
   selector: 'app-city-item-modify',

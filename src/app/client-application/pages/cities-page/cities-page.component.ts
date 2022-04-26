@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
 import { CityService } from './../../../shared/services/city.service';
-import { LOADER_TIME } from './../../../../utils/enum';
 import { City } from './../../../shared/models/city.model';
+import { LOADER_TIME } from 'src/utils/enum';
 
 @Component({
   selector: 'app-cities-page',

@@ -6,3 +6,9 @@ export function blockForbiddenChars(event: KeyboardEvent): void {
         event.preventDefault();
     }
 }
+
+/* Helper interface for Select box options */
+export interface SelectOption {
+    id: string;
+    value: string
+}

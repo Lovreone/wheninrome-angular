@@ -1,9 +1,9 @@
-import { Placeholders } from './../../../../utils/enum';
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { City } from './../../../shared/models/city.model';
 import { Landmark } from './../../../shared/models/landmark.model';
+import { Placeholders } from 'src/utils/enum';
 
 @Component({
   selector: 'app-landmark-list-view',

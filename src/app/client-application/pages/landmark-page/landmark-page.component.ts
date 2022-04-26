@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { LandmarkService } from './../../../shared/services/landmark.service';
 import { Landmark } from './../../../shared/models/landmark.model';
-import { LOADER_TIME } from './../../../../utils/enum';
+import { LOADER_TIME } from 'src/utils/enum';
 
 @Component({
   selector: 'app-landmark-page',

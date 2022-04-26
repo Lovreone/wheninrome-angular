@@ -15,8 +15,3 @@ export const LOADER_TIME = 300;
 
 export const URL_REGEX = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
 
-// Helper interface for Select box options
-export interface SelectOption {
-    id: string;
-    value: string
-}
