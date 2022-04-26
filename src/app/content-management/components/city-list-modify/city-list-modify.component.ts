@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 
 import { CityService } from './../../../shared/services/city.service';
 import { City } from './../../../shared/models/city.model';
-import { LOADER_TIME, Placeholders } from 'src/utils/enum';
+import { Placeholders } from 'src/utils/enum';
+import { mockResDelay } from 'src/utils/utils';
 
 @Component({
   selector: 'app-city-list-modify',
@@ -14,6 +15,7 @@ export class CityListModifyComponent implements OnInit {
 
   cities: City[] = [];
   isLoading = true;
+  mockResDelay = mockResDelay;
 
   constructor(
     private cityService: CityService,
@@ -21,12 +23,11 @@ export class CityListModifyComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // TODO: Remove mock timeout (used to test Loader gif)
-    setTimeout(() => {
+    mockResDelay(() => {
       this.cityService.getAllCities()
         .subscribe(res => this.cities = res);
       this.isLoading = false;
-    }, LOADER_TIME);
+    })
   }
 
   viewItem(city: City): void  {

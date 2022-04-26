@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { CityService } from './../../../shared/services/city.service';
 import { City } from './../../../shared/models/city.model';
-import { LOADER_TIME } from 'src/utils/enum';
+import { mockResDelay } from 'src/utils/utils';
 
 @Component({
   selector: 'app-city-item-modify',
@@ -19,6 +19,7 @@ export class CityItemModifyComponent implements OnInit {
   cityId!: string;
   isLoading!: boolean;
   isNew!: boolean;
+  mockResDelay = mockResDelay;
 
   constructor(
     private cityService: CityService,
@@ -49,8 +50,7 @@ export class CityItemModifyComponent implements OnInit {
 
   fillForm(): void {
     if (!this.isNew) {
-      // TODO: Remove mock timeout (used to test Loader gif)
-      setTimeout(() => {
+      mockResDelay(() => {
         this.cityService.getCityById(this.cityId)
           .subscribe(
             (res) => {
@@ -71,7 +71,7 @@ export class CityItemModifyComponent implements OnInit {
               this.router.navigate(['city-not-found'], { relativeTo: this.route.parent }); 
             });
       this.isLoading = false
-      }, LOADER_TIME);
+      });
     } else { 
       this.cityForm?.reset();
       this.cityForm.get('visibility')?.setValue(true);

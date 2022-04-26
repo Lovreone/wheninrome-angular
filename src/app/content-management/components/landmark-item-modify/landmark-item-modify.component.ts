@@ -7,8 +7,8 @@ import { Landmark, NestedCity } from '../../../shared/models/landmark.model';
 import { City } from './../../../shared/models/city.model';
 import { LandmarkService } from '../../../shared/services/landmark.service';
 import { CityService } from './../../../shared/services/city.service';
-import { LOADER_TIME, URL_REGEX } from 'src/utils/enum';
-import { blockForbiddenChars, SelectOption } from 'src/utils/utils';
+import { URL_REGEX } from 'src/utils/enum';
+import { blockForbiddenChars, SelectOption, mockResDelay } from 'src/utils/utils';
 
 @Component({
   selector: 'app-landmark-item-modify',
@@ -27,6 +27,7 @@ export class LandmarkItemModifyComponent implements OnInit, OnDestroy {
 
   citySelectValChangeSub?: Subscription;
   blockForbiddenChars = blockForbiddenChars;
+  mockResDelay = mockResDelay;
 
   isNew!: boolean;
   isLoading!: boolean;
@@ -76,8 +77,7 @@ export class LandmarkItemModifyComponent implements OnInit, OnDestroy {
 
   fillForm(): void {
     if (!this.isNew) {
-      // TODO: Remove mock timeout (used to test Loader gif)
-      setTimeout(() => {
+      mockResDelay(() => {
         this.landmarkService.getLandmarkById(this.landmarkId)
           .subscribe(
             (res) => {
@@ -102,8 +102,8 @@ export class LandmarkItemModifyComponent implements OnInit, OnDestroy {
               Use case: User changed mongo id in urlPath to an invalid one */
               this.router.navigate(['landmark-not-found'], { relativeTo: this.route.parent }); 
             });
-      this.isLoading = false
-      }, LOADER_TIME);
+        this.isLoading = false
+      });
     } else { 
       this.landmarkForm?.reset();
     }

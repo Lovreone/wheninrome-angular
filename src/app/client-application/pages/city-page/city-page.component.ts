@@ -5,7 +5,7 @@ import { CityService } from './../../../shared/services/city.service';
 import { LandmarkService } from './../../../shared/services/landmark.service';
 import { City } from './../../../shared/models/city.model';
 import { Landmark } from './../../../shared/models/landmark.model';
-import { LOADER_TIME } from 'src/utils/enum';
+import { mockResDelay } from 'src/utils/utils';
 
 @Component({
   selector: 'app-city-page',
@@ -18,6 +18,7 @@ export class CityPageComponent implements OnInit {
   landmarks: Landmark[] = [];
   fullCityName!: string;
   isLoading = true;
+  mockResDelay = mockResDelay;
 
   constructor(
     private landmarkService: LandmarkService,
@@ -28,8 +29,7 @@ export class CityPageComponent implements OnInit {
 
   ngOnInit(): void {
     const extractedSlug = this.route.snapshot.paramMap.get('citySlug') || '';
-    // TODO: Remove mock timeout (used to test Loader gif)
-    setTimeout(()=> {
+    mockResDelay(()=> {
       this.cityService.getCityBySlug(extractedSlug).subscribe(
         (city) => {
           this.city = city;
@@ -41,7 +41,7 @@ export class CityPageComponent implements OnInit {
         (err) => {
           this.router.navigateByUrl('not-found');
         });
-    }, LOADER_TIME);
+    });
   }
 
   getCityLandmarks(cityId: string): void {

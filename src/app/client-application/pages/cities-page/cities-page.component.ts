@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { CityService } from './../../../shared/services/city.service';
 import { City } from './../../../shared/models/city.model';
-import { LOADER_TIME } from 'src/utils/enum';
+import { mockResDelay } from 'src/utils/utils';
 
 @Component({
   selector: 'app-cities-page',
@@ -13,20 +13,20 @@ export class CitiesPageComponent implements OnInit {
 
   cities: City[] = [];
   isLoading = true;
+  mockResDelay = mockResDelay;
 
   constructor(
     private cityService: CityService
   ) { }
 
   ngOnInit(): void {
-    // TODO: Remove mock timeout (used to test Loader gif)
-    setTimeout(()=> {
+    mockResDelay(() => {
       this.cityService.getActiveCities().subscribe((res) => {
         if(res) {
           this.cities = res;
           this.isLoading = false;
         }
       });   
-    }, LOADER_TIME);
+    });
   }
 }

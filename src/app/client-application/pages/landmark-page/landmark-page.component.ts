@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { LandmarkService } from './../../../shared/services/landmark.service';
 import { Landmark } from './../../../shared/models/landmark.model';
-import { LOADER_TIME } from 'src/utils/enum';
+import { mockResDelay } from 'src/utils/utils';
 
 @Component({
   selector: 'app-landmark-page',
@@ -16,6 +16,7 @@ export class LandmarkPageComponent implements OnInit {
   landmark!: Landmark;
   fullLandmarkName!: string;
   isLoading = true;
+  mockResDelay = mockResDelay;
 
   constructor(
     private landmarkService: LandmarkService,
@@ -30,8 +31,7 @@ export class LandmarkPageComponent implements OnInit {
   }
 
   private initLandmark(slug: string): void {
-    // TODO: Remove mock timeout (used to test Loader gif)
-    setTimeout(()=> {
+    mockResDelay(()=> {
       this.landmarkService.getLandmarkBySlug(slug)
         .subscribe(
           (res) => {
@@ -44,6 +44,6 @@ export class LandmarkPageComponent implements OnInit {
             this.router.navigateByUrl('not-found');
           });
       this.isLoading = false;
-    }, LOADER_TIME);
+    });
   } 
 }

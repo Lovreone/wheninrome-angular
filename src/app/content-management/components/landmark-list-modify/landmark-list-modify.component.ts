@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { LandmarkService } from '../../../shared/services/landmark.service';
 import { Landmark } from '../../../shared/models/landmark.model';
-import { LOADER_TIME } from 'src/utils/enum';
+import { mockResDelay } from 'src/utils/utils';
 
 @Component({
   selector: 'app-landmark-list-modify',
@@ -14,6 +14,7 @@ export class LandmarkListModifyComponent implements OnInit {
 
   landmarks: Landmark[] = [];
   isLoading = true;
+  mockResDelay = mockResDelay;
 
   constructor(
     private landmarkService: LandmarkService,
@@ -21,12 +22,11 @@ export class LandmarkListModifyComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // TODO: Remove mock timeout (used to test Loader gif)
-    setTimeout(() => {
+    mockResDelay(() => {
       this.landmarkService.getLandmarks()
         .subscribe(res => this.landmarks = res);
       this.isLoading = false;
-    }, LOADER_TIME);
+    });
   }
 
   viewItem(landmark: Landmark): void  {
