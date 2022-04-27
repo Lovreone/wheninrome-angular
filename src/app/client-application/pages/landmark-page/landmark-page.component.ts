@@ -16,7 +16,6 @@ export class LandmarkPageComponent implements OnInit {
   landmark!: Landmark;
   fullLandmarkName!: string;
   isLoading = true;
-  mockResDelay = mockResDelay;
 
   constructor(
     private landmarkService: LandmarkService,

@@ -13,7 +13,6 @@ export class CitiesPageComponent implements OnInit {
 
   cities: City[] = [];
   isLoading = true;
-  mockResDelay = mockResDelay;
 
   constructor(
     private cityService: CityService

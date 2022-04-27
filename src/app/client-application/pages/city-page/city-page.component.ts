@@ -18,7 +18,6 @@ export class CityPageComponent implements OnInit {
   landmarks: Landmark[] = [];
   fullCityName!: string;
   isLoading = true;
-  mockResDelay = mockResDelay;
 
   constructor(
     private landmarkService: LandmarkService,

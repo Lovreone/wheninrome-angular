@@ -13,7 +13,6 @@ export class LandmarksManageComponent implements OnInit {
 
   landmarks: Landmark[] = [];
   isLoading = true;
-  mockResDelay = mockResDelay;
 
   constructor(
     private landmarkService: LandmarkService
