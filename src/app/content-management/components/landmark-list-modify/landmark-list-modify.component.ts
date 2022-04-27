@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { LandmarkService } from '../../../shared/services/landmark.service';
 import { Landmark } from '../../../shared/models/landmark.model';
-import { mockResDelay } from 'src/utils/utils';
 
 @Component({
   selector: 'app-landmark-list-modify',
@@ -12,22 +11,15 @@ import { mockResDelay } from 'src/utils/utils';
 })
 export class LandmarkListModifyComponent implements OnInit {
 
-  landmarks: Landmark[] = [];
-  isLoading = true;
-  mockResDelay = mockResDelay;
+  @Input() landmarks: Landmark[] = [];
+  @Input() isLoading = true;
 
   constructor(
     private landmarkService: LandmarkService,
     private router: Router
   ) { }
 
-  ngOnInit(): void {
-    mockResDelay(() => {
-      this.landmarkService.getLandmarks()
-        .subscribe(res => this.landmarks = res);
-      this.isLoading = false;
-    });
-  }
+  ngOnInit(): void { }
 
   viewItem(landmark: Landmark): void  {
     this.router.navigateByUrl(`/portal/cities/${landmark.city?.slug}/${landmark.slug}`);

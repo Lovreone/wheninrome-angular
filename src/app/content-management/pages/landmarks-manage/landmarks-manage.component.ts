@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+import { LandmarkService } from './../../../shared/services/landmark.service';
+import { Landmark } from './../../../shared/models/landmark.model';
+import { mockResDelay } from 'src/utils/utils';
+
 @Component({
   selector: 'app-landmarks-manage',
   templateUrl: './landmarks-manage.component.html',
@@ -7,9 +11,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandmarksManageComponent implements OnInit {
 
-  constructor() { }
+  landmarks: Landmark[] = [];
+  isLoading = true;
+  mockResDelay = mockResDelay;
+
+  constructor(
+    private landmarkService: LandmarkService
+  ) { }
 
   ngOnInit(): void {
+    mockResDelay(() => {
+      this.landmarkService.getLandmarks()
+        .subscribe(res => this.landmarks = res);
+      this.isLoading = false;
+    });
   }
-
 }
