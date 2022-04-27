@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, OnChanges, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Landmark, NestedCity } from '../../../shared/models/landmark.model';
@@ -8,49 +8,41 @@ import { City } from './../../../shared/models/city.model';
 import { LandmarkService } from '../../../shared/services/landmark.service';
 import { CityService } from './../../../shared/services/city.service';
 import { URL_REGEX } from 'src/utils/enum';
-import { blockForbiddenChars, SelectOption, mockResDelay } from 'src/utils/utils';
+import { blockForbiddenChars, SelectOption } from 'src/utils/utils';
 
 @Component({
   selector: 'app-landmark-item-modify',
   templateUrl: './landmark-item-modify.component.html',
   styleUrls: ['./landmark-item-modify.component.css']
 })
-export class LandmarkItemModifyComponent implements OnInit, OnDestroy {
+export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy {
+
+  @Input() landmark!: Landmark;
+  @Input() isNew!: boolean;
+  @Input() isLoading!: boolean;
 
   landmarkForm!: FormGroup;
-  serverErrors!: Array<string>;
-  landmarkId!: string;
-  landmark!: Landmark;
   cities!: Array<City>;
   citySelectOptions!: Array<SelectOption>;
+  serverErrors!: Array<string>;
   cityLocalCurrency?: String;
-
   citySelectValChangeSub?: Subscription;
   blockForbiddenChars = blockForbiddenChars;
-  mockResDelay = mockResDelay;
-
-  isNew!: boolean;
-  isLoading!: boolean;
-
+  
   constructor(
     private landmarkService: LandmarkService,
     private cityService: CityService,
-    private route: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.landmarkId = this.route.snapshot.paramMap.get('landmarkId') || '';
-    this.isNew = !this.landmarkId;
-    this.isLoading = !this.isNew;
     this.getCityOptions();
     this.createForm();
+    this.reactOnFormChanges();
+  }
+
+  ngOnChanges(): void {
     this.fillForm();
-    this.citySelectValChangeSub = this.landmarkForm.get('city')?.valueChanges
-      .subscribe(cityId => {
-        const selectedCity = this.cities.find(city => city.id === cityId);
-        this.cityLocalCurrency = selectedCity?.localCurrency;
-      });
   }
 
   ngOnDestroy(): void {
@@ -71,42 +63,34 @@ export class LandmarkItemModifyComponent implements OnInit, OnDestroy {
       workingHours: new FormControl(undefined),
       coordinates: new FormControl(undefined),
       city: new FormControl(undefined, Validators.required),
-      isActive: new FormControl(undefined, Validators.required)
+      isActive: new FormControl(true, Validators.required)
     });
   }
 
   fillForm(): void {
-    if (!this.isNew) {
-      mockResDelay(() => {
-        this.landmarkService.getLandmarkById(this.landmarkId)
-          .subscribe(
-            (res) => {
-              this.landmark = res;
-              this.landmarkForm.get('name')?.setValue(res.name);
-              this.landmarkForm.get('slug')?.setValue(res.slug);
-              this.landmarkForm.get('introText')?.setValue(res.introText);
-              this.landmarkForm.get('description')?.setValue(res.description);
-              this.landmarkForm.get('entranceFee')?.setValue(res.entranceFee);
-              this.landmarkForm.get('officialWebsite')?.setValue(res.officialWebsite);
-              this.landmarkForm.get('featuredImage')?.setValue(res.featuredImage);
-              this.landmarkForm.get('howToArrive')?.setValue(res.howToArrive);
-              this.landmarkForm.get('workingDays')?.setValue(res.workingDays);
-              this.landmarkForm.get('workingHours')?.setValue(res.workingHours);
-              this.landmarkForm.get('coordinates')?.setValue(res.coordinates);
-              this.landmarkForm.get('city')?.setValue(res.city.id);
-              this.landmarkForm.get('isActive')?.setValue(res.isActive);
-            },
-            (err) => {
-              /* FIXME: 
-              Is there is a better way to redirect to NotFound then pointing to a non-existing route? 
-              Use case: User changed mongo id in urlPath to an invalid one */
-              this.router.navigate(['landmark-not-found'], { relativeTo: this.route.parent }); 
-            });
-        this.isLoading = false
-      });
-    } else { 
-      this.landmarkForm?.reset();
+    if (this.landmark) {
+      this.landmarkForm.get('name')?.setValue(this.landmark.name);
+      this.landmarkForm.get('slug')?.setValue(this.landmark.slug);
+      this.landmarkForm.get('introText')?.setValue(this.landmark.introText);
+      this.landmarkForm.get('description')?.setValue(this.landmark.description);
+      this.landmarkForm.get('entranceFee')?.setValue(this.landmark.entranceFee);
+      this.landmarkForm.get('officialWebsite')?.setValue(this.landmark.officialWebsite);
+      this.landmarkForm.get('featuredImage')?.setValue(this.landmark.featuredImage);
+      this.landmarkForm.get('howToArrive')?.setValue(this.landmark.howToArrive);
+      this.landmarkForm.get('workingDays')?.setValue(this.landmark.workingDays);
+      this.landmarkForm.get('workingHours')?.setValue(this.landmark.workingHours);
+      this.landmarkForm.get('coordinates')?.setValue(this.landmark.coordinates);
+      this.landmarkForm.get('city')?.setValue(this.landmark.city.id);
+      this.landmarkForm.get('isActive')?.setValue(this.landmark.isActive);
     }
+  }
+
+  reactOnFormChanges(): void {
+    this.citySelectValChangeSub = this.landmarkForm.get('city')?.valueChanges
+    .subscribe(cityId => {
+      const selectedCity = this.cities.find(city => city.id === cityId);
+      this.cityLocalCurrency = selectedCity?.localCurrency;
+    });
   }
 
   getCityOptions(): void {
@@ -156,9 +140,7 @@ export class LandmarkItemModifyComponent implements OnInit, OnDestroy {
       .subscribe(
         (res) => {
           newLandmark.id = res.id;
-          console.warn('New Landmark created', res); // FIXME: Remove
-          // TODO: Reset form & show success message || redirect to list 
-          this.serverErrors = [];
+          this.clearFormAndGoBack();
         }, 
         (err) => {
           this.serverErrors = err.error.message;
@@ -167,17 +149,21 @@ export class LandmarkItemModifyComponent implements OnInit, OnDestroy {
 
   saveModified(data: Landmark): void {
     const modifiedLandmark: Landmark = data;
-    modifiedLandmark.id = this.landmarkId;
+    modifiedLandmark.id = this.landmark.id;
     this.landmarkService.updateLandmark(modifiedLandmark)
       .subscribe(
         (res) => {
-          console.warn('Landmark was updated', res); // FIXME: Remove
-          // TODO: Reset form & show success message || redirect to list
-          this.serverErrors = [];
+          this.clearFormAndGoBack();
         },
         (err) => {
           this.serverErrors = err.error.message;
         });
+  }
+
+  clearFormAndGoBack(): void {
+    this.landmarkForm.reset();
+    this.serverErrors = []; 
+    this.router.navigateByUrl(`admin/landmarks`);
   }
 
   isFieldInvalid(fieldName: string): boolean {

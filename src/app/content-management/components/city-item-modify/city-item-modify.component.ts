@@ -19,7 +19,6 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
 
   cityForm!: FormGroup;
   serverErrors!: Array<string>;
-  mockResDelay = mockResDelay;
 
   constructor(
     private router: Router,
