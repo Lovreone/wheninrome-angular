@@ -11,8 +11,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
   ],
   imports: [
     CommonModule,
-    RouterModule,
-    ReactiveFormsModule
+    RouterModule
   ],
   exports: [
     ReactiveFormsModule,
