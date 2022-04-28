@@ -1,6 +1,6 @@
 <app-header-portal></app-header-portal>
 
-<h2>Login</h2>
+<h2>LOGIN</h2>
 <p>Log in to be able to create your Landmark lists and more!</p><br>
 
 <form [formGroup]="loginForm">
@@ -35,6 +35,7 @@
     <button (click)="login()" [disabled]="!(loginForm.valid && loginForm.dirty)">
         LOGIN
     </button>
+
 </form>
 
 <br>
