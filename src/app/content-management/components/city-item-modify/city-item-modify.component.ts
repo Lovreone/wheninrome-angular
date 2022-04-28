@@ -4,7 +4,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { CityService } from './../../../shared/services/city.service';
 import { City } from './../../../shared/models/city.model';
-import { mockResDelay } from 'src/utils/utils';
 
 @Component({
   selector: 'app-city-item-modify',
