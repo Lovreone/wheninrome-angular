@@ -15,6 +15,7 @@ import { BreadcrumbsMenuComponent } from './components/breadcrumbs-menu/breadcru
 import { CityListViewComponent } from './components/city-list-view/city-list-view.component';
 import { LandmarkItemViewComponent } from './components/landmark-item-view/landmark-item-view.component';
 import { LandmarkListViewComponent } from './components/landmark-list-view/landmark-list-view.component';
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { LandmarkListViewComponent } from './components/landmark-list-view/landm
     CityListViewComponent,
     LandmarkListViewComponent,
     LandmarkItemViewComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    RegisterPageComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,90 @@
+<app-header-portal></app-header-portal>
+
+<h2>REGISTER</h2>
+<p>Create an account with us to be able to create your Landmark lists and more!</p><br>
+
+<form [formGroup]="registerForm">
+
+    <!-- FIRST NAME field -->
+    <label for="firstName"><b>First Name*:</b></label><br>
+    <input type="text" id="firstName" placeholder="Type in your name" required 
+        formControlName="firstName"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('firstName') }"><br>
+    <!-- FIRST NAME validation messages -->
+    <div *ngIf="isFieldInvalid('firstName')" class="error-message">
+        <div *ngIf="firstName?.errors?.required">
+            First Name is required.
+        </div>
+    </div><br>
+
+    <!-- LAST NAME field -->
+    <label for="lastName"><b>Last Name*:</b></label><br>
+    <input type="text" id="lastName" placeholder="Type in your surname" required 
+        formControlName="lastName"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('lastName') }"><br>
+    <!-- LAST NAME validation messages -->
+    <div *ngIf="isFieldInvalid('lastName')" class="error-message">
+        <div *ngIf="lastName?.errors?.required">
+            Last Name is required.
+        </div>
+    </div><br>
+    
+    <!-- EMAIL field -->
+    <label for="email"><b>Email*:</b></label><br>
+    <input type="text" id="email" placeholder="Type in your email" required 
+        formControlName="email"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('email') }"><br>
+    <!-- EMAIL validation messages -->
+    <div *ngIf="isFieldInvalid('email')" class="error-message">
+        <div *ngIf="email?.errors?.required">
+            Email is required.
+        </div>
+        <div *ngIf="email?.errors?.email || email?.errors?.pattern">
+            Incorrect email format.
+        </div>
+    </div><br>
+
+    <!-- PASSWORD field -->
+    <label for="password"><b>Password*:</b></label><br>
+    <input type="password" id="password" placeholder="Type in your password" required 
+        formControlName="password"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('password') }"><br>
+    <!-- PASSWORD validation messages -->
+    <div *ngIf="isFieldInvalid('password')" class="error-message">
+        <div *ngIf="password?.errors?.required">
+            Password is required.
+        </div>
+    </div><br>
+
+    <!-- REPEAT PASSWORD field -->
+    <label for="repeatPassword"><b>Repeat Password*:</b></label><br>
+    <input type="password" id="repeatPassword" placeholder="Retype your password" required 
+        formControlName="repeatPassword"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('repeatPassword') }"><br>
+    <!-- REPEAT PASSWORD validation messages -->
+    <div *ngIf="isFieldInvalid('repeatPassword')" class="error-message">
+        <div *ngIf="repeatPassword?.errors?.required">
+            Password repeat is required.
+        </div>
+    </div><br>
+
+    <button (click)="register()" [disabled]="!(registerForm.valid && registerForm.dirty)">
+        REGISTER
+    </button>
+
+</form>
+
+<br>
+<p>Already have an account? Login <a routerLink="/login" routerLinkActive="active">here</a>.</p>
+
+<br>
+<div *ngIf="serverErrors && serverErrors.length">
+    <p>Error messages:</p>
+    <ul>
+        <li *ngFor="let error of serverErrors" class="error-message">
+            {{ error }}
+        </li> 
+    </ul>
+</div>
+
+<app-footer-portal></app-footer-portal>

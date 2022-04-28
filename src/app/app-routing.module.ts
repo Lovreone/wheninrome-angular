@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LoginPageComponent } from './client-application/pages/login-page/login-page.component';
+import { RegisterPageComponent } from './client-application/pages/register-page/register-page.component';
 import { PageNotFoundComponent } from './shared/pages/page-not-found/page-not-found.component';
 
 const AppRoutes: Routes = [
@@ -21,6 +22,11 @@ const AppRoutes: Routes = [
   {
     path: 'login',
     component: LoginPageComponent, 
+    pathMatch: 'full'
+  },
+  {
+    path: 'register',
+    component: RegisterPageComponent, 
     pathMatch: 'full'
   },
   { 
