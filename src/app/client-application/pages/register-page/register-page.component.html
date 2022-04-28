@@ -44,29 +44,40 @@
         </div>
     </div><br>
 
-    <!-- PASSWORD field -->
-    <label for="password"><b>Password*:</b></label><br>
-    <input type="password" id="password" placeholder="Type in your password" required 
-        formControlName="password"
-        [ngClass]="{ 'field-invalid': isFieldInvalid('password') }"><br>
-    <!-- PASSWORD validation messages -->
-    <div *ngIf="isFieldInvalid('password')" class="error-message">
-        <div *ngIf="password?.errors?.required">
-            Password is required.
-        </div>
-    </div><br>
+    <div formGroupName="passGroup">
+        
+        <!-- PASSWORD field -->
+        <label for="enterPassword"><b>Password*:</b></label><br>
+        <input type="password" id="enterPassword" placeholder="Type in your password" required 
+            formControlName="enterPassword"
+            [ngClass]="{ 'field-invalid': isFieldInvalid('enterPassword') }"><br>
+        <!-- PASSWORD validation messages -->
+        <div *ngIf="isFieldInvalid('passGroup.enterPassword')" class="error-message">
+            <div *ngIf="enterPassword?.errors?.required">
+                Password is required.
+            </div>
+        </div><br>
 
-    <!-- REPEAT PASSWORD field -->
-    <label for="repeatPassword"><b>Repeat Password*:</b></label><br>
-    <input type="password" id="repeatPassword" placeholder="Retype your password" required 
-        formControlName="repeatPassword"
-        [ngClass]="{ 'field-invalid': isFieldInvalid('repeatPassword') }"><br>
-    <!-- REPEAT PASSWORD validation messages -->
-    <div *ngIf="isFieldInvalid('repeatPassword')" class="error-message">
-        <div *ngIf="repeatPassword?.errors?.required">
-            Password repeat is required.
-        </div>
-    </div><br>
+        <!-- REPEAT PASSWORD field -->
+        <label for="repeatPassword"><b>Repeat Password*:</b></label><br>
+        <input type="password" id="repeatPassword" placeholder="Retype your password" required 
+            formControlName="repeatPassword"
+            [ngClass]="{ 'field-invalid': isFieldInvalid('repeatPassword') }"><br>
+        <!-- REPEAT PASSWORD validation messages -->
+        <div *ngIf="isFieldInvalid('passGroup.repeatPassword')" class="error-message">
+            <div *ngIf="repeatPassword?.errors?.required">
+                Password repeat is required.
+            </div>
+        </div><br>
+
+        <!-- PASSWORDS MISMATCH validation message -->
+        <div *ngIf="isFieldInvalid('passGroup')" class="error-message">
+            <div *ngIf="passGroup?.errors?.invalid">
+                Password fields mismatch.
+            </div>
+        </div><br>
+
+    </div>
 
     <button (click)="register()" [disabled]="!(registerForm.valid && registerForm.dirty)">
         REGISTER

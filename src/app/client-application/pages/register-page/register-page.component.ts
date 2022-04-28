@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 
 import { EMAIL_REGEX } from 'src/utils/enum';
 
@@ -24,8 +24,10 @@ export class RegisterPageComponent implements OnInit {
       firstName: new FormControl(undefined, Validators.required),
       lastName: new FormControl(undefined, Validators.required),
       email: new FormControl(undefined, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]),
-      password: new FormControl(undefined, Validators.required),
-      repeatPassword: new FormControl(undefined, Validators.required)
+      passGroup: new FormGroup({
+        enterPassword: new FormControl(undefined, Validators.required),
+        repeatPassword: new FormControl(undefined, Validators.required)
+      }, this.passMatchValidator)
     });
   }
 
@@ -34,6 +36,12 @@ export class RegisterPageComponent implements OnInit {
     return formControl ?
       formControl?.invalid && (formControl?.dirty || formControl?.touched) :
       false;
+  }
+
+  passMatchValidator(control: AbstractControl): ValidationErrors | null { 
+    return control.get('enterPassword')?.value !== control.get('repeatPassword')?.value ?
+     { invalid: true } 
+     : null;
   }
 
   register(): void {
@@ -46,6 +54,7 @@ export class RegisterPageComponent implements OnInit {
   get firstName() { return this.registerForm.get('firstName'); };
   get lastName() { return this.registerForm.get('lastName'); };
   get email() { return this.registerForm.get('email'); };
-  get password() { return this.registerForm.get('password'); };
-  get repeatPassword() { return this.registerForm.get('repeatPassword'); };
+  get passGroup() { return this.registerForm.get('passGroup'); };
+  get enterPassword() { return this.registerForm.get('passGroup.enterPassword'); };
+  get repeatPassword() { return this.registerForm.get('passGroup.repeatPassword'); };
 }
