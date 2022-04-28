@@ -7,6 +7,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { CitiesPageComponent } from './pages/cities-page/cities-page.component';
 import { CityPageComponent } from './pages/city-page/city-page.component';
 import { LandmarkPageComponent } from './pages/landmark-page/landmark-page.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 import { HeaderPortalComponent } from './components/header-portal/header-portal.component';
 import { FooterPortalComponent } from './components/footer-portal/footer-portal.component';
@@ -27,6 +28,7 @@ import { LandmarkListViewComponent } from './components/landmark-list-view/landm
     CityListViewComponent,
     LandmarkListViewComponent,
     LandmarkItemViewComponent,
+    LoginPageComponent
   ],
   imports: [
     CommonModule,

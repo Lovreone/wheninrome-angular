@@ -12,9 +12,9 @@ const routes: Routes = [
     { path: 'dashboard', component: AdminDashboardComponent },
     { path: 'landmarks',
       children: [
-            { path: '', component: LandmarksManageComponent }, 
-            { path: 'create', component: LandmarkManageComponent },
-            { path: 'modify/:landmarkId', component: LandmarkManageComponent },
+        { path: '', component: LandmarksManageComponent }, 
+        { path: 'create', component: LandmarkManageComponent },
+        { path: 'modify/:landmarkId', component: LandmarkManageComponent },
       ]
     }, 
     { path: 'cities',

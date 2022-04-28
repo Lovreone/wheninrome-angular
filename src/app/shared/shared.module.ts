@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { RouterModule } from '@angular/router';
+
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
-    PageNotFoundComponent,
-    LoginPageComponent
+    PageNotFoundComponent
   ],
   imports: [
     CommonModule,
@@ -17,8 +16,7 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [
     ReactiveFormsModule,
-    PageNotFoundComponent,
-    LoginPageComponent
+    PageNotFoundComponent
   ]
 })
 export class SharedModule { }
