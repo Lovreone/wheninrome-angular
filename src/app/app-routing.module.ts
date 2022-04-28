@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { LoginPageComponent } from './shared/pages/login-page/login-page.component';
 import { PageNotFoundComponent } from './shared/pages/page-not-found/page-not-found.component';
 
 const AppRoutes: Routes = [
@@ -15,6 +16,11 @@ const AppRoutes: Routes = [
   {
     path: '',
     redirectTo: 'portal',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    component: LoginPageComponent, 
     pathMatch: 'full'
   },
   { 

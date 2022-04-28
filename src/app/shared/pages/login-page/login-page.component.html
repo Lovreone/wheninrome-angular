@@ -1,0 +1,47 @@
+<h2>Login</h2>
+<p>Log in to be able to create your Landmark lists and more!</p><br>
+
+<form [formGroup]="loginForm">
+    
+    <!-- EMAIL field -->
+    <label for="email"><b>Email:</b></label><br>
+    <input type="text" id="email" placeholder="Type in your email" required 
+        formControlName="email"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('email') }"><br>
+    <!-- EMAIL validation messages -->
+    <div *ngIf="isFieldInvalid('email')" class="error-message">
+        <div *ngIf="email?.errors?.required">
+            Email is required.
+        </div>
+        <div *ngIf="email?.errors?.email || email?.errors?.pattern">
+            Incorrect email format.
+        </div>
+    </div><br>
+
+    <!-- PASSWORD field -->
+    <label for="password"><b>Password:</b></label><br>
+    <input type="password" id="password" placeholder="Type in your password" required 
+        formControlName="password"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('password') }"><br>
+    <!-- PASSWORD validation messages -->
+    <div *ngIf="isFieldInvalid('password')" class="error-message">
+        <div *ngIf="password?.errors?.required">
+            Password is required.
+        </div>
+    </div><br>
+
+    <button (click)="login()" [disabled]="!(loginForm.valid && loginForm.dirty)">
+        LOGIN
+    </button>
+</form>
+
+<br>
+<div *ngIf="serverErrors && serverErrors.length">
+    <p>Error messages:</p>
+    <ul>
+        <li *ngFor="let error of serverErrors" class="error-message">
+            {{ error }}
+        </li> 
+    </ul>
+</div>
+<br>
