@@ -17,6 +17,7 @@
         <hr>
         <input #searchTerm type="text" placeholder="Search by name" 
         (keyup)="searchByName(searchTerm.value)">
+        <button (click)="resetSearchFilter()">X</button>
         <hr>
     </div>
     <!-- Landmark list -->

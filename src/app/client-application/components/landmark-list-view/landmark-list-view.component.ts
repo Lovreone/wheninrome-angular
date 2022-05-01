@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { City } from './../../../shared/models/city.model';
@@ -12,6 +12,7 @@ import { Placeholders } from 'src/utils/enum';
 })
 export class LandmarkListViewComponent implements OnInit, OnChanges {
 
+  @ViewChild('searchTerm') searchTerm!: ElementRef<HTMLInputElement>;
   @Input() city!: City;
   @Input() landmarks: Landmark[] = [];
   @Input() isLoading = true;
@@ -37,6 +38,11 @@ export class LandmarkListViewComponent implements OnInit, OnChanges {
       this.landmarks.filter((item) => 
         item.name.toLowerCase().includes(searchTerm.toLowerCase())) :
       this.landmarks;
+  }
+
+  resetSearchFilter(): void {
+    this.searchTerm.nativeElement.value = '';
+    this.fileredLandmarks = this.landmarks;
   }
   
   getCityThumbnail(city: City): string {
