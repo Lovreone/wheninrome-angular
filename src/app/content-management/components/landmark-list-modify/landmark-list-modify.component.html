@@ -4,6 +4,13 @@
     <div></div><div></div><div></div><div></div><div></div><div></div>
 </div>
 <ng-template #landmarkList>
+
+    <hr>
+    <input #searchTerm type="text" placeholder="Search by name" 
+    (keyup)="searchByName(searchTerm.value)">
+    <button (click)="resetSearchFilter()">X</button>
+    <hr>
+
     <table>
         <tr>
             <th>Name</th>
@@ -13,7 +20,7 @@
             <th>City</th>
             <th colspan="2">Actions</th>       
         </tr>
-        <tr *ngFor="let landmark of landmarks">
+        <tr *ngFor="let landmark of fileredLandmarks">
             <td>{{landmark.name}}</td>
             <td>{{landmark.slug}}</td>
             <td>{{landmark.introText}}</td>
