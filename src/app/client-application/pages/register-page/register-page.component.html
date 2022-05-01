@@ -50,7 +50,7 @@
         <label for="enterPassword"><b>Password*:</b></label><br>
         <input type="password" id="enterPassword" placeholder="Type in your password" required 
             formControlName="enterPassword"
-            [ngClass]="{ 'field-invalid': isFieldInvalid('enterPassword') }"><br>
+            [ngClass]="{ 'field-invalid': isFieldInvalid('passGroup.enterPassword') }"><br>
         <!-- PASSWORD validation messages -->
         <div *ngIf="isFieldInvalid('passGroup.enterPassword')" class="error-message">
             <div *ngIf="enterPassword?.errors?.required">
@@ -62,7 +62,7 @@
         <label for="repeatPassword"><b>Repeat Password*:</b></label><br>
         <input type="password" id="repeatPassword" placeholder="Retype your password" required 
             formControlName="repeatPassword"
-            [ngClass]="{ 'field-invalid': isFieldInvalid('repeatPassword') }"><br>
+            [ngClass]="{ 'field-invalid': isFieldInvalid('passGroup.repeatPassword') }"><br>
         <!-- REPEAT PASSWORD validation messages -->
         <div *ngIf="isFieldInvalid('passGroup.repeatPassword')" class="error-message">
             <div *ngIf="repeatPassword?.errors?.required">
