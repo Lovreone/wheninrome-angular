@@ -39,9 +39,11 @@ export class RegisterPageComponent implements OnInit {
   }
 
   passMatchValidator(control: AbstractControl): ValidationErrors | null { 
-    return control.get('enterPassword')?.value !== control.get('repeatPassword')?.value ?
-     { invalid: true } 
-     : null;
+    const enterPassVal = control.get('enterPassword')?.value;
+    const repeatPassVal = control.get('repeatPassword')?.value;
+    return (enterPassVal && repeatPassVal) && enterPassVal !== repeatPassVal ?
+      { invalid: true } 
+      : null;
   }
 
   register(): void {
