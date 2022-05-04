@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
-
+import { UserService } from './../../../shared/services/user.service';
+import { User } from './../../../shared/models/user.model';
 import { EMAIL_REGEX } from 'src/utils/enum';
 
 @Component({
@@ -13,7 +14,7 @@ export class RegisterPageComponent implements OnInit {
   registerForm!: FormGroup;
   serverErrors!: Array<string>;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -48,8 +49,18 @@ export class RegisterPageComponent implements OnInit {
 
   register(): void {
     const registerData = this.registerForm.getRawValue();
-    // TODO: Implement remaining logic
     console.warn('USER', registerData);
+    // TODO: Implement remaining logic
+    const userData: User = {
+      username: registerData.email,
+      email: registerData.email,
+      password: registerData?.passGroup?.enterPassword,
+      firstName: registerData.firstName,
+      lastName: registerData.lastName
+    }
+    this.userService.registerNewUser(userData).subscribe((user) => {
+      console.error('User created', user);
+    })
   }
 
   /** Getters used for cleaner access from Template */
