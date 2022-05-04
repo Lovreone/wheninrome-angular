@@ -1,14 +1,16 @@
-import { map, catchError } from 'rxjs/operators';
-import { City } from './../models/city.model';
-import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { baseApiUrl } from 'src/utils/config';
+import { City } from './../models/city.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CityService {
-  private apiUrl = 'http://localhost:3000/cities';
+  
+  private apiUrl = `${baseApiUrl}/cities`;
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type' : 'application/json'

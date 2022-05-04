@@ -1,9 +1,9 @@
-import { Landmark } from './../models/landmark.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { baseApiUrl } from 'src/utils/config';
+import { Landmark } from './../models/landmark.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ import { catchError, map } from 'rxjs/operators';
 export class LandmarkService {
   // https://rxjs.dev/deprecations/to-promise
 
-  private apiUrl = 'http://localhost:3000/landmarks';
+  private apiUrl = `${baseApiUrl}/landmarks`;
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type' : 'application/json'
