@@ -7,7 +7,7 @@ import { Landmark, NestedCity } from '../../../shared/models/landmark.model';
 import { City } from './../../../shared/models/city.model';
 import { LandmarkService } from '../../../shared/services/landmark.service';
 import { CityService } from './../../../shared/services/city.service';
-import { URL_REGEX } from 'src/utils/enum';
+import { URL_REGEX } from 'src/utils/utils';
 import { blockForbiddenChars, SelectOption } from 'src/utils/utils';
 
 @Component({

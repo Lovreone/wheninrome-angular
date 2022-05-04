@@ -1,4 +1,8 @@
-import { LOADER_TIME } from './enum';
+
+/* Angulars Validators.email allows a@b, while we need a@b.c */
+export const EMAIL_REGEX = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+
+export const URL_REGEX = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
 
 /** Disables insertion of forbidden characters  
  *  Usage example: <input type="number" (keydown)="blockForbiddenChars($event)"/>
@@ -15,10 +19,9 @@ export function blockForbiddenChars(
  *  TODO: Remove before deploying the application
 */
 export function mockResDelay(
-    fn: Function, 
-    delayMs = LOADER_TIME
+    fn: Function
 ): void {
-    setTimeout(fn, delayMs);
+    setTimeout(fn, 300);
 }
 
 /* Helper interface for Select box options */

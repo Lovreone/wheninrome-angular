@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-
-import { EMAIL_REGEX } from 'src/utils/enum';
+import { EMAIL_REGEX } from 'src/utils/utils';
 
 @Component({
   selector: 'app-login-page',

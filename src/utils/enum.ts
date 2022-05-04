@@ -11,9 +11,7 @@ export enum Placeholders {
     LANDMARK_IMAGE = '/assets/images/placeholder-thumb-landmark.jpg'
 }
 
-export const LOADER_TIME = 300;
-
-export const URL_REGEX = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
-
-// Angulars Validators.email allows a@b, while we need a@b.c
-export const EMAIL_REGEX = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+export enum UserRole {
+    User = 'user',
+    Admin = 'admin',
+}

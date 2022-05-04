@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { UserService } from './../../../shared/services/user.service';
 import { User } from './../../../shared/models/user.model';
-import { EMAIL_REGEX } from 'src/utils/enum';
+import { EMAIL_REGEX } from 'src/utils/utils';
 
 @Component({
   selector: 'app-register-page',

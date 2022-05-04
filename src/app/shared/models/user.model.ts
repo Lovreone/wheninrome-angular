@@ -1,3 +1,4 @@
+import { UserRole } from 'src/utils/enum';
 export interface User {
     id?: string;
     username: string;
@@ -8,10 +9,5 @@ export interface User {
     isActive?: boolean;
     createdAt?: Date;
     modifiedAt?: Date;
-    roles?: Role[];
-}
-
-export enum Role {
-    User = 'user',
-    Admin = 'admin',
+    roles?: UserRole[];
 }
