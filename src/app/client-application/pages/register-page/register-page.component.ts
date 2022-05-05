@@ -59,9 +59,15 @@ export class RegisterPageComponent implements OnInit {
       firstName: registerData.firstName,
       lastName: registerData.lastName
     }
-    this.userService.registerNewUser(userData).subscribe((user) => {
-      console.error('User created', user);
-    })
+    this.userService.registerNewUser(userData)
+      .subscribe(
+        (user) => {
+          console.error('User created', user); // TODO: Remove log, clear form, login and redirect user
+        },
+        (err) => {
+          this.serverErrors = err.error.message;
+        }
+      );
   }
 
   /** Getters used for cleaner access from Template */
