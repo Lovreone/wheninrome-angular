@@ -25,6 +25,7 @@ export class RegisterPageComponent implements OnInit {
       firstName: new FormControl(undefined, Validators.required),
       lastName: new FormControl(undefined, Validators.required),
       email: new FormControl(undefined, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]),
+      username: new FormControl(undefined, Validators.required),
       passGroup: new FormGroup({
         enterPassword: new FormControl(undefined, Validators.required),
         repeatPassword: new FormControl(undefined, Validators.required)
@@ -52,7 +53,7 @@ export class RegisterPageComponent implements OnInit {
     console.warn('USER', registerData);
     // TODO: Implement remaining logic
     const userData: User = {
-      username: registerData.email,
+      username: registerData.username,
       email: registerData.email,
       password: registerData?.passGroup?.enterPassword,
       firstName: registerData.firstName,
@@ -67,6 +68,7 @@ export class RegisterPageComponent implements OnInit {
   get firstName() { return this.registerForm.get('firstName'); };
   get lastName() { return this.registerForm.get('lastName'); };
   get email() { return this.registerForm.get('email'); };
+  get username() { return this.registerForm.get('username'); };
   get passGroup() { return this.registerForm.get('passGroup'); };
   get enterPassword() { return this.registerForm.get('passGroup.enterPassword'); };
   get repeatPassword() { return this.registerForm.get('passGroup.repeatPassword'); };

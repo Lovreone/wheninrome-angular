@@ -44,6 +44,18 @@
         </div>
     </div><br>
 
+    <!-- USERNAME field -->
+    <label for="username"><b>Username*:</b></label><br>
+    <input type="text" id="username" placeholder="Type in your username" required 
+        formControlName="username"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('username') }"><br>
+    <!-- USERNAME validation messages -->
+    <div *ngIf="isFieldInvalid('username')" class="error-message">
+        <div *ngIf="username?.errors?.required">
+            Username is required.
+        </div>
+    </div><br>
+
     <div formGroupName="passGroup">
         
         <!-- PASSWORD field -->
