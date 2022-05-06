@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { AuthService } from './../../../shared/services/auth.service';
 import { EMAIL_REGEX } from 'src/utils/utils';
 
 @Component({
@@ -12,7 +13,7 @@ export class LoginPageComponent implements OnInit {
   loginForm!: FormGroup;
   serverErrors!: Array<string>;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -35,6 +36,13 @@ export class LoginPageComponent implements OnInit {
   login(): void {
     const loginData = this.loginForm.getRawValue();
     // TODO: Implement remaining logic
+  
+    // loginData.email, loginData.password
+    this.authService.login('milmil', loginData.password).subscribe(res => {
+      console.warn('LOGIN', res) 
+      // 'res' Output: {access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2N…E2OH0.P2efe0fW0Epukcifbi5HXqW0OjvsmsU8QDFyQlBMpao'}
+    });
+
     console.warn('USER', loginData);
   }
 
