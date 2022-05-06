@@ -49,6 +49,7 @@ export class RegisterPageComponent implements OnInit {
   }
 
   register(): void {
+    this.serverErrors = [];
     const registerData = this.registerForm.getRawValue();
     console.warn('USER', registerData);
     // TODO: Implement remaining logic
