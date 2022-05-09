@@ -6,6 +6,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { CitiesPageComponent } from './pages/cities-page/cities-page.component';
 import { CityPageComponent } from './pages/city-page/city-page.component';
 import { LandmarkPageComponent } from './pages/landmark-page/landmark-page.component';
+import { UserProfilePageComponent } from './pages/user-profile-page/user-profile-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'about', pathMatch: 'full' },
@@ -17,6 +18,7 @@ const routes: Routes = [
       { path: ':citySlug/:landmarkSlug', component: LandmarkPageComponent }
     ]
   },
+  { path: 'user-profile', component: UserProfilePageComponent },
 ];
 
 @NgModule({
