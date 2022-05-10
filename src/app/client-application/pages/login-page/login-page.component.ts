@@ -40,7 +40,7 @@ export class LoginPageComponent implements OnInit {
   login(): void {
     this.serverErrors = [];
     const loginData = this.loginForm.getRawValue();
-    this.authService.signIn(loginData).subscribe(user => {
+    this.authService.login(loginData).subscribe(user => {
       console.warn('User logged in', user); // TODO: REMOVE
       this.router.navigate(['portal/user-profile/']); //  + user.username // TODO: Think if we need /id
     },(err) => {

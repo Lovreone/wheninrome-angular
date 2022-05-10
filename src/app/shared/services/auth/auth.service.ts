@@ -25,8 +25,7 @@ export class AuthService {
     return this.http.post(api, user).pipe(catchError(this.handleError));
   }
 
-  // Login
-  signIn(user: User): Observable<User> {
+  login(user: User): Observable<User> {
     return this.http.post<any>(`${baseApiUrl}/auth/login`, user).pipe(
       map(res => {
         console.warn('SIGNIN RES', res); // TODO: REMOVE
@@ -34,21 +33,20 @@ export class AuthService {
         if (res && res.access_token) {
           /* Storing user details and token in local storage to keep user logged in between page refreshes */
           localStorage.setItem('access_token', res.access_token);
-          localStorage.setItem('user', res.user);
+          localStorage.setItem('user', JSON.stringify(res.user)); // TODO: Determine which user data we need in here
         }
         return res.user;
       })
     )
   }
 
-  getToken() {
-    return localStorage.getItem('access_token');
-  }
 
-  doLogout() {
-    let removeToken = localStorage.removeItem('access_token');
-    if (removeToken == null) {
-      this.router.navigate(['log-in']);
+
+  logout(): void {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('user');
+    if (!this.getToken()) {
+      this.router.navigate(['login']);
     }
   }
 
@@ -74,6 +72,10 @@ export class AuthService {
       msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     return throwError(msg);
+  }
+
+  getToken() {
+    return localStorage.getItem('access_token');
   }
 
   get isLoggedIn(): boolean {
