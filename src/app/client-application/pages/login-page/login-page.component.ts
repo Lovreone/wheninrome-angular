@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { AuthService } from './../../../shared/services/auth.service';
+import { AuthService } from './../../../shared/services/auth/auth.service';
 import { EMAIL_REGEX } from 'src/utils/utils';
 
 @Component({
@@ -11,9 +12,12 @@ import { EMAIL_REGEX } from 'src/utils/utils';
 export class LoginPageComponent implements OnInit {
 
   loginForm!: FormGroup;
-  serverErrors!: Array<string>;
+  serverErrors: Array<string> = [];
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    public router: Router
+  ) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -34,16 +38,14 @@ export class LoginPageComponent implements OnInit {
   }
 
   login(): void {
+    this.serverErrors = [];
     const loginData = this.loginForm.getRawValue();
-    // TODO: Implement remaining logic
-  
-    // loginData.email, loginData.password
-    this.authService.login('milmil', loginData.password).subscribe(res => {
-      console.warn('LOGIN', res) 
-      // 'res' Output: {access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2N…E2OH0.P2efe0fW0Epukcifbi5HXqW0OjvsmsU8QDFyQlBMpao'}
+    this.authService.signIn(loginData).subscribe(user => {
+      console.warn('User logged in', user); // TODO: REMOVE
+      this.router.navigate(['portal/user-profile/']); //  + user.username // TODO: Think if we need /id
+    },(err) => {
+      this.serverErrors.push(err.error.message);
     });
-
-    console.warn('USER', loginData);
   }
 
   /** Getters used for cleaner access from Template */

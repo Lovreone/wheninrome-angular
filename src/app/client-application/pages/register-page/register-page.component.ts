@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
+import { AuthService } from './../../../shared/services/auth/auth.service';
 import { UserService } from './../../../shared/services/user.service';
 import { User } from './../../../shared/models/user.model';
 import { EMAIL_REGEX } from 'src/utils/utils';
@@ -14,7 +16,11 @@ export class RegisterPageComponent implements OnInit {
   registerForm!: FormGroup;
   serverErrors!: Array<string>;
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    public authService: AuthService,
+    public router: Router
+  ) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -69,6 +75,16 @@ export class RegisterPageComponent implements OnInit {
           this.serverErrors = err.error.message;
         }
       );
+  }
+
+  // FIXME: Check which implementation works best and remove unnecessary one
+  registerUser() {
+    this.authService.signUp(this.registerForm.value).subscribe((res) => {
+      if (res.result) {
+        this.registerForm.reset();
+        this.router.navigate(['login']);
+      }
+    });
   }
 
   /** Getters used for cleaner access from Template */

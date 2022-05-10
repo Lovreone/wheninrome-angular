@@ -39,11 +39,6 @@
 </form>
 
 <br>
-<p><a routerLink="/forgot-password" routerLinkActive="active">Forgot Password?</a></p>
-<br>
-<p>Don't have an account yet? You can create one <a routerLink="/register" routerLinkActive="active">here</a>.</p>
-
-<br>
 <div *ngIf="serverErrors && serverErrors.length">
     <p>Error messages:</p>
     <ul>
@@ -52,5 +47,10 @@
         </li> 
     </ul>
 </div>
+
+<br>
+<p><a routerLink="/forgot-password" routerLinkActive="active">Forgot Password?</a></p>
+<br>
+<p>Don't have an account yet? You can create one <a routerLink="/register" routerLinkActive="active">here</a>.</p>
 
 <app-footer-portal></app-footer-portal>

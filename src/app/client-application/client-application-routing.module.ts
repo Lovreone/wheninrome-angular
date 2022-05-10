@@ -1,6 +1,6 @@
-
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from '../shared/services/auth/auth.guard';
 
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { CitiesPageComponent } from './pages/cities-page/cities-page.component';
@@ -18,7 +18,7 @@ const routes: Routes = [
       { path: ':citySlug/:landmarkSlug', component: LandmarkPageComponent }
     ]
   },
-  { path: 'user-profile', component: UserProfilePageComponent },
+  { path: 'user-profile', component: UserProfilePageComponent, canActivate: [AuthGuard] }, //:username
 ];
 
 @NgModule({
