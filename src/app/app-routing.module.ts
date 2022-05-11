@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './shared/services/auth/auth.guard';
 
 import { LoginPageComponent } from './client-application/pages/login-page/login-page.component';
 import { RegisterPageComponent } from './client-application/pages/register-page/register-page.component';
@@ -12,7 +13,8 @@ const AppRoutes: Routes = [
   },
   {
     path: 'admin',
-    loadChildren: () => import('./content-management/content-management.module').then(m => m.ContentManagementModule)
+    loadChildren: () => import('./content-management/content-management.module').then(m => m.ContentManagementModule),
+    canActivate: [AuthGuard]
   },
   {
     path: '',
