@@ -9,7 +9,7 @@ import { AuthService } from './../../../shared/services/auth/auth.service';
 })
 export class UserProfilePageComponent implements OnInit {
  
-  currentUser: Object = {};
+  currentUser!: ProfileResponse;
 
   constructor(
     public authService: AuthService,
@@ -23,4 +23,11 @@ export class UserProfilePageComponent implements OnInit {
       this.currentUser = res;
     });
   }
+}
+
+interface ProfileResponse {
+  userId: string;
+  email: string;
+  issuedAt: number;
+  expiresAt: number;
 }

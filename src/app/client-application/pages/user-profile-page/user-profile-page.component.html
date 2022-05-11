@@ -1,6 +1,15 @@
 <app-header-portal></app-header-portal>
 <h2>USER PROFILE PAGE</h2> 
+
 <!-- TODO: Implement page contents -->
-<p>Lorem Ipsum Dolor Sit Amet Fortis Fortuna Adiuvat</p>
-<p>CURRENT USER {{currentUser|json}}</p>
+<br>
+<div *ngIf="currentUser">
+    <p> <strong>CURRENT USER: </strong> <br>
+        id: {{currentUser.userId}} <br>
+        email: {{currentUser.email}} <br>
+        issuedAt: {{currentUser.issuedAt}} <br>
+        expiresAt: {{currentUser.expiresAt}} <br>
+    </p> 
+</div><br>
+
 <app-footer-portal></app-footer-portal>
