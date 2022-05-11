@@ -1,8 +1,4 @@
-<!-- Pure CSS Loader https://loading.io/css/ -->
-<div *ngIf="isLoading" class="lds-default">
-    <div></div><div></div><div></div><div></div><div></div><div></div>
-    <div></div><div></div><div></div><div></div><div></div><div></div>
-</div>
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 
 <form *ngIf="!isLoading" [formGroup]="cityForm">
   

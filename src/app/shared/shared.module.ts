@@ -4,10 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     CommonModule,
@@ -15,7 +17,8 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
   ],
   exports: [
     ReactiveFormsModule,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LoadingSpinnerComponent
   ]
 })
 export class SharedModule { }
