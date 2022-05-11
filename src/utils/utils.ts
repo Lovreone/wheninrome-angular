@@ -15,15 +15,6 @@ export function blockForbiddenChars(
     }
 }
 
-/** Mock timeout for Loader gif tests (multiple pages) 
- *  TODO: Remove before deploying the application
-*/
-export function mockResDelay(
-    fn: Function
-): void {
-    setTimeout(fn, 300);
-}
-
 /* Helper interface for Select box options */
 export interface SelectOption {
     id: string;

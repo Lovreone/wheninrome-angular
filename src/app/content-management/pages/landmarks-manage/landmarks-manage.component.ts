@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { LandmarkService } from './../../../shared/services/landmark.service';
 import { Landmark } from './../../../shared/models/landmark.model';
-import { mockResDelay } from 'src/utils/utils';
+import { mockResDelay } from 'src/utils/config';
 
 @Component({
   selector: 'app-landmarks-manage',

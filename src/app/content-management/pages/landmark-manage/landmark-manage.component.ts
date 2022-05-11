@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { mockResDelay } from 'src/utils/utils';
+import { mockResDelay } from 'src/utils/config';
 import { Landmark } from './../../../shared/models/landmark.model';
 import { LandmarkService } from './../../../shared/services/landmark.service';
 
