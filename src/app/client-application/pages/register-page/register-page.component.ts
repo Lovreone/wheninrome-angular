@@ -57,8 +57,6 @@ export class RegisterPageComponent implements OnInit {
   register(): void {
     this.serverErrors = [];
     const registerData = this.registerForm.getRawValue();
-    console.warn('USER', registerData);
-    // TODO: Implement remaining logic
     const userData: User = {
       username: registerData.username,
       email: registerData.email,
@@ -66,25 +64,17 @@ export class RegisterPageComponent implements OnInit {
       firstName: registerData.firstName,
       lastName: registerData.lastName
     }
-    this.userService.registerNewUser(userData)
+    this.authService.register(userData)
       .subscribe(
         (user) => {
           console.error('User created', user); // TODO: Remove log, clear form, login and redirect user
+          // this.registerForm.reset();
+          // this.router.navigate(['login']);
         },
         (err) => {
           this.serverErrors = err.error.message;
         }
       );
-  }
-
-  // FIXME: Check which implementation works best and remove unnecessary one
-  registerUser() {
-    this.authService.signUp(this.registerForm.value).subscribe((res) => {
-      if (res.result) {
-        this.registerForm.reset();
-        this.router.navigate(['login']);
-      }
-    });
   }
 
   /** Getters used for cleaner access from Template */

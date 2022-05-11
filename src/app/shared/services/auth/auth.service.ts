@@ -7,7 +7,7 @@ import { baseApiUrl } from 'src/utils/config';
 import { User } from './../../models/user.model';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class AuthService {
 
@@ -19,16 +19,14 @@ export class AuthService {
     public router: Router
   ) { }
 
-  // Registration
-  signUp(user: User): Observable<any> {
-    let api = `${baseApiUrl}/users`;
-    return this.http.post(api, user).pipe(catchError(this.handleError));
+  register(data: User): Observable<User> {
+    const apiUrl = `${baseApiUrl}/users`;
+    return this.http.post<User>(apiUrl, data, { headers: this.headers });
   }
 
   login(user: User): Observable<User> {
     return this.http.post<any>(`${baseApiUrl}/auth/login`, user).pipe(
       map(res => {
-        console.warn('SIGNIN RES', res); // TODO: REMOVE
         /* On successful Login there's a jwt token in the response */
         if (res && res.access_token) {
           /* Storing user details and token in local storage to keep user logged in between page refreshes */
@@ -40,17 +38,6 @@ export class AuthService {
     )
   }
 
-
-
-  logout(): void {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('user');
-    if (!this.getToken()) {
-      this.router.navigate(['login']);
-    }
-  }
-
-  // User profile
   getUserProfile(username?: any): Observable<any> {
     let api = `${baseApiUrl}/profile`; // /${username}
     return this.http.get(api, { headers: this.headers }).pipe(
@@ -61,7 +48,6 @@ export class AuthService {
     );
   }
 
- // Error
   handleError(error: HttpErrorResponse) {
     let msg = '';
     if (error.error instanceof ErrorEvent) {
@@ -69,9 +55,22 @@ export class AuthService {
       msg = error.error.message;
     } else {
       // server-side error
-      msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      msg = `Error Code: ${error.status}, Message: ${error.message}`;
+      // FIXME: Find a solution for this:
+      if (error.status === 401) {
+        console.error('Token needs to be refreshed'); 
+        localStorage.removeItem('access_token');
+      }
     }
     return throwError(msg);
+  }
+
+  logout(): void {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('user'); // TODO: Follow whatever path is determined in login
+    if (!this.getToken()) {
+      this.router.navigate(['login']);
+    }
   }
 
   getToken() {
@@ -79,7 +78,6 @@ export class AuthService {
   }
 
   get isLoggedIn(): boolean {
-    let authToken = localStorage.getItem('access_token');
-    return authToken !== null ? true : false;
+    return this.getToken() ? true : false;
   }
 }

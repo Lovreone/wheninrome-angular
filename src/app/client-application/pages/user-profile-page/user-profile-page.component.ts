@@ -19,7 +19,7 @@ export class UserProfilePageComponent implements OnInit {
   ngOnInit(): void {
     //let username = this.activatedRoute.snapshot.paramMap.get('username');
     this.authService.getUserProfile().subscribe((res) => {
-      console.warn('MyPROFILE: Curr user', res); // TODO: Remove
+      console.warn('UserProfileComponent: get profile:', res); // TODO: Remove
       this.currentUser = res;
     });
   }

@@ -25,7 +25,11 @@ export class LoginPageComponent implements OnInit {
 
   createForm(): void {
     this.loginForm = new FormGroup({
-      email: new FormControl(undefined, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]),
+      email: new FormControl(undefined, [
+        Validators.required, 
+        Validators.email, 
+        Validators.pattern(EMAIL_REGEX)]
+      ),
       password: new FormControl(undefined, Validators.required)
     });
   }
@@ -37,12 +41,12 @@ export class LoginPageComponent implements OnInit {
       false;
   }
 
-  login(): void {
+  loginUser(): void {
     this.serverErrors = [];
     const loginData = this.loginForm.getRawValue();
     this.authService.login(loginData).subscribe(user => {
-      console.warn('User logged in', user); // TODO: REMOVE
-      this.router.navigate(['portal/user-profile/']); //  + user.username // TODO: Think if we need /id
+      console.warn('LoginComponent: User logged in:', user); // TODO: REMOVE
+      this.router.navigate(['portal/user-profile/']); // TODO: Think if we need /id  (user.username)
     },(err) => {
       this.serverErrors.push(err.error.message);
     });
