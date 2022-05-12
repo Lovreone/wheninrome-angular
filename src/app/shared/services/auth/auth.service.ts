@@ -48,7 +48,7 @@ export class AuthService {
     );
   }
 
-  handleError(error: HttpErrorResponse) {
+  handleError(error: HttpErrorResponse): Observable<any> {
     let msg = '';
     if (error.error instanceof ErrorEvent) {
       // client-side error
@@ -73,7 +73,7 @@ export class AuthService {
     }
   }
 
-  getToken() {
+  getToken(): string | null {
     return localStorage.getItem('access_token');
   }
 
