@@ -1,3 +1,6 @@
+.align-center {
+    text-align: center;
+}
 .lds-default {
     display: inline-block;
     position: relative;
