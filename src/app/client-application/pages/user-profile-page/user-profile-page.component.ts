@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { AuthService } from './../../../shared/services/auth/auth.service';
 
 @Component({
@@ -10,18 +9,23 @@ import { AuthService } from './../../../shared/services/auth/auth.service';
 export class UserProfilePageComponent implements OnInit {
  
   currentUser!: ProfileResponse;
+  serverError!: string;
 
   constructor(
-    public authService: AuthService,
-    private activatedRoute: ActivatedRoute
+    public authService: AuthService
   ) { }
 
   ngOnInit(): void {
-    //let username = this.activatedRoute.snapshot.paramMap.get('username');
-    this.authService.getUserProfile().subscribe((res) => {
-      console.warn('UserProfileComponent: get profile:', res); // TODO: Remove
-      this.currentUser = res;
-    });
+    this.authService.getUserProfile()
+      .subscribe(
+        (res) => {
+          console.warn('UserProfileComponent: get profile:', res); // TODO: Remove
+          this.currentUser = res;
+        },
+        (errorMessage) => {
+          this.serverError = errorMessage;
+        }
+      );
   }
 }
 

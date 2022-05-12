@@ -12,57 +12,54 @@ import { User } from './../../models/user.model';
 export class AuthService {
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
-  currentUser = {};
 
   constructor(
     private http: HttpClient,
     public router: Router
   ) { }
 
-  register(data: User): Observable<User> {
-    const apiUrl = `${baseApiUrl}/users`;
-    return this.http.post<User>(apiUrl, data, { headers: this.headers });
+  register(userData: User): Observable<User> {
+    return this.http
+      .post<User>(
+        `${baseApiUrl}/users`, 
+        userData, 
+        {headers: this.headers}
+      )
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
-  login(user: User): Observable<User> {
-    return this.http.post<any>(`${baseApiUrl}/auth/login`, user).pipe(
-      map(res => {
-        /* On successful Login there's a jwt token in the response */
-        if (res && res.access_token) {
-          /* Storing user details and token in local storage to keep user logged in between page refreshes */
-          localStorage.setItem('access_token', res.access_token);
-          localStorage.setItem('user', JSON.stringify(res.user)); // TODO: Determine which user data we need in here
-        }
-        return res.user;
-      })
-    )
+  login(userLoginData: User): Observable<User> {
+    return this.http
+      .post<any>(
+        `${baseApiUrl}/auth/login`,
+        userLoginData)
+      .pipe(
+        map(res => {
+          if (res && res.access_token) {
+            localStorage.setItem('access_token', res.access_token);
+            // TODO: Determine which user data we need in here (if any):
+            localStorage.setItem('user', JSON.stringify(res.user)); 
+          }
+          return res.user;
+        }),
+        catchError(this.handleError)
+      );
   }
 
-  getUserProfile(username?: any): Observable<any> {
-    let api = `${baseApiUrl}/profile`; // /${username}
-    return this.http.get(api, { headers: this.headers }).pipe(
-      map((res) => {
-        return res || {};
-      }),
-      catchError(this.handleError)
-    );
-  }
-
-  handleError(error: HttpErrorResponse): Observable<any> {
-    let msg = '';
-    if (error.error instanceof ErrorEvent) {
-      // client-side error
-      msg = error.error.message;
-    } else {
-      // server-side error
-      msg = `Error Code: ${error.status}, Message: ${error.message}`;
-      // FIXME: Find a solution for this:
-      if (error.status === 401) {
-        console.error('Token needs to be refreshed'); 
-        localStorage.removeItem('access_token');
-      }
-    }
-    return throwError(msg);
+  getUserProfile(): Observable<any> {
+    return this.http
+      .get(
+        `${baseApiUrl}/profile`,
+        {headers: this.headers}
+      )
+      .pipe(
+        map((res) => {
+          return res || {};
+        }),
+        catchError(this.handleError)
+      );
   }
 
   logout(): void {
@@ -77,7 +74,26 @@ export class AuthService {
     return localStorage.getItem('access_token');
   }
 
+  private handleError(error: HttpErrorResponse): Observable<any> {
+    let errorMessage = 'An unknown error has occured!';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side error
+      errorMessage = error.error.message;
+    } else {
+      // Server-side error
+      errorMessage = `ERR ${error.status}: ${error.error.message}`;
+    
+      // FIXME: Implement a solution for this (Move to interceptor):
+      if (error.status === 401) {
+        console.error('Token needs to be refreshed'); 
+        localStorage.removeItem('access_token'); 
+      }
+        
+    }
+    return throwError(errorMessage);
+  }
+
   get isLoggedIn(): boolean {
-    return this.getToken() ? true : false;
+    return !!this.getToken();
   }
 }

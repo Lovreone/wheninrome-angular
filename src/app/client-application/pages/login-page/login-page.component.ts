@@ -12,7 +12,7 @@ import { EMAIL_REGEX } from 'src/utils/utils';
 export class LoginPageComponent implements OnInit {
 
   loginForm!: FormGroup;
-  serverErrors: Array<string> = [];
+  serverError!: string;
 
   constructor(
     private authService: AuthService,
@@ -42,14 +42,18 @@ export class LoginPageComponent implements OnInit {
   }
 
   loginUser(): void {
-    this.serverErrors = [];
+    this.serverError = '';
     const loginData = this.loginForm.getRawValue();
-    this.authService.login(loginData).subscribe(user => {
-      console.warn('LoginComponent: User logged in:', user); // TODO: REMOVE
-      this.router.navigate(['portal/user-profile/']); // TODO: Think if we need /id  (user.username)
-    },(err) => {
-      this.serverErrors.push(err.error.message);
-    });
+    this.authService.login(loginData)
+      .subscribe(
+        (user) => {
+          console.warn('LoginComponent: User logged in:', user); // TODO: REMOVE
+          this.router.navigate(['portal/user-profile/']);
+        },
+        (errorMessage) => {
+          this.serverError = errorMessage;
+        }
+      );
   }
 
   /** Getters used for cleaner access from Template */

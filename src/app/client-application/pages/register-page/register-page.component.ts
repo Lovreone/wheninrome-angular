@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from './../../../shared/services/auth/auth.service';
-import { UserService } from './../../../shared/services/user.service';
 import { User } from './../../../shared/models/user.model';
 import { EMAIL_REGEX } from 'src/utils/utils';
 
@@ -17,7 +16,6 @@ export class RegisterPageComponent implements OnInit {
   serverErrors!: Array<string>;
 
   constructor(
-    private userService: UserService,
     public authService: AuthService,
     public router: Router
   ) { }
@@ -71,8 +69,8 @@ export class RegisterPageComponent implements OnInit {
           // this.registerForm.reset();
           // this.router.navigate(['login']);
         },
-        (err) => {
-          this.serverErrors = err.error.message;
+        (errorMessage) => {
+          this.serverErrors.push(errorMessage);
         }
       );
   }

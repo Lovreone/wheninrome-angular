@@ -39,14 +39,7 @@
 </form>
 
 <br>
-<div *ngIf="serverErrors && serverErrors.length">
-    <p>Error messages:</p>
-    <ul>
-        <li *ngFor="let error of serverErrors" class="error-message">
-            {{ error }}
-        </li> 
-    </ul>
-</div>
+<p *ngIf="serverError" class="error-message">{{serverError}}</p>
 
 <br>
 <p><a routerLink="/forgot-password" routerLinkActive="active">Forgot Password?</a></p>
