@@ -14,7 +14,7 @@ const AppRoutes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./content-management/content-management.module').then(m => m.ContentManagementModule),
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
   {
     path: '',

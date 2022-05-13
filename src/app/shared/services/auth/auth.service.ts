@@ -1,8 +1,8 @@
 import { Router } from '@angular/router';
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { map, catchError, tap } from 'rxjs/operators';
 import { baseApiUrl } from 'src/utils/config';
 import { User } from './../../models/user.model';
 
@@ -12,6 +12,7 @@ import { User } from './../../models/user.model';
 export class AuthService {
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
+  user = new BehaviorSubject<User | null>(null); 
 
   constructor(
     private http: HttpClient,
@@ -21,13 +22,11 @@ export class AuthService {
   register(userData: User): Observable<User> {
     return this.http
       .post<User>(
-        `${baseApiUrl}/users`, 
+        `${baseApiUrl}/auth/register`, 
         userData, 
         {headers: this.headers}
       )
-      .pipe(
-        catchError(this.handleError)
-      );
+      .pipe(catchError(this.handleError));
   }
 
   login(userLoginData: User): Observable<User> {
@@ -36,7 +35,10 @@ export class AuthService {
         `${baseApiUrl}/auth/login`,
         userLoginData)
       .pipe(
-        map(res => {
+        tap((res) => {
+          this.handleAuth(res.access_token, res.user)
+        }),
+        map((res) => {
           if (res && res.access_token) {
             localStorage.setItem('access_token', res.access_token);
             // TODO: Determine which user data we need in here (if any):
@@ -64,7 +66,8 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('access_token');
-    localStorage.removeItem('user'); // TODO: Follow whatever path is determined in login
+    // TODO: Follow whatever path is decided in login:
+    localStorage.removeItem('user');
     if (!this.getToken()) {
       this.router.navigate(['login']);
     }
@@ -72,6 +75,27 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem('access_token');
+  }
+
+  private handleAuth(token: string, userData: User): void {
+    const tokenExpirySeconds = 60; 
+    const expirationDate = new Date(new Date().getTime() + tokenExpirySeconds * 1000);
+    // TODO: Decide which data is necessary, apply to User model (we cant have all optional attributes)
+    const user = new User(
+      userData.id,
+      undefined,
+      userData.email,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      token, // FIXME: Token should arrive from BE with User data
+      expirationDate // FIXME: Temp, should arrive from BE with User data
+    );
+    this.user.next(user); // Setting/Emmitting this user as our currently logged in user
   }
 
   private handleError(error: HttpErrorResponse): Observable<any> {

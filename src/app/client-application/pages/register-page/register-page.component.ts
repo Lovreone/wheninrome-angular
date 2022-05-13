@@ -55,13 +55,14 @@ export class RegisterPageComponent implements OnInit {
   register(): void {
     this.serverErrors = [];
     const registerData = this.registerForm.getRawValue();
-    const userData: User = {
-      username: registerData.username,
-      email: registerData.email,
-      password: registerData?.passGroup?.enterPassword,
-      firstName: registerData.firstName,
-      lastName: registerData.lastName
-    }
+    const userData = new User(
+      undefined,
+      registerData.username,
+      registerData.email,
+      registerData.firstName,
+      registerData.lastName,
+      registerData?.passGroup?.enterPassword
+    )
     this.authService.register(userData)
       .subscribe(
         (user) => {
