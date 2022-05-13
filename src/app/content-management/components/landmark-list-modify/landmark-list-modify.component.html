@@ -1,8 +1,5 @@
-<!-- Pure CSS Loader https://loading.io/css/ -->
-<div *ngIf="isLoading; else landmarkList" class="lds-default">
-    <div></div><div></div><div></div><div></div><div></div><div></div>
-    <div></div><div></div><div></div><div></div><div></div><div></div>
-</div>
+<app-loading-spinner *ngIf="isLoading; else landmarkList"></app-loading-spinner>
+
 <ng-template #landmarkList>
 
     <hr>

@@ -1,13 +1,35 @@
 import { UserRole } from 'src/utils/enum';
-export interface User {
-    id?: string;
-    username: string;
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    isActive?: boolean;
-    createdAt?: Date;
-    modifiedAt?: Date;
-    roles?: UserRole[];
+
+// TODO: Reevaluate which properties are optional and which ar not (Contexts: Register,Login,ServerResponse)
+export class User {
+    constructor(
+        public id?: string | undefined,
+        public username?: string,
+        public email?: string,
+        public firstName?: string | undefined,
+        public lastName?: string | undefined,
+        public password?: string | undefined,
+        public roles?: UserRole[],
+        public isActive?: boolean,
+        public createdAt?: Date,
+        public modifiedAt?: Date,
+        private _token?: string,
+        private _tokenExpirationDate?: Date,
+    ) {}
+
+    get fullName(): string {
+        return this.firstName!.concat(' ', this.lastName!);
+    }
+
+    get token() {
+        if (!this._tokenExpirationDate || new Date() > this._tokenExpirationDate) {
+            // Token expiry doesnt exist OR Token has expired
+            return null;
+        }
+        return this._token;
+    }
+
+    get tokenExpirationDate() {
+        return this._tokenExpirationDate;
+    }
 }

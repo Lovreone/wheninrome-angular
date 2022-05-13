@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
-import { UserService } from './../../../shared/services/user.service';
+import { AuthService } from './../../../shared/services/auth/auth.service';
 import { User } from './../../../shared/models/user.model';
 import { EMAIL_REGEX } from 'src/utils/utils';
 
@@ -14,7 +15,10 @@ export class RegisterPageComponent implements OnInit {
   registerForm!: FormGroup;
   serverErrors!: Array<string>;
 
-  constructor(private userService: UserService) { }
+  constructor(
+    public authService: AuthService,
+    public router: Router
+  ) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -51,22 +55,23 @@ export class RegisterPageComponent implements OnInit {
   register(): void {
     this.serverErrors = [];
     const registerData = this.registerForm.getRawValue();
-    console.warn('USER', registerData);
-    // TODO: Implement remaining logic
-    const userData: User = {
-      username: registerData.username,
-      email: registerData.email,
-      password: registerData?.passGroup?.enterPassword,
-      firstName: registerData.firstName,
-      lastName: registerData.lastName
-    }
-    this.userService.registerNewUser(userData)
+    const userData = new User(
+      undefined,
+      registerData.username,
+      registerData.email,
+      registerData.firstName,
+      registerData.lastName,
+      registerData?.passGroup?.enterPassword
+    )
+    this.authService.register(userData)
       .subscribe(
         (user) => {
           console.error('User created', user); // TODO: Remove log, clear form, login and redirect user
+          // this.registerForm.reset();
+          // this.router.navigate(['login']);
         },
-        (err) => {
-          this.serverErrors = err.error.message;
+        (errorMessage) => {
+          this.serverErrors.push(errorMessage);
         }
       );
   }

@@ -1,8 +1,11 @@
 <!-- FIXME: Remove temporary navigation when ready -->
 <nav style="background-color: rgb(190, 190, 190); color: white; font-weight: bold;">
     <p> TEMPORARY NAVIGATION &nbsp;
+        <a href="http://localhost:3000/api-docs/#/" target="_blank"><b>NestJS Swagger</b></a> |
         <a routerLink="/portal" routerLinkActive="active"><b>Portal:</b> Home</a> |
-        <a routerLink="/admin" routerLinkActive="active"><b>CMS:</b> Dashboard</a>
+        <a routerLink="/admin" routerLinkActive="active"><b>CMS:</b> Dashboard</a> | 
+        <a *ngIf="authService.isLoggedIn" routerLink="" (click)="logoutUser()">Logout (localStorage)</a>
+        <a *ngIf="isLoggedIn">Logout (Subject)</a>
     </p>
 </nav>
 <hr>

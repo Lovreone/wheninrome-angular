@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { CityService } from './../../../shared/services/city.service';
 import { City } from './../../../shared/models/city.model';
-import { mockResDelay } from 'src/utils/utils';
+import { mockResDelay } from 'src/utils/config';
 
 @Component({
   selector: 'app-city-manage',

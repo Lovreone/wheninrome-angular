@@ -1,8 +1,5 @@
-<!-- Pure CSS Loader https://loading.io/css/ -->
-<div *ngIf="isLoading; else cityList" class="lds-default">
-    <div></div><div></div><div></div><div></div><div></div><div></div>
-    <div></div><div></div><div></div><div></div><div></div><div></div>
-</div>
+<app-loading-spinner *ngIf="isLoading; else cityList"></app-loading-spinner>
+
 <ng-template #cityList>
     <ul *ngFor="let city of cities">   
         <li>     

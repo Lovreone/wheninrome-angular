@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { LandmarkService } from './../../../shared/services/landmark.service';
 import { Landmark } from './../../../shared/models/landmark.model';
-import { mockResDelay } from 'src/utils/utils';
+import { mockResDelay } from 'src/utils/config';
 
 @Component({
   selector: 'app-landmark-page',

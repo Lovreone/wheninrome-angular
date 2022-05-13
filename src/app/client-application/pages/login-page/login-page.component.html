@@ -32,25 +32,18 @@
         </div>
     </div><br>
 
-    <button (click)="login()" [disabled]="!(loginForm.valid && loginForm.dirty)">
+    <button (click)="loginUser()" [disabled]="!(loginForm.valid && loginForm.dirty)">
         LOGIN
     </button>
 
 </form>
 
 <br>
+<p *ngIf="serverError" class="error-message">{{serverError}}</p>
+
+<br>
 <p><a routerLink="/forgot-password" routerLinkActive="active">Forgot Password?</a></p>
 <br>
 <p>Don't have an account yet? You can create one <a routerLink="/register" routerLinkActive="active">here</a>.</p>
-
-<br>
-<div *ngIf="serverErrors && serverErrors.length">
-    <p>Error messages:</p>
-    <ul>
-        <li *ngFor="let error of serverErrors" class="error-message">
-            {{ error }}
-        </li> 
-    </ul>
-</div>
 
 <app-footer-portal></app-footer-portal>

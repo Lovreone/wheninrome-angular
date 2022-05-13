@@ -5,7 +5,7 @@ import { CityService } from './../../../shared/services/city.service';
 import { LandmarkService } from './../../../shared/services/landmark.service';
 import { City } from './../../../shared/models/city.model';
 import { Landmark } from './../../../shared/models/landmark.model';
-import { mockResDelay } from 'src/utils/utils';
+import { mockResDelay } from 'src/utils/config';
 
 @Component({
   selector: 'app-city-page',
