@@ -36,7 +36,12 @@ export class AuthService {
         userLoginData)
       .pipe(
         tap((res) => {
-          this.handleAuth(res.access_token, res.user)
+          this.handleAuth(
+            res.access_token, 
+            res.tokenIssuedAt, 
+            res.tokenExpiresAt, 
+            res.user
+          );
         }),
         map((res) => {
           if (res && res.access_token) {
@@ -77,9 +82,9 @@ export class AuthService {
     return localStorage.getItem('access_token');
   }
 
-  private handleAuth(token: string, userData: User): void {
-    const tokenExpirySeconds = 60; 
-    const expirationDate = new Date(new Date().getTime() + tokenExpirySeconds * 1000);
+  private handleAuth(token: string, issuedAt: number, expiresAt: number, userData: User): void {
+    const tokenExpiryMs = (expiresAt - issuedAt) * 1000; 
+    const tokenExpiryDate = new Date(new Date().getTime() + tokenExpiryMs);
     // TODO: Decide which data is necessary, apply to User model (we cant have all optional attributes)
     const user = new User(
       userData.id,
@@ -92,8 +97,8 @@ export class AuthService {
       undefined,
       undefined,
       undefined,
-      token, // FIXME: Token should arrive from BE with User data
-      expirationDate // FIXME: Temp, should arrive from BE with User data
+      token,
+      tokenExpiryDate
     );
     this.user.next(user); // Setting/Emmitting this user as our currently logged in user
   }
