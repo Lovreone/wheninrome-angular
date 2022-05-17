@@ -45,15 +45,13 @@ export class AuthService {
           );
         }),
         map((res) => {
-          if (res && res.access_token) {
-            localStorage.setItem('access_token', res.access_token);
-          }
           return res.user;
         }),
         catchError(this.handleError)
       );
   }
 
+  /* Keeps user state between page refreshes */
   autoLogin(): void {
     const userDataSnapshot = localStorage.getItem('userData');
     if (!userDataSnapshot) {
@@ -82,11 +80,14 @@ export class AuthService {
       new Date(userData._tokenExpirationDate)
     );
     if (loadedUser.token) { 
-      this.user.next(loadedUser); // If we have a valid token auto-logging user between page refreshes
+      // If we have a valid token auto-login user between page refreshes
+      this.user.next(loadedUser); 
 
-      const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
-      // console.error('Token Expires in (seconds): ', expirationDuration / 1000); // FIXME: Remove later
-      this.autoLogout(expirationDuration); // Starting auto-logout timer when user logs in
+      // Starting up auto-logout timer when user logs in
+      const expirationDuration = 
+        new Date(userData._tokenExpirationDate).getTime() - 
+        new Date().getTime();
+      this.autoLogout(expirationDuration); 
     }
   }
 
@@ -101,15 +102,26 @@ export class AuthService {
     this.tokenExpirationTimer = null;
   }
 
-  // Sets and manages the timer for auto user logout
+  // Sets and manages the timer for user auto-logout
   autoLogout(expirationDurationMs: number): void {
     this.tokenExpirationTimer = setTimeout(() => {
       this.logout();
     }, expirationDurationMs);
+    console.error('Token expires in (seconds): ', expirationDurationMs / 1000); // TODO: Remove later
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('access_token');
+  getUserProfile(): Observable<any> {
+    return this.http
+      .get(
+        `${baseApiUrl}/profile`,
+        {headers: this.headers}
+      )
+      .pipe(
+        map((res) => {
+          return res || {};
+        }),
+        catchError(this.handleError)
+      );
   }
 
   private handleAuth(token: string, issuedAt: number, expiresAt: number, userData: User): void {
@@ -130,23 +142,12 @@ export class AuthService {
       token,
       tokenExpiryDate
     );
-    this.user.next(user); // Setting/Emmitting this user as our currently logged in user
-    this.autoLogout(tokenExpiryMs); // Starting autoLogout Timer as soon as user logs in
+    // Setting/Emmitting the currently logged-in user
+    this.user.next(user);
+    // Persisting data to keep user between page-refreshes
     localStorage.setItem('userData', JSON.stringify(user));
-  }
-
-  getUserProfile(): Observable<any> {
-    return this.http
-      .get(
-        `${baseApiUrl}/profile`,
-        {headers: this.headers}
-      )
-      .pipe(
-        map((res) => {
-          return res || {};
-        }),
-        catchError(this.handleError)
-      );
+    // Starting auto-logout Timer as soon as user logs in
+    this.autoLogout(tokenExpiryMs);
   }
 
   private handleError(error: HttpErrorResponse): Observable<any> {
@@ -156,19 +157,8 @@ export class AuthService {
       errorMessage = error.error.message;
     } else {
       // Server-side error
-      errorMessage = `ERR ${error.status}: ${error.error.message}`;
-    
-      // FIXME: Implement a solution for this (Move to interceptor):
-      if (error.status === 401) {
-        console.error('Token needs to be refreshed'); 
-        localStorage.removeItem('access_token'); 
-      }
-        
+      errorMessage = `Error ${error.status}: ${error.error.message}`;        
     }
     return throwError(errorMessage);
-  }
-
-  get isLoggedIn(): boolean {
-    return !!this.getToken();
   }
 }
