@@ -18,7 +18,7 @@ const routes: Routes = [
       { path: ':citySlug/:landmarkSlug', component: LandmarkPageComponent }
     ]
   },
-  { path: 'user-profile', component: UserProfilePageComponent, canActivate: [AuthGuard] }, //:username
+  { path: 'user-profile', component: UserProfilePageComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
