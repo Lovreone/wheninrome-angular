@@ -32,13 +32,8 @@ export class CityService {
   }
 
   public getCityById(id: string): Observable<City> {
-    return this.authService.user.pipe(take(1), exhaustMap((user) => {
-      return this.http.get<City>(`${this.apiUrl}/${id}`);
-     })
-    );
-    // TODO: Remove later:
-    // const url = `${this.apiUrl}/${id}`;
-    // return this.http.get<City>(url);
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.get<City>(url);
   }
   
   public getCityBySlug(slug: string): Observable<City> {
