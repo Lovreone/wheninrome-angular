@@ -13,6 +13,7 @@ export class AuthService {
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   user = new BehaviorSubject<User | null>(null); 
+  private tokenExpirationTimer: any;
 
   constructor(
     private http: HttpClient,
@@ -53,20 +54,6 @@ export class AuthService {
       );
   }
 
-  getUserProfile(): Observable<any> {
-    return this.http
-      .get(
-        `${baseApiUrl}/profile`,
-        {headers: this.headers}
-      )
-      .pipe(
-        map((res) => {
-          return res || {};
-        }),
-        catchError(this.handleError)
-      );
-  }
-
   autoLogin(): void {
     const userDataSnapshot = localStorage.getItem('userData');
     if (!userDataSnapshot) {
@@ -76,7 +63,7 @@ export class AuthService {
       id: string,
       email: string,
       _token: string,
-      _tokenExpiryDate: string,
+      _tokenExpirationDate: string,
     } = JSON.parse(userDataSnapshot);
 
     // TODO: Decide which data is necessary, apply to User model (we cant have all optional attributes)
@@ -92,17 +79,33 @@ export class AuthService {
       undefined,
       undefined,
       userData._token,
-      new Date(userData._tokenExpiryDate)
+      new Date(userData._tokenExpirationDate)
     );
-    if (loadedUser.token) {
-      this.user.next(loadedUser);
+    if (loadedUser.token) { 
+      this.user.next(loadedUser); // If we have a valid token auto-logging user between page refreshes
+
+      const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+      // console.error('Token Expires in (seconds): ', expirationDuration / 1000); // FIXME: Remove later
+      this.autoLogout(expirationDuration); // Starting auto-logout timer when user logs in
     }
   }
 
   logout(): void {
     this.user.next(null);
-    localStorage.removeItem('userData')
+    localStorage.removeItem('userData');
     this.router.navigate(['login']);
+
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
+  }
+
+  // Sets and manages the timer for auto user logout
+  autoLogout(expirationDurationMs: number): void {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDurationMs);
   }
 
   getToken(): string | null {
@@ -128,7 +131,22 @@ export class AuthService {
       tokenExpiryDate
     );
     this.user.next(user); // Setting/Emmitting this user as our currently logged in user
+    this.autoLogout(tokenExpiryMs); // Starting autoLogout Timer as soon as user logs in
     localStorage.setItem('userData', JSON.stringify(user));
+  }
+
+  getUserProfile(): Observable<any> {
+    return this.http
+      .get(
+        `${baseApiUrl}/profile`,
+        {headers: this.headers}
+      )
+      .pipe(
+        map((res) => {
+          return res || {};
+        }),
+        catchError(this.handleError)
+      );
   }
 
   private handleError(error: HttpErrorResponse): Observable<any> {
