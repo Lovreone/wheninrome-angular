@@ -70,12 +70,8 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('access_token');
-    // TODO: Follow whatever path is decided in login:
-    localStorage.removeItem('user');
-    if (!this.getToken()) {
-      this.router.navigate(['login']);
-    }
+    this.user.next(null);
+    this.router.navigate(['login']);
   }
 
   getToken(): string | null {

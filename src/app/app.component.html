@@ -4,8 +4,7 @@
         <a href="http://localhost:3000/api-docs/#/" target="_blank"><b>NestJS Swagger</b></a> |
         <a routerLink="/portal" routerLinkActive="active"><b>Portal:</b> Home</a> |
         <a routerLink="/admin" routerLinkActive="active"><b>CMS:</b> Dashboard</a> | 
-        <a *ngIf="authService.isLoggedIn" routerLink="" (click)="logoutUser()">Logout (localStorage)</a>
-        <a *ngIf="isLoggedIn">Logout (Subject)</a>
+        <a *ngIf="isLoggedIn" routerLink="" (click)="onLogout()">Logout</a>
     </p>
 </nav>
 <hr>
