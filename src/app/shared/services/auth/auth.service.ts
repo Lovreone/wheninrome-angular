@@ -46,8 +46,6 @@ export class AuthService {
         map((res) => {
           if (res && res.access_token) {
             localStorage.setItem('access_token', res.access_token);
-            // TODO: Determine which user data we need in here (if any):
-            localStorage.setItem('user', JSON.stringify(res.user)); 
           }
           return res.user;
         }),
@@ -69,8 +67,41 @@ export class AuthService {
       );
   }
 
+  autoLogin(): void {
+    const userDataSnapshot = localStorage.getItem('userData');
+    if (!userDataSnapshot) {
+      return;
+    }
+    const userData: {
+      id: string,
+      email: string,
+      _token: string,
+      _tokenExpiryDate: string,
+    } = JSON.parse(userDataSnapshot);
+
+    // TODO: Decide which data is necessary, apply to User model (we cant have all optional attributes)
+    const loadedUser: User = new User(
+      userData.id,
+      undefined,
+      userData.email,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      userData._token,
+      new Date(userData._tokenExpiryDate)
+    );
+    if (loadedUser.token) {
+      this.user.next(loadedUser);
+    }
+  }
+
   logout(): void {
     this.user.next(null);
+    localStorage.removeItem('userData')
     this.router.navigate(['login']);
   }
 
@@ -97,6 +128,7 @@ export class AuthService {
       tokenExpiryDate
     );
     this.user.next(user); // Setting/Emmitting this user as our currently logged in user
+    localStorage.setItem('userData', JSON.stringify(user));
   }
 
   private handleError(error: HttpErrorResponse): Observable<any> {

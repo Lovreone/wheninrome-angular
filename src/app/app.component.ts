@@ -12,14 +12,15 @@ export class AppComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
   private userSub!: Subscription;
 
-  constructor(
-    public authService: AuthService
-  ) {}
+  constructor(public authService: AuthService) {}
 
   ngOnInit(): void {
+    // Auto-login early in the app lifecycle
+    this.authService.autoLogin();
+
     this.userSub = this.authService.user
       .subscribe((user) => {
-        console.error('WHAT IS USER', user); // TODO: Remove later
+        console.error('User state:', user); // TODO: Remove later
         this.isLoggedIn = user ? true : false;
       });
   }
