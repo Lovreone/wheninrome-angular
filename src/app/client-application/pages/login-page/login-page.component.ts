@@ -47,7 +47,7 @@ export class LoginPageComponent implements OnInit {
     this.authService.login(loginData)
       .subscribe(
         (user) => {
-          console.warn('LoginComponent: User logged in:', user); // TODO: REMOVE
+          this.loginForm.reset();
           this.router.navigate(['portal/user-profile/']);
         },
         (errorMessage) => {

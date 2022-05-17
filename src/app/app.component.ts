@@ -20,7 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.userSub = this.authService.user
       .subscribe((user) => {
-        console.error('User state:', user); // TODO: Remove later
+        console.warn('USER STATE:', user); // TODO: Remove later
         this.isLoggedIn = user ? true : false;
       });
   }

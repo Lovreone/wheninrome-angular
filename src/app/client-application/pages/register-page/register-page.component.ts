@@ -66,9 +66,8 @@ export class RegisterPageComponent implements OnInit {
     this.authService.register(userData)
       .subscribe(
         (user) => {
-          console.error('User created', user); // TODO: Remove log, clear form, login and redirect user
-          // this.registerForm.reset();
-          // this.router.navigate(['login']);
+          this.registerForm.reset();
+          this.router.navigate(['login']);
         },
         (errorMessage) => {
           this.serverErrors.push(errorMessage);
