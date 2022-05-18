@@ -2,9 +2,11 @@
     <p><b>PORTAL NAV:</b> &nbsp;
         <a routerLink="/portal" routerLinkActive="active">Home</a> |
         <a routerLink="/portal/cities" routerLinkActive="active">City list</a> |
-        <a routerLink="/login" routerLinkActive="active">Login</a> /
-        <a routerLink="/register" routerLinkActive="active">Register</a> |
-        <a routerLink="/portal/user-profile" routerLinkActive="active">MyProfile</a> 
+        <span *ngIf="!isLoggedIn">
+            <a routerLink="/login" routerLinkActive="active">Login</a> /
+            <a routerLink="/register" routerLinkActive="active">Register</a>
+        </span>
+        <a *ngIf="isLoggedIn" routerLink="/portal/user-profile" routerLinkActive="active">MyProfile</a> 
     </p>
 </nav>
 <hr>
