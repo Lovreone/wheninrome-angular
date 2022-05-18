@@ -6,7 +6,11 @@
             <a routerLink="/login" routerLinkActive="active">Login</a> /
             <a routerLink="/register" routerLinkActive="active">Register</a>
         </span>
-        <a *ngIf="isLoggedIn" routerLink="/portal/user-profile" routerLinkActive="active"> MyProfile ({{userFullName}})</a>
+        <span *ngIf="isLoggedIn">
+            <a routerLink="/portal/user-profile" routerLinkActive="active">MyProfile</a> |
+            <a routerLink="" (click)="onLogout()">Logout</a> | 
+            <b>Welcome {{userFullName}}!</b>
+        </span>
     </p>
 </nav>
 <hr>
