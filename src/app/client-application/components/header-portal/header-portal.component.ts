@@ -10,13 +10,17 @@ import { Subscription } from 'rxjs';
 export class HeaderPortalComponent implements OnInit, OnDestroy {
 
   isLoggedIn = false;
+  userFullName: string | undefined;
   private userSub!: Subscription;
 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.userSub = this.authService.user
-      .subscribe((user) => {this.isLoggedIn = !!user});
+      .subscribe((user) => {
+        this.userFullName = user?.fullName;
+        this.isLoggedIn = !!user
+      });
   }
 
   ngOnDestroy(): void {

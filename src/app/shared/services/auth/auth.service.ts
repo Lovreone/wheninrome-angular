@@ -44,7 +44,7 @@ export class AuthService {
             res.user
           );
         }),
-        map((res) => {
+        map((res) => { // Not used atm
           return res.user;
         }),
         catchError(this.handleError)
@@ -60,6 +60,8 @@ export class AuthService {
     const userData: {
       id: string,
       email: string,
+      firstName: string,
+      lastName: string,
       _token: string,
       _tokenExpirationDate: string,
     } = JSON.parse(userDataSnapshot);
@@ -69,8 +71,8 @@ export class AuthService {
       userData.id,
       undefined,
       userData.email,
-      undefined,
-      undefined,
+      userData.firstName,
+      userData.lastName,
       undefined,
       undefined,
       undefined,
@@ -132,8 +134,8 @@ export class AuthService {
       userData.id,
       undefined,
       userData.email,
-      undefined,
-      undefined,
+      userData.firstName,
+      userData.lastName,
       undefined,
       undefined,
       undefined,

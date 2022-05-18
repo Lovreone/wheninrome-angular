@@ -6,7 +6,7 @@
             <a routerLink="/login" routerLinkActive="active">Login</a> /
             <a routerLink="/register" routerLinkActive="active">Register</a>
         </span>
-        <a *ngIf="isLoggedIn" routerLink="/portal/user-profile" routerLinkActive="active">MyProfile</a> 
+        <a *ngIf="isLoggedIn" routerLink="/portal/user-profile" routerLinkActive="active"> MyProfile ({{userFullName}})</a>
     </p>
 </nav>
 <hr>
