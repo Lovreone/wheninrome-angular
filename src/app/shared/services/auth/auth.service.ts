@@ -5,6 +5,7 @@ import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { baseApiUrl } from 'src/utils/config';
 import { User } from './../../models/user.model';
+import { UserRole } from 'src/utils/enum';
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +63,7 @@ export class AuthService {
       email: string,
       firstName: string,
       lastName: string,
+      roles: UserRole[],
       _token: string,
       _tokenExpirationDate: string,
     } = JSON.parse(userDataSnapshot);
@@ -74,7 +76,7 @@ export class AuthService {
       userData.firstName,
       userData.lastName,
       undefined,
-      undefined,
+      userData.roles,
       undefined,
       undefined,
       undefined,
@@ -137,7 +139,7 @@ export class AuthService {
       userData.firstName,
       userData.lastName,
       undefined,
-      undefined,
+      userData.roles,
       undefined,
       undefined,
       undefined,
