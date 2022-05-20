@@ -68,20 +68,15 @@ export class AuthService {
       _tokenExpirationDate: string,
     } = JSON.parse(userDataSnapshot);
 
-    // TODO: Decide which data is necessary, apply to User model (we cant have all optional attributes)
     const loadedUser: User = new User(
       userData.id,
-      undefined,
       userData.email,
       userData.firstName,
       userData.lastName,
       undefined,
-      userData.roles,
-      undefined,
-      undefined,
-      undefined,
       userData._token,
-      new Date(userData._tokenExpirationDate)
+      new Date(userData._tokenExpirationDate),
+      userData.roles
     );
     if (loadedUser.token) { 
       // If we have a valid token auto-login user between page refreshes
@@ -114,6 +109,7 @@ export class AuthService {
     console.error('Token expires in (seconds): ', expirationDurationMs / 1000); // TODO: Remove later
   }
 
+  // TODO: Migrate to user service
   getUserProfile(): Observable<any> {
     return this.http
       .get(
@@ -131,20 +127,15 @@ export class AuthService {
   private handleAuth(token: string, issuedAt: number, expiresAt: number, userData: User): void {
     const tokenExpiryMs = (expiresAt - issuedAt) * 1000; 
     const tokenExpiryDate = new Date(new Date().getTime() + tokenExpiryMs);
-    // TODO: Decide which data is necessary, apply to User model (we cant have all optional attributes)
     const user = new User(
       userData.id,
-      undefined,
       userData.email,
       userData.firstName,
       userData.lastName,
       undefined,
-      userData.roles,
-      undefined,
-      undefined,
-      undefined,
       token,
-      tokenExpiryDate
+      tokenExpiryDate,
+      userData.roles
     );
     // Setting/Emmitting the currently logged-in user
     this.user.next(user);

@@ -1,24 +1,22 @@
 import { UserRole } from 'src/utils/enum';
 
-// TODO: Reevaluate which properties are optional and which ar not (Contexts: Register,Login,ServerResponse)
 export class User {
     constructor(
-        public id?: string | undefined,
+        public id: string,
+        public email: string,
+        public firstName: string,
+        public lastName: string,
         public username?: string,
-        public email?: string,
-        public firstName?: string | undefined,
-        public lastName?: string | undefined,
-        public password?: string | undefined,
+        private _token?: string,
+        private _tokenExpirationDate?: Date,
         public roles?: UserRole[],
         public isActive?: boolean,
         public createdAt?: Date,
         public modifiedAt?: Date,
-        private _token?: string,
-        private _tokenExpirationDate?: Date,
     ) {}
 
     get fullName(): string {
-        return this.firstName!.concat(' ', this.lastName!);
+        return this.firstName.concat(' ', this.lastName);
     }
 
     get token() {
