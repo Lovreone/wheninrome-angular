@@ -113,7 +113,7 @@ export class AuthService {
   getUserProfile(): Observable<any> {
     return this.http
       .get(
-        `${baseApiUrl}/profile`,
+        `${baseApiUrl}/users/profile`,
         {headers: this.headers}
       )
       .pipe(
