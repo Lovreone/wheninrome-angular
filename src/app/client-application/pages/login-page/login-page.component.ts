@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { AuthService } from './../../../shared/services/auth/auth.service';
 import { EMAIL_REGEX } from 'src/utils/utils';
+import { AuthService } from './../../../shared/services/auth/auth.service';
+import { UserLoginData } from './../../../shared/models/user.model';
 
 @Component({
   selector: 'app-login-page',
@@ -43,7 +44,7 @@ export class LoginPageComponent implements OnInit {
 
   loginUser(): void {
     this.serverError = '';
-    const loginData = this.loginForm.getRawValue();
+    const loginData: UserLoginData = this.loginForm.getRawValue();
     this.authService.login(loginData)
       .subscribe(
         (user) => {

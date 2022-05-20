@@ -4,7 +4,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { baseApiUrl } from 'src/utils/config';
-import { User } from './../../models/user.model';
+import { User, UserLoginData, UserRegisterData } from './../../models/user.model';
 import { UserRole } from 'src/utils/enum';
 
 @Injectable({
@@ -21,21 +21,21 @@ export class AuthService {
     public router: Router
   ) { }
 
-  register(userData: User): Observable<User> {
+  register(data: UserRegisterData): Observable<User> {
     return this.http
       .post<User>(
         `${baseApiUrl}/auth/register`, 
-        userData, 
+        data, 
         {headers: this.headers}
       )
       .pipe(catchError(this.handleError));
   }
 
-  login(userLoginData: User): Observable<User> {
+  login(data: UserLoginData): Observable<User> {
     return this.http
       .post<any>(
         `${baseApiUrl}/auth/login`,
-        userLoginData)
+        data)
       .pipe(
         tap((res) => {
           this.handleAuth(
