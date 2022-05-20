@@ -54,6 +54,7 @@ export class LandmarkListModifyComponent implements OnInit, OnChanges {
         .subscribe(res => {
           if (res) {
             this.landmarks = this.landmarks.filter(item => item.id !== landmark.id);
+            this.fileredLandmarks = this.landmarks;
           }
         });
     }

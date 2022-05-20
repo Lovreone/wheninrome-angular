@@ -19,7 +19,6 @@ export class UserProfilePageComponent implements OnInit {
     this.authService.getUserProfile()
       .subscribe(
         (res) => {
-          console.warn('UserProfileComponent: get profile:', res); // TODO: Remove
           this.currentUser = res;
         },
         (errorMessage) => {

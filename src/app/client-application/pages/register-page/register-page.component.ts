@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from './../../../shared/services/auth/auth.service';
-import { User } from './../../../shared/models/user.model';
+import { UserRegisterData } from './../../../shared/models/user.model';
 import { EMAIL_REGEX } from 'src/utils/utils';
 
 @Component({
@@ -55,20 +55,18 @@ export class RegisterPageComponent implements OnInit {
   register(): void {
     this.serverErrors = [];
     const registerData = this.registerForm.getRawValue();
-    const userData = new User(
-      undefined,
-      registerData.username,
-      registerData.email,
-      registerData.firstName,
-      registerData.lastName,
-      registerData?.passGroup?.enterPassword
-    )
+    const userData = {
+      email: registerData.email,
+      password: registerData?.passGroup?.enterPassword,
+      username: registerData.username,
+      firstName: registerData.firstName,
+      lastName: registerData.lastName,
+    } as UserRegisterData;
     this.authService.register(userData)
       .subscribe(
         (user) => {
-          console.error('User created', user); // TODO: Remove log, clear form, login and redirect user
-          // this.registerForm.reset();
-          // this.router.navigate(['login']);
+          this.registerForm.reset();
+          this.router.navigate(['login']);
         },
         (errorMessage) => {
           this.serverErrors.push(errorMessage);

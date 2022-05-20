@@ -4,7 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { AuthInterceptor } from './shared/services/auth/authconfig.interceptor';
+import { AuthInterceptorService } from './shared/services/auth/auth-interceptor.service';
 import { ClientApplicationModule } from './client-application/client-application.module';
 import { ContentManagementModule } from './content-management/content-management.module';
 import { SharedModule } from './shared/shared.module';
@@ -24,7 +24,7 @@ import { SharedModule } from './shared/shared.module';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
+      useClass: AuthInterceptorService,
       multi: true
     }
   ],

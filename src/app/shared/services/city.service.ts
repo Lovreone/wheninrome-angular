@@ -1,8 +1,7 @@
-import { AuthService } from './auth/auth.service';
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { map, catchError, take, exhaustMap } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { baseApiUrl } from 'src/utils/config';
 import { City } from './../models/city.model';
 
@@ -18,10 +17,7 @@ export class CityService {
     })
   };
 
-  constructor(
-    private http: HttpClient,
-    private authService: AuthService
-  ) { }
+  constructor(private http: HttpClient) { }
 
   public getAllCities(): Observable<City[]> {
     return this.http.get<City[]>(this.apiUrl);
@@ -32,13 +28,8 @@ export class CityService {
   }
 
   public getCityById(id: string): Observable<City> {
-    return this.authService.user.pipe(take(1), exhaustMap((user) => {
-      return this.http.get<City>(`${this.apiUrl}/${id}`);
-     })
-    );
-    // TODO: Remove later:
-    // const url = `${this.apiUrl}/${id}`;
-    // return this.http.get<City>(url);
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.get<City>(url);
   }
   
   public getCityBySlug(slug: string): Observable<City> {
