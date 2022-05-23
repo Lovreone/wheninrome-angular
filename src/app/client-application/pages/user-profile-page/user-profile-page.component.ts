@@ -31,6 +31,6 @@ export class UserProfilePageComponent implements OnInit {
 interface ProfileResponse {
   userId: string;
   email: string;
-  issuedAt: number;
-  expiresAt: number;
+  firstName: string;
+  lastName: string; 
 }
