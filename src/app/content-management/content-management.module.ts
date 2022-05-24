@@ -8,6 +8,8 @@ import { CitiesManageComponent } from './pages/cities-manage/cities-manage.compo
 import { CityManageComponent } from './pages/city-manage/city-manage.component';
 import { LandmarksManageComponent } from './pages/landmarks-manage/landmarks-manage.component';
 import { LandmarkManageComponent } from './pages/landmark-manage/landmark-manage.component';
+import { UsersManageComponent } from './pages/users-manage/users-manage.component';
+import { UserManageComponent } from './pages/user-manage/user-manage.component';
 
 import { HeaderAdminComponent } from './components/header-admin/header-admin.component';
 import { FooterAdminComponent } from './components/footer-admin/footer-admin.component';
@@ -15,20 +17,26 @@ import { CityListModifyComponent } from './components/city-list-modify/city-list
 import { CityItemModifyComponent } from './components/city-item-modify/city-item-modify.component';
 import { LandmarkListModifyComponent } from './components/landmark-list-modify/landmark-list-modify.component';
 import { LandmarkItemModifyComponent } from './components/landmark-item-modify/landmark-item-modify.component';
+import { UserListModifyComponent } from './components/user-list-modify/user-list-modify.component';
+import { UserItemModifyComponent } from './components/user-item-modify/user-item-modify.component';
 
 @NgModule({
   declarations: [
+    HeaderAdminComponent,
+    FooterAdminComponent,
     AdminDashboardComponent,
     CitiesManageComponent,
     CityManageComponent,
-    LandmarksManageComponent,
-    LandmarkManageComponent,
-    HeaderAdminComponent,
-    FooterAdminComponent,
     CityListModifyComponent,
     CityItemModifyComponent,
+    LandmarksManageComponent,
+    LandmarkManageComponent,
     LandmarkListModifyComponent, 
     LandmarkItemModifyComponent,
+    UsersManageComponent,
+    UserManageComponent,
+    UserListModifyComponent,
+    UserItemModifyComponent,
   ],
   imports: [
     CommonModule,
