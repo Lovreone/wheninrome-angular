@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { baseApiUrl } from 'src/utils/config';
 import { User } from './../models/user.model';
 
@@ -8,16 +9,24 @@ import { User } from './../models/user.model';
     providedIn: 'root'
 })
 export class UserService {
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-    private apiUrl = `${baseApiUrl}/users`;
-    private httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type' : 'application/json'
-      })
-    };
+  private apiUrl = `${baseApiUrl}/users`;
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type' : 'application/json'
+    })
+  };
 
-    public registerNewUser(data: User): Observable<User> {
-        return this.http.post<User>(this.apiUrl, data, this.httpOptions);;
-    }
+  public getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl);
+  }
+
+  public deleteUser(data: User): Observable<boolean> {
+    const url = `${this.apiUrl}/${data.id}`;
+    return this.http.delete(url).pipe(
+      map(() => true), 
+      catchError(() => of(false))
+    );
+  }
 }
