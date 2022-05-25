@@ -6,6 +6,8 @@
     <p *ngIf="user?.createdAt">Created: {{ user.createdAt | date:'fullDate' }}</p>
     <p *ngIf="user?.modifiedAt">Last Modified: {{ user.modifiedAt | date:'fullDate' }}</p>
     <br>
+    <p *ngIf="user?.roles">User Permissions: {{ user.roles }}</p>
+    <br>
 
     <!-- FIRST NAME field -->
     <label for="firstName"><b>First Name*:</b></label><br>
