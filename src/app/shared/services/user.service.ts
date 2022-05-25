@@ -22,6 +22,16 @@ export class UserService {
     return this.http.get<User[]>(this.apiUrl);
   }
 
+  public getUserById(id: string): Observable<User> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.get<User>(url);
+  }
+
+  public updateUser(data: User): Observable<User> {
+    const url = `${this.apiUrl}/${data.id}`;
+    return this.http.patch<User>(url, data, this.httpOptions);
+  }
+
   public deleteUser(data: User): Observable<boolean> {
     const url = `${this.apiUrl}/${data.id}`;
     return this.http.delete(url).pipe(
