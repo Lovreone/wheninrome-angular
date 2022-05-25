@@ -1,1 +1,95 @@
-<p>user-item-modify works!</p>
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+<form *ngIf="!isLoading" [formGroup]="userForm">
+
+    <br>
+    <p *ngIf="user?.createdAt">Created: {{ user.createdAt | date:'fullDate' }}</p>
+    <p *ngIf="user?.modifiedAt">Last Modified: {{ user.modifiedAt | date:'fullDate' }}</p>
+    <br>
+
+    <!-- FIRST NAME field -->
+    <label for="firstName"><b>First Name*:</b></label><br>
+    <input type="text" id="firstName" placeholder="Type in your name" required 
+        formControlName="firstName"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('firstName') }"><br>
+    <!-- FIRST NAME validation messages -->
+    <div *ngIf="isFieldInvalid('firstName')" class="error-message">
+        <div *ngIf="firstName?.errors?.required">
+            First Name is required.
+        </div>
+    </div><br>
+
+    <!-- LAST NAME field -->
+    <label for="lastName"><b>Last Name*:</b></label><br>
+    <input type="text" id="lastName" placeholder="Type in your surname" required 
+        formControlName="lastName"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('lastName') }"><br>
+    <!-- LAST NAME validation messages -->
+    <div *ngIf="isFieldInvalid('lastName')" class="error-message">
+        <div *ngIf="lastName?.errors?.required">
+            Last Name is required.
+        </div>
+    </div><br>
+    
+    <!-- EMAIL field -->
+    <label for="email"><b>Email*:</b></label><br>
+    <input type="text" id="email" placeholder="Type in your email" required 
+        formControlName="email"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('email') }"><br>
+    <!-- EMAIL validation messages -->
+    <div *ngIf="isFieldInvalid('email')" class="error-message">
+        <div *ngIf="email?.errors?.required">
+            Email is required.
+        </div>
+        <div *ngIf="email?.errors?.email || email?.errors?.pattern">
+            Incorrect email format.
+        </div>
+    </div><br>
+
+    <!-- USERNAME field -->
+    <label for="username"><b>Username*:</b></label><br>
+    <input type="text" id="username" placeholder="Type in your username" required 
+        formControlName="username"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('username') }"><br>
+    <!-- USERNAME validation messages -->
+    <div *ngIf="isFieldInvalid('username')" class="error-message">
+        <div *ngIf="username?.errors?.required">
+            Username is required.
+        </div>
+    </div><br>
+
+    <!-- IS ACTIVE field -->
+    <p><b>Account status options*:</b></p>    
+    <div>
+        <input type="radio" id="active" name="isActive" [value]="true" required
+            formControlName="isActive"                >
+        <label for="active">Active</label>
+    </div>
+    <div>
+        <input type="radio" id="inactive" name="isActive" [value]="false" required
+            formControlName="isActive">
+        <label for="inactive">Inactive</label>
+    </div>
+    <!-- IS ACTIVE validation messages -->
+    <div *ngIf="isFieldInvalid('isActive')" class="error-message">
+        <div *ngIf="isActive?.errors?.required">
+            Account status selection is required.
+        </div>
+    </div><br>
+
+    <button (click)="updateUser()" [disabled]="!(userForm.valid && userForm.dirty)">
+        Update User
+    </button>
+
+</form>
+
+<br>
+<div *ngIf="serverErrors && serverErrors.length">
+    <p>Error messages:</p>
+    <ul>
+        <li *ngFor="let error of serverErrors" class="error-message">
+            {{ error }}
+        </li> 
+    </ul>
+</div>
+<br>
