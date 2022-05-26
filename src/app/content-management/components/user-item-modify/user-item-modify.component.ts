@@ -54,6 +54,7 @@ export class UserItemModifyComponent implements OnInit, OnChanges {
   }
 
   updateUser(): void {
+    this.serverErrors = [];
     const modifiedUser = this.userForm.getRawValue() as User;
     modifiedUser.id = this.user.id;
     this.userService.updateUser(modifiedUser)
@@ -62,7 +63,7 @@ export class UserItemModifyComponent implements OnInit, OnChanges {
           this.clearFormAndGoBack();
         },
         (err) => {
-          this.serverErrors = err.error.message;
+          this.serverErrors = err;
         });
   }
 

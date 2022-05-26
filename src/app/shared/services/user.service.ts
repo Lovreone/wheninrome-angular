@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { baseApiUrl } from 'src/utils/config';
 import { User } from './../models/user.model';
@@ -9,34 +9,47 @@ import { User } from './../models/user.model';
     providedIn: 'root'
 })
 export class UserService {
-  constructor(private http: HttpClient) { }
 
+  headers = new HttpHeaders().set('Content-Type', 'application/json');
   private apiUrl = `${baseApiUrl}/users`;
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type' : 'application/json'
-    })
-  };
+
+  constructor(private http: HttpClient) { }
 
   public getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl);
   }
 
   public getUserById(id: string): Observable<User> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<User>(url);
+    return this.http.get<User>(`${this.apiUrl}/${id}`);
   }
 
   public updateUser(data: User): Observable<User> {
-    const url = `${this.apiUrl}/${data.id}`;
-    return this.http.patch<User>(url, data, this.httpOptions);
+    return this.http
+      .patch<User>(
+        `${this.apiUrl}/${data.id}`, 
+        data, 
+        {headers: this.headers}
+      )
+      .pipe(catchError(this.handleError));
   }
 
   public deleteUser(data: User): Observable<boolean> {
-    const url = `${this.apiUrl}/${data.id}`;
-    return this.http.delete(url).pipe(
-      map(() => true), 
-      catchError(() => of(false))
+    return this.http
+      .delete(`${this.apiUrl}/${data.id}`)
+      .pipe(
+        map(() => true), 
+        catchError(() => of(false)
+      )
     );
+  }
+
+  private handleError(errorResponse: HttpErrorResponse): Observable<any> {
+    let errorMessage = ['An unknown error has occured!'];
+    if (!errorResponse.error || !errorResponse.error.error) {  
+      return throwError(errorMessage);
+    } else {
+      errorMessage = errorResponse.error.message;  
+    }
+    return throwError(errorMessage);
   }
 }
