@@ -145,14 +145,12 @@ export class AuthService {
     this.autoLogout(tokenExpiryMs);
   }
 
-  private handleError(error: HttpErrorResponse): Observable<any> {
-    let errorMessage = 'An unknown error has occured!';
-    if (error.error instanceof ErrorEvent) {
-      // Client-side error
-      errorMessage = error.error.message;
+  private handleError(errorResponse: HttpErrorResponse): Observable<any> {
+    let errorMessage = ['An unknown error has occured!'];
+    if (!errorResponse.error || !errorResponse.error.error) {  
+      return throwError(errorMessage);
     } else {
-      // Server-side error
-      errorMessage = `Error ${error.status}: ${error.error.message}`;        
+      errorMessage = errorResponse.error.message;  
     }
     return throwError(errorMessage);
   }
