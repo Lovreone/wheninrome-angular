@@ -13,7 +13,7 @@ import { UserLoginData } from './../../../shared/models/user.model';
 export class LoginPageComponent implements OnInit {
 
   loginForm!: FormGroup;
-  serverError!: string;
+  serverErrors!: Array<string>;
 
   constructor(
     private authService: AuthService,
@@ -43,7 +43,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   loginUser(): void {
-    this.serverError = '';
+    this.serverErrors = [];
     const loginData: UserLoginData = this.loginForm.getRawValue();
     this.authService.login(loginData)
       .subscribe(
@@ -52,7 +52,7 @@ export class LoginPageComponent implements OnInit {
           this.router.navigate(['portal/user-profile/']);
         },
         (errorMessage) => {
-          this.serverError = errorMessage;
+          this.serverErrors = errorMessage;
         }
       );
   }

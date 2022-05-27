@@ -1,0 +1,28 @@
+<app-loading-spinner *ngIf="isLoading; else userList"></app-loading-spinner>
+
+<ng-template #userList>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Full name</th>
+            <th>Registered</th>
+            <th>Roles</th> 
+            <th colspan="2">Actions</th>
+        </tr>
+        <tr *ngFor="let user of users" 
+            [ngClass]="{'inactive-item': !user.isActive}">
+            <td>{{user.id}}</td>
+            <td>{{user.username}}</td>
+            <td>{{user.email}}</td>
+            <td>{{getFullName(user)}}</td>
+            <td>{{user.createdAt | date:'fullDate'}}</td>
+            <td>{{user.roles}}</td>
+            <td>
+                <button (click)="modifyItem(user)">Modify</button>
+                <button (click)="deleteItem(user)">Delete</button>
+            </td>
+        </tr>       
+    </table>
+</ng-template>

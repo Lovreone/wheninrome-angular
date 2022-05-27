@@ -69,7 +69,7 @@ export class RegisterPageComponent implements OnInit {
           this.router.navigate(['login']);
         },
         (errorMessage) => {
-          this.serverErrors.push(errorMessage);
+          this.serverErrors = errorMessage;
         }
       );
   }

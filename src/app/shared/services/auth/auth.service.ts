@@ -5,7 +5,6 @@ import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 import { baseApiUrl } from 'src/utils/config';
 import { User, UserLoginData, UserRegisterData } from './../../models/user.model';
-import { UserRole } from 'src/utils/enum';
 
 @Injectable({
   providedIn: 'root'
@@ -63,7 +62,6 @@ export class AuthService {
       email: string,
       firstName: string,
       lastName: string,
-      roles: UserRole[],
       _token: string,
       _tokenExpirationDate: string,
     } = JSON.parse(userDataSnapshot);
@@ -76,7 +74,6 @@ export class AuthService {
       undefined,
       userData._token,
       new Date(userData._tokenExpirationDate),
-      userData.roles
     );
     if (loadedUser.token) { 
       // If we have a valid token auto-login user between page refreshes
@@ -134,8 +131,7 @@ export class AuthService {
       userData.lastName,
       undefined,
       token,
-      tokenExpiryDate,
-      userData.roles
+      tokenExpiryDate
     );
     // Setting/Emmitting the currently logged-in user
     this.user.next(user);
@@ -145,14 +141,12 @@ export class AuthService {
     this.autoLogout(tokenExpiryMs);
   }
 
-  private handleError(error: HttpErrorResponse): Observable<any> {
-    let errorMessage = 'An unknown error has occured!';
-    if (error.error instanceof ErrorEvent) {
-      // Client-side error
-      errorMessage = error.error.message;
+  private handleError(errorResponse: HttpErrorResponse): Observable<any> {
+    let errorMessage = ['An unknown error has occured!'];
+    if ((!errorResponse.error || !errorResponse.error.error) && !errorResponse.error.message) {  
+      return throwError(errorMessage);
     } else {
-      // Server-side error
-      errorMessage = `Error ${error.status}: ${error.error.message}`;        
+      errorMessage = errorResponse.error.message;  
     }
     return throwError(errorMessage);
   }

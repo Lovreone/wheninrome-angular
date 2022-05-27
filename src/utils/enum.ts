@@ -12,6 +12,6 @@ export enum Placeholders {
 }
 
 export enum UserRole {
-    User = 'user',
-    Admin = 'admin',
+    User = 'ROLE_USER',
+    Admin = 'PONTIFEX_MAXIMVS',
 }
