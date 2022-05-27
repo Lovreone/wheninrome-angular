@@ -27,13 +27,25 @@ export class RolesGuard implements CanActivate {
     return this.authService.user.pipe(
       take(1),
       map((user) => {
-        // FIXME: This is not secure, as localStorage can be manipulated by the user, Rework later
-        const isAdmin = user?.roles?.includes(UserRole.Admin);
+        const userRoles = this.getUserRoles(user?.token);
+        const isAdmin = userRoles.includes(UserRole.Admin);
+        console.warn('ROLES GUARD> user:', user, 'roles:', userRoles, 'isAdmin:', isAdmin); // TODO: Remove me
         if (isAdmin) {
           return true;
         }
         return this.router.createUrlTree(['portal']);
       })
     );
+  }
+
+  /** We get JWT segment containing user data (inluding roles array), 
+  decode it, parse it, and extract user roles from it */
+  private getUserRoles(token: string | null | undefined): Array<string> {
+    if (!token) {
+      return [];
+    }
+    return JSON.parse(
+      atob(token.split('.')[1])
+    ).roles;
   }
 }
