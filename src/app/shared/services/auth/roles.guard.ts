@@ -32,8 +32,8 @@ export class RolesGuard implements CanActivate {
         Steps: Open localStorage, Decode token, change role, Encode token, Modify localStorage, Refresh page and Gain access
         
         FIXME: Additional measures that could be implemented:
-          - Make sure Role strings are not easily predicted ('user' remains user, 'admin' should be 'ROLE_PRINCEPS')
-          - Make sure each and every Admin route is protected on the BE side, so even if user enters he wont be able to do anyting
+          [DONE]- Make sure Role strings are not easily predicted ('user' remains user, 'admin' should be 'ROLE_PRINCEPS')
+          [DONE]- Make sure each and every Admin route is protected on the BE side, so even if user enters he wont be able to do anyting
           - On Each trigger of RolesGuard we call BE (ie /auth/get-roles) and grant/deny access based on that isntead of token
         */
         const userRoles = this.getUserRoles(user?.token);
