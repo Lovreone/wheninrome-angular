@@ -27,6 +27,15 @@ export class RolesGuard implements CanActivate {
     return this.authService.user.pipe(
       take(1),
       map((user) => {
+        /*  NOTE: Users can still change the role in the localSTorage token (user>admin), 
+        but it is much more diffucult than previous implementation. 
+        Steps: Open localStorage, Decode token, change role, Encode token, Modify localStorage, Refresh page and Gain access
+        
+        FIXME: Additional measures that could be implemented:
+          - Make sure Role strings are not easily predicted ('user' remains user, 'admin' should be 'ROLE_PRINCEPS')
+          - Make sure each and every Admin route is protected on the BE side, so even if user enters he wont be able to do anyting
+          - On Each trigger of RolesGuard we call BE (ie /auth/get-roles) and grant/deny access based on that isntead of token
+        */
         const userRoles = this.getUserRoles(user?.token);
         const isAdmin = userRoles.includes(UserRole.Admin);
         console.warn('ROLES GUARD> user:', user, 'roles:', userRoles, 'isAdmin:', isAdmin); // TODO: Remove me
