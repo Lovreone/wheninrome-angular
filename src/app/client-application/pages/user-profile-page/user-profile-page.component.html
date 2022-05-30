@@ -1,14 +1,14 @@
 <app-header-portal></app-header-portal>
-<h2>USER PROFILE PAGE</h2> 
-
-<!-- TODO: Implement page contents -->
+<h2>MY PROFILE PAGE</h2> 
 <br>
 <div *ngIf="currentUser">
-    <p> <strong>CURRENT USER: </strong> <br>
-        id: {{currentUser.userId}} <br>
-        email: {{currentUser.email}} <br>
-        First name: {{currentUser.firstName}} <br>
-        Last name: {{currentUser.lastName}} <br>
+    <p>
+        <strong>First name: </strong>{{ currentUser.firstName }} <br>
+        <strong>Last name: </strong>{{ currentUser.lastName }} <br>
+        <strong>Username: </strong>{{ currentUser.username }} <br>
+        <strong>Email: </strong>{{ currentUser.email }} <br>
+        <strong>Signup date: </strong>{{ currentUser.createdAt | date:'fullDate' }}<br>
+        <strong>Last updated: </strong>{{ currentUser.modifiedAt | date:'fullDate' }}<br>
     </p> 
 </div><br>
 

@@ -16,11 +16,17 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   public getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl);
+    return this.http
+      .get<User[]>(
+        this.apiUrl
+      );
   }
 
   public getUserById(id: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/${id}`);
+    return this.http
+      .get<User>(
+        `${this.apiUrl}/${id}`
+      );
   }
 
   public updateUser(data: User): Observable<User> {

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from './../../../shared/models/user.model';
+import { take, exhaustMap } from 'rxjs/operators';
 import { AuthService } from './../../../shared/services/auth/auth.service';
+import { UserService } from './../../../shared/services/user.service';
 
 @Component({
   selector: 'app-user-profile-page',
@@ -8,29 +11,28 @@ import { AuthService } from './../../../shared/services/auth/auth.service';
 })
 export class UserProfilePageComponent implements OnInit {
  
-  currentUser!: ProfileResponse;
+  currentUser!: User;
   serverError!: string;
 
   constructor(
-    public authService: AuthService
+    public authService: AuthService,
+    public userService: UserService
   ) { }
 
   ngOnInit(): void {
     this.authService.getUserProfile()
-      .subscribe(
-        (res) => {
-          this.currentUser = res;
+      .pipe(
+        take(1),
+        exhaustMap((userProfile) => {
+          return this.userService.getUserById(userProfile.userId)
+            .pipe(take(1))
+        })
+      ).subscribe(
+        (userData: User) => {
+        this.currentUser = userData;
         },
         (errorMessage) => {
           this.serverError = errorMessage;
-        }
-      );
+        })
   }
-}
-
-interface ProfileResponse {
-  userId: string;
-  email: string;
-  firstName: string;
-  lastName: string; 
 }
