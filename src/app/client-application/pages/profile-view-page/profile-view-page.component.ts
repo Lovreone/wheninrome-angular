@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from './../../../shared/models/user.model';
+import { User } from '../../../shared/models/user.model';
 import { take, exhaustMap } from 'rxjs/operators';
-import { AuthService } from './../../../shared/services/auth/auth.service';
-import { UserService } from './../../../shared/services/user.service';
+import { AuthService } from '../../../shared/services/auth/auth.service';
+import { UserService } from '../../../shared/services/user.service';
 
 @Component({
-  selector: 'app-user-profile-page',
-  templateUrl: './user-profile-page.component.html',
-  styleUrls: ['./user-profile-page.component.css']
+  selector: 'app-profile-view-page',
+  templateUrl: './profile-view-page.component.html',
+  styleUrls: ['./profile-view-page.component.css']
 })
-export class UserProfilePageComponent implements OnInit {
+export class ProfileViewPageComponent implements OnInit {
  
   currentUser!: User;
   serverError!: string;
