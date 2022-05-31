@@ -16,7 +16,7 @@ import { CityListViewComponent } from './components/city-list-view/city-list-vie
 import { LandmarkItemViewComponent } from './components/landmark-item-view/landmark-item-view.component';
 import { LandmarkListViewComponent } from './components/landmark-list-view/landmark-list-view.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
-import { ProfileViewPageComponent } from './pages/profile-view-page/profile-view-page.component';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,7 @@ import { ProfileViewPageComponent } from './pages/profile-view-page/profile-view
     LandmarkItemViewComponent,
     LoginPageComponent,
     RegisterPageComponent,
-    ProfileViewPageComponent
+    ProfilePageComponent
   ],
   imports: [
     CommonModule,

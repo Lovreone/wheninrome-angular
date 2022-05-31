@@ -5,11 +5,11 @@ import { AuthService } from '../../../shared/services/auth/auth.service';
 import { UserService } from '../../../shared/services/user.service';
 
 @Component({
-  selector: 'app-profile-view-page',
-  templateUrl: './profile-view-page.component.html',
-  styleUrls: ['./profile-view-page.component.css']
+  selector: 'app-profile-page',
+  templateUrl: './profile-page.component.html',
+  styleUrls: ['./profile-page.component.css']
 })
-export class ProfileViewPageComponent implements OnInit {
+export class ProfilePageComponent implements OnInit {
  
   currentUser!: User;
   serverError!: string;
