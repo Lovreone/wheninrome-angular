@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../../shared/models/user.model';
 import { take, exhaustMap } from 'rxjs/operators';
+import { mockResDelay } from 'src/utils/config';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import { UserService } from '../../../shared/services/user.service';
 
@@ -13,6 +14,8 @@ export class ProfilePageComponent implements OnInit {
  
   currentUser!: User;
   serverError!: string;
+  isLoading = true;
+  isEditMode = false;
 
   constructor(
     public authService: AuthService,
@@ -20,7 +23,8 @@ export class ProfilePageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authService.getUserProfile()
+    mockResDelay(() => {
+      this.authService.getUserProfile()
       .pipe(
         take(1),
         exhaustMap((userProfile) => {
@@ -29,10 +33,13 @@ export class ProfilePageComponent implements OnInit {
         })
       ).subscribe(
         (userData: User) => {
-        this.currentUser = userData;
+          this.currentUser = userData;
+          this.isLoading = false;
         },
         (errorMessage) => {
           this.serverError = errorMessage;
+          this.isLoading = false;
         })
+    })
   }
 }

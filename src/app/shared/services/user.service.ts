@@ -29,7 +29,19 @@ export class UserService {
       );
   }
 
+  /** Admin updates user info in CMS */
   public updateUser(data: User): Observable<User> {
+    return this.http
+      .patch<User>(
+        `${this.apiUrl}/profile/${data.id}`, 
+        data, 
+        {headers: this.headers}
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  /** User updates his profile info */
+  public updateMyProfile(data: User): Observable<User> {
     return this.http
       .patch<User>(
         `${this.apiUrl}/${data.id}`, 

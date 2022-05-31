@@ -1,7 +1,9 @@
 <app-header-portal></app-header-portal>
 <h2>MY PROFILE INFO</h2> 
 <br>
-<div *ngIf="currentUser">
+
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<div *ngIf="currentUser && !isEditMode">
     <p>
         <strong>First name: </strong>{{ currentUser.firstName }} <br>
         <strong>Last name: </strong>{{ currentUser.lastName }} <br>
@@ -9,9 +11,16 @@
         <strong>Email: </strong>{{ currentUser.email }} <br>
         <strong>Signup date: </strong>{{ currentUser.createdAt | date:'fullDate' }}<br>
         <strong>Last updated: </strong>{{ currentUser.modifiedAt | date:'fullDate' }}<br>
-    </p> 
-</div><br>
-
+    </p><br>
+    <button (click)="isEditMode=true">Modify info</button><br>
+</div>
 <p *ngIf="serverError" class="error-message">{{serverError}}</p>
+
+<app-profile-modify 
+    *ngIf="isEditMode"
+    (isEditMode)="isEditMode=$event"
+    [user]="currentUser" 
+    [isLoading]="isLoading">
+</app-profile-modify>
 
 <app-footer-portal></app-footer-portal>
