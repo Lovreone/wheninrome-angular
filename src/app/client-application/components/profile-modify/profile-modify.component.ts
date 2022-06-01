@@ -52,6 +52,7 @@ export class ProfileModifyComponent implements OnInit, OnChanges {
   }
 
   updateProfile(): void {
+    this.profileForm.disable();
     this.serverErrors = [];
     const modifiedUser = this.profileForm.getRawValue() as User;
     modifiedUser.id = this.user.id;
@@ -62,8 +63,8 @@ export class ProfileModifyComponent implements OnInit, OnChanges {
           this.updatedUser.emit(changedUser);
           this.clearFormAndGoBack();
         },
-        (err) => {
-          this.serverErrors = err;
+        (errorResponse) => {
+          this.serverErrors = errorResponse;
         });
   }
 
