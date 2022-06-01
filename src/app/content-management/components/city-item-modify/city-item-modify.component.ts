@@ -59,6 +59,7 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
   }
 
   saveCity(): void {
+    this.cityForm.disable();
     const city = this.cityForm.getRawValue() as City;
     this.isNew ? this.saveNew(city) : this.saveModified(city);
   }

@@ -104,6 +104,7 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
   }
 
   saveLandmark(): void {
+    this.landmarkForm.disable();
     const formValue = this.landmarkForm.getRawValue(); 
     const landmarkCity = this.cities
       .find(city => city.id === formValue.city);
