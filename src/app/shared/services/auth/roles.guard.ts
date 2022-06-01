@@ -29,7 +29,7 @@ export class RolesGuard implements CanActivate {
         take(1),
         map((user) => {      
           const isAdmin = user?.roles.includes(UserRole.Admin);
-          console.warn('1. ROLES GUARD> user:', user, '\nroles:', user.roles, '\nisAdmin:', isAdmin); // TODO: Remove me
+          console.warn('ROLES GUARD: \nuser:', user, '\nroles:', user.roles, '\nisAdmin:', isAdmin); // TODO: Remove me
           if (isAdmin) {
             return true;
           }
