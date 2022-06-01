@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../../../shared/models/user.model';
 import { take, exhaustMap } from 'rxjs/operators';
 import { mockResDelay } from 'src/utils/config';
 import { AuthService } from '../../../shared/services/auth/auth.service';
 import { UserService } from '../../../shared/services/user.service';
+import { User } from '../../../shared/models/user.model';
 
 @Component({
   selector: 'app-profile-page',
