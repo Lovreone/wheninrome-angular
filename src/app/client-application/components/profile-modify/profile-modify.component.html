@@ -56,10 +56,12 @@
     <button (click)="updateProfile()" [disabled]="!(profileForm.valid && profileForm.dirty)">
         Update Info
     </button>
-    <button (click)="isEditMode.emit(false)">
-        Go back
-    </button>
 </form>
+
+<br>
+<button (click)="isEditMode.emit(false)">
+    Go back
+</button>
 
 <br>
 <div *ngIf="serverErrors && serverErrors.length">
