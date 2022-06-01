@@ -43,6 +43,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   loginUser(): void {
+    this.loginForm.disable();
     this.serverErrors = [];
     const loginData: UserLoginData = this.loginForm.getRawValue();
     this.authService.login(loginData)
