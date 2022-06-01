@@ -15,6 +15,7 @@ export class ProfileModifyComponent implements OnInit, OnChanges {
   @Input() isLoading!: boolean;
   @Input() user!: User;
   @Output() isEditMode = new EventEmitter<boolean>();
+  @Output() updatedUser = new EventEmitter<User>();
 
   profileForm!: FormGroup;
   serverErrors!: Array<string>;
@@ -57,7 +58,8 @@ export class ProfileModifyComponent implements OnInit, OnChanges {
     modifiedUser.isActive = true; // For now user cant disable his profile
     this.userService.updateUser(modifiedUser)
       .subscribe(
-        (res) => {
+        (changedUser) => {
+          this.updatedUser.emit(changedUser);
           this.clearFormAndGoBack();
         },
         (err) => {

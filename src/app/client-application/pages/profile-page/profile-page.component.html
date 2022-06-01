@@ -18,9 +18,10 @@
 
 <app-profile-modify 
     *ngIf="isEditMode"
-    (isEditMode)="isEditMode=$event"
     [user]="currentUser" 
-    [isLoading]="isLoading">
+    [isLoading]="isLoading"
+    (isEditMode)="isEditMode=$event"
+    (updatedUser)="currentUser=$event">
 </app-profile-modify>
 
 <app-footer-portal></app-footer-portal>

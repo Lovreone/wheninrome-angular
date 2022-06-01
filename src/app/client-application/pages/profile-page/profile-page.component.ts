@@ -25,21 +25,21 @@ export class ProfilePageComponent implements OnInit {
   ngOnInit(): void {
     mockResDelay(() => {
       this.authService.getUserProfile()
-      .pipe(
-        take(1),
-        exhaustMap((userProfile) => {
-          return this.userService.getUserById(userProfile.userId)
-            .pipe(take(1))
-        })
-      ).subscribe(
-        (userData: User) => {
-          this.currentUser = userData;
-          this.isLoading = false;
-        },
-        (errorMessage) => {
-          this.serverError = errorMessage;
-          this.isLoading = false;
-        })
-    })
+        .pipe(
+          take(1),
+          exhaustMap((userProfile) => {
+            return this.userService.getUserById(userProfile.userId)
+              .pipe(take(1))
+          })
+        ).subscribe(
+          (userData: User) => {
+            this.currentUser = userData;
+            this.isLoading = false;
+          },
+          (errorMessage) => {
+            this.serverError = errorMessage;
+            this.isLoading = false;
+          });
+        });
   }
 }
