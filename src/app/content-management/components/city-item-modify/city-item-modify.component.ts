@@ -38,7 +38,7 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
       slug: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
       country: new FormControl(undefined, Validators.minLength(3)),
       featuredImage: new FormControl(undefined),
-      introText: new FormControl(undefined, Validators.required),
+      introText: new FormControl(undefined, [Validators.required, Validators.maxLength(50)]),
       localCurrency: new FormControl(undefined),
       description: new FormControl(undefined),
       isActive: new FormControl(true, Validators.required),

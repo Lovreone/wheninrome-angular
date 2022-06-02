@@ -65,6 +65,9 @@
         <div *ngIf="introText?.errors?.required">
             Introductory text is required.
         </div>
+        <div *ngIf="introText?.errors?.maxlength">
+            Intro text can be a max of {{ introText?.errors?.maxlength?.requiredLength }} characters long.
+        </div>
     </div><br>
     
     <!-- COUNTRY field -->
