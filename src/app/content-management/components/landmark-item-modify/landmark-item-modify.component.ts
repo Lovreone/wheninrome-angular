@@ -53,7 +53,7 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
     this.landmarkForm = new FormGroup({
       name: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
       slug: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
-      introText: new FormControl(undefined, Validators.required),
+      introText: new FormControl(undefined, [Validators.required, Validators.maxLength(50)]),
       description: new FormControl(undefined),
       entranceFee: new FormControl(undefined, Validators.min(0)),
       officialWebsite: new FormControl(undefined, Validators.pattern(URL_REGEX)),
