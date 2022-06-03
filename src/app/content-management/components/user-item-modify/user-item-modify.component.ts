@@ -65,6 +65,7 @@ export class UserItemModifyComponent implements OnInit, OnChanges {
         },
         (err) => {
           this.serverErrors = err;
+          this.userForm.enable();
         });
   }
 

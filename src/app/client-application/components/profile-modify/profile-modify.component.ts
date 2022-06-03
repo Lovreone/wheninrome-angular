@@ -65,6 +65,7 @@ export class ProfileModifyComponent implements OnInit, OnChanges {
         },
         (errorResponse) => {
           this.serverErrors = errorResponse;
+          this.profileForm.enable();
         });
   }
 

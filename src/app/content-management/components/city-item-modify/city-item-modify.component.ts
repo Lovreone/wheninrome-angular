@@ -74,6 +74,7 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
         }, 
         (err) => {
           this.serverErrors = err.error.message;
+          this.cityForm.enable();
         });
   }
 
@@ -87,6 +88,7 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
         },
         (err) => {
           this.serverErrors = err.error.message;
+          this.cityForm.enable();
         });
   }
 

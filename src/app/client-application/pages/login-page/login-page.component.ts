@@ -54,6 +54,7 @@ export class LoginPageComponent implements OnInit {
         },
         (errorMessage) => {
           this.serverErrors = errorMessage;
+          this.loginForm.enable();
         }
       );
   }

@@ -87,10 +87,10 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
 
   reactOnFormChanges(): void {
     this.citySelectValChangeSub = this.landmarkForm.get('city')?.valueChanges
-    .subscribe(cityId => {
-      const selectedCity = this.cities.find(city => city.id === cityId);
-      this.cityLocalCurrency = selectedCity?.localCurrency;
-    });
+      .subscribe(cityId => {
+        const selectedCity = this.cities.find(city => city.id === cityId);
+        this.cityLocalCurrency = selectedCity?.localCurrency;
+      });
   }
 
   getCityOptions(): void {
@@ -145,6 +145,7 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
         }, 
         (err) => {
           this.serverErrors = err.error.message;
+          this.landmarkForm.enable();
         });
   }
 
@@ -158,6 +159,7 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
         },
         (err) => {
           this.serverErrors = err.error.message;
+          this.landmarkForm.enable();
         });
   }
 

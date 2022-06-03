@@ -71,6 +71,7 @@ export class RegisterPageComponent implements OnInit {
         },
         (errorMessage) => {
           this.serverErrors = errorMessage;
+          this.registerForm.enable();
         }
       );
   }
