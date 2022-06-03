@@ -16,7 +16,8 @@ import { CityListViewComponent } from './components/city-list-view/city-list-vie
 import { LandmarkItemViewComponent } from './components/landmark-item-view/landmark-item-view.component';
 import { LandmarkListViewComponent } from './components/landmark-list-view/landmark-list-view.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
-import { UserProfilePageComponent } from './pages/user-profile-page/user-profile-page.component';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { ProfileModifyComponent } from './components/profile-modify/profile-modify.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { UserProfilePageComponent } from './pages/user-profile-page/user-profile
     LandmarkItemViewComponent,
     LoginPageComponent,
     RegisterPageComponent,
-    UserProfilePageComponent
+    ProfilePageComponent,
+    ProfileModifyComponent
   ],
   imports: [
     CommonModule,

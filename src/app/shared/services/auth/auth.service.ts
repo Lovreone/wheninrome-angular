@@ -51,7 +51,7 @@ export class AuthService {
       );
   }
 
-  /* Keeps user state between page refreshes */
+  /** Keeps user state between page refreshes */
   autoLogin(): void {
     const userDataSnapshot = localStorage.getItem('userData');
     if (!userDataSnapshot) {
@@ -98,7 +98,7 @@ export class AuthService {
     this.tokenExpirationTimer = null;
   }
 
-  // Sets and manages the timer for user auto-logout
+  /** Sets and manages the timer for user auto-logout */
   autoLogout(expirationDurationMs: number): void {
     this.tokenExpirationTimer = setTimeout(() => {
       this.logout();
@@ -106,11 +106,11 @@ export class AuthService {
     console.error('Token expires in (seconds): ', expirationDurationMs / 1000); // TODO: Remove later
   }
 
-  // TODO: Migrate to user service
+  /** Gets basic user data, including user roles */
   getUserProfile(): Observable<any> {
     return this.http
       .get(
-        `${baseApiUrl}/users/profile`,
+        `${baseApiUrl}/auth/me`,
         {headers: this.headers}
       )
       .pipe(

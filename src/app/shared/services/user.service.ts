@@ -16,14 +16,32 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   public getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl);
+    return this.http
+      .get<User[]>(
+        this.apiUrl
+      );
   }
 
   public getUserById(id: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/${id}`);
+    return this.http
+      .get<User>(
+        `${this.apiUrl}/${id}`
+      );
   }
 
+  /** Admin updates user info in CMS */
   public updateUser(data: User): Observable<User> {
+    return this.http
+      .patch<User>(
+        `${this.apiUrl}/profile/${data.id}`, 
+        data, 
+        {headers: this.headers}
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  /** User updates his profile info */
+  public updateMyProfile(data: User): Observable<User> {
     return this.http
       .patch<User>(
         `${this.apiUrl}/${data.id}`, 

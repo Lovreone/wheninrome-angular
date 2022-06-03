@@ -38,7 +38,7 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
       slug: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
       country: new FormControl(undefined, Validators.minLength(3)),
       featuredImage: new FormControl(undefined),
-      introText: new FormControl(undefined, Validators.required),
+      introText: new FormControl(undefined, [Validators.required, Validators.maxLength(50)]),
       localCurrency: new FormControl(undefined),
       description: new FormControl(undefined),
       isActive: new FormControl(true, Validators.required),
@@ -59,6 +59,7 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
   }
 
   saveCity(): void {
+    this.cityForm.disable();
     const city = this.cityForm.getRawValue() as City;
     this.isNew ? this.saveNew(city) : this.saveModified(city);
   }
@@ -73,6 +74,7 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
         }, 
         (err) => {
           this.serverErrors = err.error.message;
+          this.cityForm.enable();
         });
   }
 
@@ -86,6 +88,7 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
         },
         (err) => {
           this.serverErrors = err.error.message;
+          this.cityForm.enable();
         });
   }
 

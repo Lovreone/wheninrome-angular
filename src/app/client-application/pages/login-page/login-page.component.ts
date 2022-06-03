@@ -43,6 +43,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   loginUser(): void {
+    this.loginForm.disable();
     this.serverErrors = [];
     const loginData: UserLoginData = this.loginForm.getRawValue();
     this.authService.login(loginData)
@@ -53,6 +54,7 @@ export class LoginPageComponent implements OnInit {
         },
         (errorMessage) => {
           this.serverErrors = errorMessage;
+          this.loginForm.enable();
         }
       );
   }

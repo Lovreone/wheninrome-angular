@@ -53,7 +53,7 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
     this.landmarkForm = new FormGroup({
       name: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
       slug: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
-      introText: new FormControl(undefined, Validators.required),
+      introText: new FormControl(undefined, [Validators.required, Validators.maxLength(50)]),
       description: new FormControl(undefined),
       entranceFee: new FormControl(undefined, Validators.min(0)),
       officialWebsite: new FormControl(undefined, Validators.pattern(URL_REGEX)),
@@ -87,10 +87,10 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
 
   reactOnFormChanges(): void {
     this.citySelectValChangeSub = this.landmarkForm.get('city')?.valueChanges
-    .subscribe(cityId => {
-      const selectedCity = this.cities.find(city => city.id === cityId);
-      this.cityLocalCurrency = selectedCity?.localCurrency;
-    });
+      .subscribe(cityId => {
+        const selectedCity = this.cities.find(city => city.id === cityId);
+        this.cityLocalCurrency = selectedCity?.localCurrency;
+      });
   }
 
   getCityOptions(): void {
@@ -104,6 +104,7 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
   }
 
   saveLandmark(): void {
+    this.landmarkForm.disable();
     const formValue = this.landmarkForm.getRawValue(); 
     const landmarkCity = this.cities
       .find(city => city.id === formValue.city);
@@ -144,6 +145,7 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
         }, 
         (err) => {
           this.serverErrors = err.error.message;
+          this.landmarkForm.enable();
         });
   }
 
@@ -157,6 +159,7 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
         },
         (err) => {
           this.serverErrors = err.error.message;
+          this.landmarkForm.enable();
         });
   }
 

@@ -53,6 +53,7 @@ export class RegisterPageComponent implements OnInit {
   }
 
   register(): void {
+    this.registerForm.disable();
     this.serverErrors = [];
     const registerData = this.registerForm.getRawValue();
     const userData = {
@@ -70,6 +71,7 @@ export class RegisterPageComponent implements OnInit {
         },
         (errorMessage) => {
           this.serverErrors = errorMessage;
+          this.registerForm.enable();
         }
       );
   }

@@ -54,6 +54,7 @@ export class UserItemModifyComponent implements OnInit, OnChanges {
   }
 
   updateUser(): void {
+    this.userForm.disable();
     this.serverErrors = [];
     const modifiedUser = this.userForm.getRawValue() as User;
     modifiedUser.id = this.user.id;
@@ -64,6 +65,7 @@ export class UserItemModifyComponent implements OnInit, OnChanges {
         },
         (err) => {
           this.serverErrors = err;
+          this.userForm.enable();
         });
   }
 
