@@ -18,6 +18,7 @@ import { LandmarkListViewComponent } from './components/landmark-list-view/landm
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { ProfileModifyComponent } from './components/profile-modify/profile-modify.component';
+import { ToursPageComponent } from './pages/tours-page/tours-page.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ProfileModifyComponent } from './components/profile-modify/profile-modi
     LoginPageComponent,
     RegisterPageComponent,
     ProfilePageComponent,
-    ProfileModifyComponent
+    ProfileModifyComponent,
+    ToursPageComponent
   ],
   imports: [
     CommonModule,
