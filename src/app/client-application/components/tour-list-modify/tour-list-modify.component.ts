@@ -29,7 +29,6 @@ export class TourListModifyComponent implements OnInit {
   }
 
   deleteItem(tour: Tour): void {
-    // TODO: Temporary (Development only) functionality, disable for Prod
     if (confirm('Are you sure you want to delete this Tour? This action is irreversible!')) {
       this.tourService.deleteTour(tour)
         .subscribe(isDeleted => {

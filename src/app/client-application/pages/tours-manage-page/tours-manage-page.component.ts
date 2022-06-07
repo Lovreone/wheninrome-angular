@@ -27,6 +27,7 @@ export class ToursManagePageComponent implements OnInit {
           take(1),
           exhaustMap((userData) => 
             this.tourService.getToursByUser(userData.userId)
+              .pipe(take(1))
           )
         ).subscribe((userTours) => {
           this.tours = userTours;

@@ -24,6 +24,7 @@ const routes: Routes = [
   { path: 'tours',
     children: [
       { path: '', component: ToursManagePageComponent, canActivate: [AuthGuard] }, 
+      // TODO: Add in a page for Tour preview, i.e. /portal/tours/${tour.id}`
       { path: 'create', component: TourManagePageComponent, canActivate: [AuthGuard] },
       { path: 'modify/:tourId', component: TourManagePageComponent, canActivate: [AuthGuard] }
     ]
