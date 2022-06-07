@@ -21,9 +21,13 @@ const routes: Routes = [
     ]
   },
   { path: 'user-profile', component: ProfilePageComponent, canActivate: [AuthGuard] },
-  { path: 'my-tours', component: ToursManagePageComponent, canActivate: [AuthGuard] },
-  { path: 'my-tour', component: TourManagePageComponent, canActivate: [AuthGuard] }, // FIXME: Rethink url
-
+  { path: 'tours',
+    children: [
+      { path: '', component: ToursManagePageComponent, canActivate: [AuthGuard] }, 
+      { path: 'create', component: TourManagePageComponent, canActivate: [AuthGuard] },
+      { path: 'modify/:tourId', component: TourManagePageComponent, canActivate: [AuthGuard] }
+    ]
+  },
 ];
 
 @NgModule({
