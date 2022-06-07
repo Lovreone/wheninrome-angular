@@ -20,6 +20,8 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
 import { ProfileModifyComponent } from './components/profile-modify/profile-modify.component';
 import { ToursManagePageComponent } from './pages/tours-manage-page/tours-manage-page.component';
 import { TourManagePageComponent } from './pages/tour-manage-page/tour-manage-page.component';
+import { TourListModifyComponent } from './components/tour-list-modify/tour-list-modify.component';
+import { TourItemModifyComponent } from './components/tour-item-modify/tour-item-modify.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { TourManagePageComponent } from './pages/tour-manage-page/tour-manage-pa
     ProfilePageComponent,
     ProfileModifyComponent,
     ToursManagePageComponent,
-    TourManagePageComponent
+    TourManagePageComponent,
+    TourListModifyComponent,
+    TourItemModifyComponent
   ],
   imports: [
     CommonModule,
