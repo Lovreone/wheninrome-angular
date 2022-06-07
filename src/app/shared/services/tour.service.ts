@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { baseApiUrl } from './../../../utils/config';
-import { Tour } from './../models/tour.model';
+import { baseApiUrl } from '../../../utils/config';
+import { Tour } from '../models/tour.model';
 
 @Injectable({
     providedIn: 'root'
 })
-export class ToursService {
+export class TourService {
 
     private apiUrl = `${baseApiUrl}/tours`;
     private httpOptions = {

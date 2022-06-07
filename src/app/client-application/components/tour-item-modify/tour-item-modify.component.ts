@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToursService } from 'src/app/shared/services/tours.service';
+import { TourService } from 'src/app/shared/services/tour.service';
 import { Tour } from './../../../shared/models/tour.model';
 
 @Component({
@@ -20,7 +20,7 @@ export class TourItemModifyComponent implements OnInit, OnChanges {
 
   constructor(
     private router: Router,
-    private tourService: ToursService
+    private tourService: TourService
   ) { }
 
   ngOnInit(): void {
