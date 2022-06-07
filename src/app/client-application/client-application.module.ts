@@ -19,6 +19,7 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { ProfileModifyComponent } from './components/profile-modify/profile-modify.component';
 import { ToursManagePageComponent } from './pages/tours-manage-page/tours-manage-page.component';
+import { TourManagePageComponent } from './pages/tour-manage-page/tour-manage-page.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ToursManagePageComponent } from './pages/tours-manage-page/tours-manage
     RegisterPageComponent,
     ProfilePageComponent,
     ProfileModifyComponent,
-    ToursManagePageComponent
+    ToursManagePageComponent,
+    TourManagePageComponent
   ],
   imports: [
     CommonModule,
