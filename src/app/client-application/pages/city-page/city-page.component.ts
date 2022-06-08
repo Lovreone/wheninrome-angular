@@ -29,26 +29,28 @@ export class CityPageComponent implements OnInit {
   ngOnInit(): void {
     const extractedSlug = this.route.snapshot.paramMap.get('citySlug') || '';
     mockResDelay(()=> {
-      this.cityService.getCityBySlug(extractedSlug).subscribe(
-        (city) => {
-          this.city = city;
-          this.fullCityName = city.name
-            .concat(', ', city.country)
-            .toUpperCase();
-          this.getCityLandmarks(city.id)
-        },
-        (err) => {
-          this.router.navigateByUrl('not-found');
-        });
+      this.cityService.getCityBySlug(extractedSlug)
+        .subscribe(
+          (city) => {
+            this.city = city;
+            this.fullCityName = city.name
+              .concat(', ', city.country)
+              .toUpperCase();
+            this.getCityLandmarks(city.id)
+          },
+          (errorResponse) => {
+            this.router.navigateByUrl('not-found');
+          });
     });
   }
 
   getCityLandmarks(cityId: string): void {
-    this.landmarkService.getLandmarksByCity(cityId).subscribe((res) => {
-      if(res) {
-        this.landmarks = res;
-        this.isLoading = false;
-      }
-    });   
+    this.landmarkService.getLandmarksByCity(cityId)
+      .subscribe((landmarks) => {
+        if(landmarks) {
+          this.landmarks = landmarks;
+          this.isLoading = false;
+        }
+      });   
   }
 }

@@ -51,8 +51,8 @@ export class LandmarkListModifyComponent implements OnInit, OnChanges {
   deleteItem(landmark: Landmark): void {
     if (confirm('Are you sure you want to delete this Landmark?')) {
       this.landmarkService.deleteLandmark(landmark)
-        .subscribe(res => {
-          if (res) {
+        .subscribe((isDeleted) => {
+          if (isDeleted) {
             this.landmarks = this.landmarks.filter(item => item.id !== landmark.id);
             this.fileredLandmarks = this.landmarks;
           }

@@ -139,12 +139,11 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
     const newLandmark: Landmark = data;
     this.landmarkService.createLandmark(newLandmark)
       .subscribe(
-        (res) => {
-          newLandmark.id = res.id;
+        (createdLandmark) => {
           this.clearFormAndGoBack();
         }, 
-        (err) => {
-          this.serverErrors = err.error.message;
+        (errorResponse) => {
+          this.serverErrors = errorResponse.error.message;
           this.landmarkForm.enable();
         });
   }
@@ -154,11 +153,11 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
     modifiedLandmark.id = this.landmark.id;
     this.landmarkService.updateLandmark(modifiedLandmark)
       .subscribe(
-        (res) => {
+        (udpatedLandmark) => {
           this.clearFormAndGoBack();
         },
-        (err) => {
-          this.serverErrors = err.error.message;
+        (errorResponse) => {
+          this.serverErrors = errorResponse.error.message;
           this.landmarkForm.enable();
         });
   }

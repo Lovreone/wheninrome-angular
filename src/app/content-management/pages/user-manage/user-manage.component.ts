@@ -25,15 +25,16 @@ export class UserManageComponent implements OnInit {
     this.userId = this.route.snapshot.paramMap.get('userId') || '';
     if (this.userId) {
       mockResDelay(() => {
-        this.userService.getUserById(this.userId).subscribe(
-          (res) => {
-            this.user = res; 
-          },
-          (err) => {
-            // Use case: Wrong/non-existing item ID in urlPath 
-            this.router.navigate(['not-found'], { relativeTo: this.route.parent }); 
-          });
-          this.isLoading = false
+        this.userService.getUserById(this.userId)
+          .subscribe(
+            (fetchedUser) => {
+              this.user = fetchedUser; 
+            },
+            (errorResponse) => {
+              // Use case: Wrong/non-existing item ID in urlPath 
+              this.router.navigate(['not-found'], { relativeTo: this.route.parent }); 
+            });
+        this.isLoading = false;
       });
     }
   }

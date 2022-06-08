@@ -34,8 +34,8 @@ export class CityListModifyComponent implements OnInit {
     // TODO: Temporary (Development only) functionality, disable for Prod
     if (confirm('Are you sure you want to delete this City?')) {
       this.cityService.deleteCity(city)
-        .subscribe(res => {
-          if (res) {
+        .subscribe((isDeleted) => {
+          if (isDeleted) {
             this.cities = this.cities.filter(item => item.id !== city.id);
           }
         });
