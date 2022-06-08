@@ -1,9 +1,9 @@
 <app-header-portal></app-header-portal>
-<h2>TOUR PAGE</h2> <!-- TODO: Rename me dynamically -->
-<br>
-
-<p>tour-manage-page works!</p>
-
-<app-tour-item-modify></app-tour-item-modify>
-
+<h2>{{ !isNew ? (tour?.name | uppercase) : '' }} TOUR PAGE</h2>
+<app-tour-item-modify
+    [tour]="tour"
+    [isLoading]="isLoading"
+    [isNew]="isNew"
+></app-tour-item-modify>
+<p><a routerLink="/portal/tours" routerLinkActive="active">Back to List</a></p>
 <app-footer-portal></app-footer-portal>

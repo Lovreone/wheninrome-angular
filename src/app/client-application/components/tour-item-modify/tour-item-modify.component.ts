@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TourService } from 'src/app/shared/services/tour.service';
+import { getSimpleDateString } from 'src/utils/utils';
 import { Tour } from './../../../shared/models/tour.model';
 
 @Component({
@@ -13,7 +14,7 @@ export class TourItemModifyComponent implements OnInit, OnChanges {
 
   @Input() tour!: Tour;
   @Input() isLoading!: boolean;
-  @Input() isNew: boolean = true; // FIXME: Shouldnt be initialized here, comes from parent
+  @Input() isNew!: boolean;
   
   tourForm!: FormGroup;
   serverErrors!: Array<string>;
@@ -37,14 +38,13 @@ export class TourItemModifyComponent implements OnInit, OnChanges {
       tourDate: new FormControl(undefined, Validators.required), 
       startingLocation: new FormControl(undefined, Validators.required),
       tourNotes: new FormControl(undefined),
-      // userId: new FormControl(undefined), // TODO: Extract dynamically, not with input
     });
   }
 
   fillForm(): void {
     if (this.tour) {
       this.tourForm.get('name')?.setValue(this.tour.name);
-      this.tourForm.get('tourDate')?.setValue(this.tour.tourDate);
+      this.tourForm.get('tourDate')?.setValue(getSimpleDateString(new Date(this.tour.tourDate)));
       this.tourForm.get('startingLocation')?.setValue(this.tour.startingLocation);
       this.tourForm.get('tourNotes')?.setValue(this.tour.tourNotes);
     } 
@@ -95,7 +95,7 @@ export class TourItemModifyComponent implements OnInit, OnChanges {
   clearFormAndGoBack(): void {
     this.tourForm.reset();
     this.serverErrors = []; 
-    this.router.navigateByUrl(`portal/my-tours`);
+    this.router.navigateByUrl(`portal/tours`);
   }
 
   isFieldInvalid(fieldName: string): boolean {
