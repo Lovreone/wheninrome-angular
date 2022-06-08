@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TourService } from 'src/app/shared/services/tour.service';
+import { take, exhaustMap } from 'rxjs/operators';
 import { getSimpleDateString } from 'src/utils/utils';
+import { TourService } from 'src/app/shared/services/tour.service';
+import { AuthService } from './../../../shared/services/auth/auth.service';
 import { Tour } from './../../../shared/models/tour.model';
 
 @Component({
@@ -21,7 +23,8 @@ export class TourItemModifyComponent implements OnInit, OnChanges {
 
   constructor(
     private router: Router,
-    private tourService: TourService
+    private tourService: TourService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -52,50 +55,31 @@ export class TourItemModifyComponent implements OnInit, OnChanges {
 
   saveTour(): void {
     this.tourForm.disable();
-    const tour = this.tourForm.getRawValue() as Tour;
-    tour.tourDate = new Date(tour.tourDate); 
-    this.isNew ? this.saveNew(tour) : this.saveModified(tour);
-  }
-
-  saveNew(data: Tour): void {
-    let userId: string = '';
-    const userData = localStorage.getItem('userData');
-    if (userData) {
-      userId = JSON.parse(userData).id; // FIXME: Rethink if better solution for userId extraction is needed 
-    } 
-    const newTour: Tour = { ...data, userId };
-    console.error('"NEW TOUR" DATA PASSED', newTour, 'localStorage id', userId); // FIXME: Remove later
-
-    this.tourService.createTour(newTour)
-      .subscribe(
-        (createdTour) => {
-          newTour.id = createdTour.id;
-          this.clearFormAndGoBack();
-        }, 
-        (errorResponse) => {
-          this.serverErrors = errorResponse.error.message;
-          this.tourForm.enable();
-        });
-  }
-
-  saveModified(data: Tour): void {
-    const modifiedTour: Tour = data;
-    modifiedTour.id = this.tour.id;
-    this.tourService.updateTour(modifiedTour)
-      .subscribe(
-        (updatedTour) => {
-          this.clearFormAndGoBack();
+    this.serverErrors = []; 
+    const tourData = this.tourForm.getRawValue() as Tour;
+    this.authService.getUserProfile()
+      .pipe(
+        take(1),
+        exhaustMap((userData) => {
+          tourData.userId = userData.userId;
+          tourData.tourDate = new Date(tourData.tourDate);
+          if (this.isNew) {
+            return this.tourService.createTour(tourData).pipe(take(1));
+          } else {
+            tourData.id = this.tour.id;
+            return this.tourService.updateTour(tourData).pipe(take(1));
+          }  
+        })
+      ).subscribe(
+        (savedTour) => {
+          this.tourForm.reset();
+          this.serverErrors = []; 
+          this.router.navigateByUrl(`portal/tours`);
         },
         (errorResponse) => {
           this.serverErrors = errorResponse.error.message;
           this.tourForm.enable();
         });
-  }
-
-  clearFormAndGoBack(): void {
-    this.tourForm.reset();
-    this.serverErrors = []; 
-    this.router.navigateByUrl(`portal/tours`);
   }
 
   isFieldInvalid(fieldName: string): boolean {
