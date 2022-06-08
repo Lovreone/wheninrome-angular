@@ -21,7 +21,7 @@ export class TourListModifyComponent implements OnInit {
   ngOnInit(): void { }
 
   viewItem(tour: Tour): void  {
-    this.router.navigateByUrl(`/portal/tours/${tour.id}`); // TODO: Page and Route to be created
+    this.router.navigateByUrl(`/portal/tours/view/${tour.id}`);
   }
 
   modifyItem(tour: Tour): void  {

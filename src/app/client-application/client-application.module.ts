@@ -12,6 +12,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { ToursManagePageComponent } from './pages/tours-manage-page/tours-manage-page.component';
 import { TourManagePageComponent } from './pages/tour-manage-page/tour-manage-page.component';
+import { TourViewPageComponent } from './pages/tour-view-page/tour-view-page.component';
 // Portal Components:
 import { HeaderPortalComponent } from './components/header-portal/header-portal.component';
 import { FooterPortalComponent } from './components/footer-portal/footer-portal.component';
@@ -42,7 +43,8 @@ import { TourItemModifyComponent } from './components/tour-item-modify/tour-item
     ToursManagePageComponent,
     TourManagePageComponent,
     TourListModifyComponent,
-    TourItemModifyComponent
+    TourItemModifyComponent,
+    TourViewPageComponent
   ],
   imports: [
     CommonModule,

@@ -9,6 +9,7 @@ import { LandmarkPageComponent } from './pages/landmark-page/landmark-page.compo
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { ToursManagePageComponent } from './pages/tours-manage-page/tours-manage-page.component';
 import { TourManagePageComponent } from './pages/tour-manage-page/tour-manage-page.component';
+import { TourViewPageComponent } from './pages/tour-view-page/tour-view-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'about', pathMatch: 'full' },
@@ -24,7 +25,7 @@ const routes: Routes = [
   { path: 'tours',
     children: [
       { path: '', component: ToursManagePageComponent, canActivate: [AuthGuard] }, 
-      // TODO: Add in a page for Tour preview, i.e. /portal/tours/${tour.id}`
+      { path: 'view/:tourId', component: TourViewPageComponent, canActivate: [AuthGuard] }, 
       { path: 'create', component: TourManagePageComponent, canActivate: [AuthGuard] },
       { path: 'modify/:tourId', component: TourManagePageComponent, canActivate: [AuthGuard] }
     ]
