@@ -1,7 +1,7 @@
 <app-loading-spinner *ngIf="isLoading; else tourList"></app-loading-spinner>
 
 <ng-template #tourList>
-    <table>
+    <table *ngIf="tours.length">
         <tr>
             <th>Name</th>
             <th>Start date</th>
@@ -21,4 +21,9 @@
             </td>
         </tr>       
     </table>
+
+    <br>
+    <span *ngIf="!tours.length">
+        <p>You don't currently have any tours.</p>
+    </span>
 </ng-template>
