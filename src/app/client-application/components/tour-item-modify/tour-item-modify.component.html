@@ -48,6 +48,21 @@
         </div>
     </div><br>
 
+    <!-- CITY field -->
+    <label for="city"><b>Select a City*:</b></label><br>
+    <select id="city" required
+        formControlName="cityId"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('cityId') }">
+        <option [ngValue]="null" disabled>Select a city</option>
+        <option *ngFor="let city of citySelectOptions" [ngValue]="city.id">{{city.value}}</option>
+    </select><br>
+    <!-- CITY validation messages -->
+    <div *ngIf="isFieldInvalid('cityId')" class="error-message">
+        <div *ngIf="cityId?.errors?.required">
+            City selection is required.
+        </div>
+    </div><br>
+
     <!-- TOUR NOTES field -->
     <label for="tourNotes">Tour notes:</label><br>
     <textarea id="tourNotes" rows="3" placeholder="Tour notes" required

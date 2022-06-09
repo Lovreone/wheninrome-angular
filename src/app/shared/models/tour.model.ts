@@ -5,6 +5,7 @@ export interface Tour {
     startingLocation: string;
     tourNotes: string;
     userId: string;
+    cityId: string;
     createdAt: Date;
     modifiedAt: Date;    
 }
