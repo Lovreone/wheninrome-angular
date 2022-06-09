@@ -3,6 +3,7 @@ import { take, exhaustMap } from 'rxjs/operators';
 import { mockResDelay } from 'src/utils/config';
 import { AuthService } from './../../../shared/services/auth/auth.service';
 import { TourService } from '../../../shared/services/tour.service';
+import { CityService } from './../../../shared/services/city.service';
 import { Tour } from './../../../shared/models/tour.model';
 
 @Component({
@@ -14,14 +15,23 @@ export class ToursManagePageComponent implements OnInit {
 
   tours: Tour[] = [];
   isLoading = true;
+  citiesMap = new Map<string, string>();
 
   constructor(
     private tourService: TourService,
+    private cityService: CityService,
     private authService: AuthService
   ) { }
 
   ngOnInit(): void {
     mockResDelay(() => {
+      this.cityService.getActiveCities()
+      .pipe(take(1))
+      .subscribe((activeCities) => {
+        activeCities?.forEach(city => {
+          this.citiesMap.set(city.id, city.name);
+        })
+      });
       this.authService.getUserProfile()
         .pipe(
           take(1),

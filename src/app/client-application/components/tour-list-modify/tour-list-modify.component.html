@@ -5,6 +5,7 @@
         <tr>
             <th>Name</th>
             <th>Start date</th>
+            <th>City</th>
             <th>Start point</th>
             <th>Notes</th>
             <th colspan="2">Actions</th>
@@ -12,6 +13,7 @@
         <tr *ngFor="let tour of tours">
             <td>{{tour.name}}</td>
             <td>{{tour.tourDate | date:'fullDate'}}</td>
+            <td>{{getCityName(tour.cityId)}}</td>
             <td>{{tour.startingLocation}}</td>
             <td>{{tour.tourNotes}}</td>
             <td>

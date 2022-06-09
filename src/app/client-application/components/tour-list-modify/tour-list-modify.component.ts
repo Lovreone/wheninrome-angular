@@ -11,6 +11,7 @@ import { Tour } from './../../../shared/models/tour.model';
 export class TourListModifyComponent implements OnInit {
 
   @Input() tours: Array<Tour> = [];
+  @Input() citiesMap!: Map<string,string>;
   @Input() isLoading = true;
 
   constructor(
@@ -19,6 +20,10 @@ export class TourListModifyComponent implements OnInit {
   ) { }
 
   ngOnInit(): void { }
+
+  getCityName(cityId: string): string | undefined {
+    return this.citiesMap.get(cityId); 
+  }
 
   viewItem(tour: Tour): void  {
     this.router.navigateByUrl(`/portal/tours/view/${tour.id}`);
