@@ -1,0 +1,9 @@
+<app-header-portal></app-header-portal>
+<h2>{{ !isNew ? (tour?.name | uppercase) : '' }} TOUR PAGE</h2>
+<app-tour-item-modify
+    [tour]="tour"
+    [isLoading]="isLoading"
+    [isNew]="isNew"
+></app-tour-item-modify>
+<p><a routerLink="/portal/tours" routerLinkActive="active">Back to List</a></p>
+<app-footer-portal></app-footer-portal>

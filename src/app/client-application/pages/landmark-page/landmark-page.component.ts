@@ -33,13 +33,13 @@ export class LandmarkPageComponent implements OnInit {
     mockResDelay(()=> {
       this.landmarkService.getLandmarkBySlug(slug)
         .subscribe(
-          (res) => {
-            this.landmark = res
-            this.fullLandmarkName = res.name
-              .concat(', ', res.city.name)
+          (fetchedLandmark) => {
+            this.landmark = fetchedLandmark;
+            this.fullLandmarkName = fetchedLandmark.name
+              .concat(', ', fetchedLandmark.city.name)
               .toUpperCase();
           },
-          (err) => {
+          (errorResponse) => {
             this.router.navigateByUrl('not-found');
           });
       this.isLoading = false;

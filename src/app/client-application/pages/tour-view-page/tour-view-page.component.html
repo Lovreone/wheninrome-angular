@@ -1,0 +1,19 @@
+<app-header-portal></app-header-portal>
+<app-loading-spinner *ngIf="isLoading; else tourData"></app-loading-spinner>
+<ng-template #tourData>
+    <h2>{{ tour?.name | uppercase }} TOUR PAGE</h2>
+    <br>
+    <p *ngIf="tour">
+        <b>ID:</b> {{ tour.id }} <br>
+        <b>Name:</b> {{ tour.name }}<br>
+        <b>Start date:</b> {{ tour.tourDate | date:'fullDate' }}<br>
+        <b>Start location:</b> {{ tour.startingLocation }}<br>
+        <b>Tour notes:</b> {{ tour.tourNotes }}<br>
+        <b>Creator ID:</b> {{ tour.userId }}<br>
+        <b>Created:</b> {{ tour.createdAt | date:'fullDate' }}<br>
+        <b>Last modified:</b> {{ tour.modifiedAt | date:'fullDate' }}<br>
+    </p><br>
+</ng-template>
+<p><a routerLink="/portal/tours/create" routerLinkActive="active">Create Tour</a></p>
+<p><a routerLink="/portal/tours" routerLinkActive="active">Back to List</a></p>
+<app-footer-portal></app-footer-portal>

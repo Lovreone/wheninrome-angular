@@ -8,6 +8,7 @@
         </span>
         <span *ngIf="isLoggedIn">
             <a routerLink="/portal/user-profile" routerLinkActive="active">MyProfile</a> |
+            <a routerLink="/portal/tours" routerLinkActive="active">MyTours</a> |
             <a routerLink="" (click)="onLogout()">Logout</a> | 
             <b>Welcome {{userFullName}}!</b>
         </span>

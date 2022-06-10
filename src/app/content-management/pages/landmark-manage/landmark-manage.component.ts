@@ -31,10 +31,10 @@ export class LandmarkManageComponent implements OnInit {
       mockResDelay(() => {
         this.landmarkService.getLandmarkById(this.landmarkId)
           .subscribe(
-            (res) => {
-              this.landmark = res;
+            (fetchedlandmark) => {
+              this.landmark = fetchedlandmark;
             },
-            (err) => {
+            (errorResponse) => {
               // Use case: Wrong/non-existing item ID in urlPath 
               this.router.navigate(['not-found'], { relativeTo: this.route.parent }); 
             });

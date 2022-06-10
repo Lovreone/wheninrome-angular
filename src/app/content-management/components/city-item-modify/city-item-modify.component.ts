@@ -68,12 +68,11 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
     const newCity: City = data;
     this.cityService.createCity(newCity)
       .subscribe(
-        (res) => {
-          newCity.id = res.id;
+        (createdCity) => {
           this.clearFormAndGoBack();
         }, 
-        (err) => {
-          this.serverErrors = err.error.message;
+        (errorResponse) => {
+          this.serverErrors = errorResponse.error.message;
           this.cityForm.enable();
         });
   }
@@ -83,11 +82,11 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
     modifiedCity.id = this.city.id;
     this.cityService.updateCity(modifiedCity)
       .subscribe(
-        (res) => {
+        (updatedCity) => {
           this.clearFormAndGoBack();
         },
-        (err) => {
-          this.serverErrors = err.error.message;
+        (errorResponse) => {
+          this.serverErrors = errorResponse.error.message;
           this.cityForm.enable();
         });
   }

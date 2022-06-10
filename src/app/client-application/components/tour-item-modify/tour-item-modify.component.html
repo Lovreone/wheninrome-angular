@@ -1,0 +1,92 @@
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+<form *ngIf="!isLoading" [formGroup]="tourForm">
+  
+    <br>
+    <p *ngIf="tour?.createdAt">Created: {{ tour.createdAt | date:'fullDate' }}</p>
+    <p *ngIf="tour?.modifiedAt">Last Modified: {{ tour.modifiedAt | date:'fullDate' }}</p>
+    <br>
+        
+    <!-- NAME field -->
+    <label for="name"><b>Tour name*:</b></label><br>
+    <input type="text" id="name" placeholder="Tour name" required 
+        formControlName="name"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('name') }"><br>
+    <!-- NAME validation messages -->
+    <div *ngIf="isFieldInvalid('name')" class="error-message">
+        <div *ngIf="name?.errors?.required">
+            Tour name is required.
+        </div>
+        <div *ngIf="name?.errors?.minlength">
+            Tour name must be at least {{ name?.errors?.minlength?.requiredLength }} characters long.
+        </div>
+    </div><br>
+
+    <!-- TOUR DATE field -->
+    <!-- FIXME: Rethink if we need the value/min/max params in template -->
+    <label for="tourDate"><b>Tour date*:</b></label><br>
+    <input type="date" id="tourDate"
+        value="2022-07-22" min="2022-01-01" max="2030-12-31" required
+        formControlName="tourDate"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('tourDate') }"><br>
+    <!-- TOUR DATE validation messages -->
+    <div *ngIf="isFieldInvalid('tourDate')" class="error-message">
+        <div *ngIf="tourDate?.errors?.required">
+            Tour date is required.
+        </div>
+    </div><br>
+
+    <!-- STARTING LOCATION field -->
+    <label for="startingLocation"><b>Starting location*:</b></label><br>
+    <input type="text" id="startingLocation" placeholder="Tour starting location (coordinates)" required 
+        formControlName="startingLocation"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('startingLocation') }"><br>
+    <!-- NAME validation messages -->
+    <div *ngIf="isFieldInvalid('startingLocation')" class="error-message">
+        <div *ngIf="startingLocation?.errors?.required">
+            Tour starting location is required.
+        </div>
+    </div><br>
+
+    <!-- CITY field -->
+    <label for="city"><b>Select a City*:</b></label><br>
+    <select id="city" required
+        formControlName="cityId"
+        [ngClass]="{ 'field-invalid': isFieldInvalid('cityId') }">
+        <option [ngValue]="null" disabled>Select a city</option>
+        <option *ngFor="let city of citySelectOptions" [ngValue]="city.id">{{city.value}}</option>
+    </select><br>
+    <!-- CITY validation messages -->
+    <div *ngIf="isFieldInvalid('cityId')" class="error-message">
+        <div *ngIf="cityId?.errors?.required">
+            City selection is required.
+        </div>
+    </div><br>
+
+    <!-- TOUR NOTES field -->
+    <label for="tourNotes">Tour notes:</label><br>
+    <textarea id="tourNotes" rows="3" placeholder="Tour notes" required
+        formControlName="tourNotes"></textarea><br>
+    <!-- TOUR NOTES validation messages -->
+    <div *ngIf="isFieldInvalid('tourNotes')" class="error-message">
+        <div *ngIf="tourNotes?.errors?.maxlength">
+            Tour notes can be a max of {{ tourNotes?.errors?.maxlength?.requiredLength }} characters long.
+        </div>
+    </div><br>
+    
+    <button (click)="saveTour()" [disabled]="!(tourForm.valid && tourForm.dirty)">
+        {{ isNew ? 'Create Tour' : 'Update Tour' }}
+    </button>
+
+</form>
+
+<br>
+<div *ngIf="serverErrors && serverErrors.length">
+    <p>Error messages:</p>
+    <ul>
+        <li *ngFor="let error of serverErrors" class="error-message">
+            {{ error }}
+        </li> 
+    </ul>
+</div>
+<br>

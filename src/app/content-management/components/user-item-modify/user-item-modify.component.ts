@@ -60,11 +60,11 @@ export class UserItemModifyComponent implements OnInit, OnChanges {
     modifiedUser.id = this.user.id;
     this.userService.updateUser(modifiedUser)
       .subscribe(
-        (res) => {
+        (udpatedUser) => {
           this.clearFormAndGoBack();
         },
-        (err) => {
-          this.serverErrors = err;
+        (errorResponse) => {
+          this.serverErrors = errorResponse;
           this.userForm.enable();
         });
   }

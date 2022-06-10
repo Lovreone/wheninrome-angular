@@ -36,16 +36,16 @@ export class AuthService {
         `${baseApiUrl}/auth/login`,
         data)
       .pipe(
-        tap((res) => {
+        tap((loginResponse) => {
           this.handleAuth(
-            res.access_token, 
-            res.tokenIssuedAt, 
-            res.tokenExpiresAt, 
-            res.user
+            loginResponse.access_token, 
+            loginResponse.tokenIssuedAt, 
+            loginResponse.tokenExpiresAt, 
+            loginResponse.user
           );
         }),
-        map((res) => { // Not used atm
-          return res.user;
+        map((loginResponse) => { // Not used atm
+          return loginResponse.user;
         }),
         catchError(this.handleError)
       );
@@ -114,8 +114,8 @@ export class AuthService {
         {headers: this.headers}
       )
       .pipe(
-        map((res) => {
-          return res || {};
+        map((userData) => {
+          return userData || {};
         }),
         catchError(this.handleError)
       );

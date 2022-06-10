@@ -1,0 +1,31 @@
+<app-loading-spinner *ngIf="isLoading; else tourList"></app-loading-spinner>
+
+<ng-template #tourList>
+    <table *ngIf="tours.length">
+        <tr>
+            <th>Name</th>
+            <th>Start date</th>
+            <th>City</th>
+            <th>Start point</th>
+            <th>Notes</th>
+            <th colspan="2">Actions</th>
+        </tr>
+        <tr *ngFor="let tour of tours">
+            <td>{{tour.name}}</td>
+            <td>{{tour.tourDate | date:'fullDate'}}</td>
+            <td>{{getCityName(tour.cityId)}}</td>
+            <td>{{tour.startingLocation}}</td>
+            <td>{{tour.tourNotes}}</td>
+            <td>
+                <button (click)="viewItem(tour)">View</button>
+                <button (click)="modifyItem(tour)">Modify</button>
+                <button (click)="deleteItem(tour)">Delete</button>
+            </td>
+        </tr>       
+    </table>
+
+    <br>
+    <span *ngIf="!tours.length">
+        <p>You don't currently have any tours.</p>
+    </span>
+</ng-template>

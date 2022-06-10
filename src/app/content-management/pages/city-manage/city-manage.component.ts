@@ -29,15 +29,16 @@ export class CityManageComponent implements OnInit {
     this.isLoading = !this.isNew;
     if (this.cityId) {
       mockResDelay(() => {
-        this.cityService.getCityById(this.cityId).subscribe(
-          (res) => {
-            this.city = res; 
-          },
-          (err) => {
-            // Use case: Wrong/non-existing item ID in urlPath 
-            this.router.navigate(['not-found'], { relativeTo: this.route.parent }); 
-          });
-          this.isLoading = false
+        this.cityService.getCityById(this.cityId)
+          .subscribe(
+            (fetchedCity) => {
+              this.city = fetchedCity; 
+            },
+            (errorResponse) => {
+              // Use case: Wrong/non-existing item ID in urlPath 
+              this.router.navigate(['not-found'], { relativeTo: this.route.parent }); 
+            });
+        this.isLoading = false;
       });
     }
   }

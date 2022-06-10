@@ -20,12 +20,13 @@ export class CitiesPageComponent implements OnInit {
 
   ngOnInit(): void {
     mockResDelay(() => {
-      this.cityService.getActiveCities().subscribe((res) => {
-        if(res) {
-          this.cities = res;
-          this.isLoading = false;
-        }
-      });   
+      this.cityService.getActiveCities()
+        .subscribe((activeCities) => {
+          if(activeCities) {
+            this.cities = activeCities;
+            this.isLoading = false;
+          }
+        });   
     });
   }
 }

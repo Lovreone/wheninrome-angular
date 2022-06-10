@@ -29,8 +29,8 @@ export class UserListModifyComponent implements OnInit {
     // TODO: Temporary (Development only) functionality, disable for Prod
     if (confirm('Are you sure you want to delete this User?')) {
       this.userService.deleteUser(user)
-        .subscribe(res => {
-          if (res) {
+        .subscribe((isDeleted) => {
+          if (isDeleted) {
             this.users = this.users.filter(item => item.id !== user.id);
           }
         });
