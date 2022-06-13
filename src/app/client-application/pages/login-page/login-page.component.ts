@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, Validators, UntypedFormControl } from '@angular/forms';
 import { EMAIL_REGEX } from 'src/utils/utils';
 import { AuthService } from './../../../shared/services/auth/auth.service';
 import { UserLoginData } from './../../../shared/models/user.model';
@@ -12,7 +12,7 @@ import { UserLoginData } from './../../../shared/models/user.model';
 })
 export class LoginPageComponent implements OnInit {
 
-  loginForm!: FormGroup;
+  loginForm!: UntypedFormGroup;
   serverErrors!: Array<string>;
 
   constructor(
@@ -25,13 +25,13 @@ export class LoginPageComponent implements OnInit {
   }
 
   createForm(): void {
-    this.loginForm = new FormGroup({
-      email: new FormControl(undefined, [
+    this.loginForm = new UntypedFormGroup({
+      email: new UntypedFormControl(undefined, [
         Validators.required, 
         Validators.email, 
         Validators.pattern(EMAIL_REGEX)]
       ),
-      password: new FormControl(undefined, Validators.required)
+      password: new UntypedFormControl(undefined, Validators.required)
     });
   }
 

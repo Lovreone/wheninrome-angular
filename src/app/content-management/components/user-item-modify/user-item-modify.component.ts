@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EMAIL_REGEX } from './../../../../utils/utils';
 import { UserService } from './../../../shared/services/user.service';
@@ -15,7 +15,7 @@ export class UserItemModifyComponent implements OnInit, OnChanges {
   @Input() user!: User;
   @Input() isLoading!: boolean;
 
-  userForm!: FormGroup;
+  userForm!: UntypedFormGroup;
   serverErrors!: Array<string>;
 
   constructor(
@@ -32,14 +32,14 @@ export class UserItemModifyComponent implements OnInit, OnChanges {
   }
 
   createForm(): void {
-    this.userForm = new FormGroup({
-      firstName: new FormControl(undefined, Validators.required),
-      lastName: new FormControl(undefined, Validators.required),
-      email: new FormControl(undefined, 
+    this.userForm = new UntypedFormGroup({
+      firstName: new UntypedFormControl(undefined, Validators.required),
+      lastName: new UntypedFormControl(undefined, Validators.required),
+      email: new UntypedFormControl(undefined, 
         [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]
       ),
-      username: new FormControl(undefined, Validators.required),
-      isActive: new FormControl(true, Validators.required),
+      username: new UntypedFormControl(undefined, Validators.required),
+      isActive: new UntypedFormControl(true, Validators.required),
     });
   }
 

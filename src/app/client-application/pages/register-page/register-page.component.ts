@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
+import { UntypedFormGroup, Validators, UntypedFormControl, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from './../../../shared/services/auth/auth.service';
 import { UserRegisterData } from './../../../shared/models/user.model';
 import { EMAIL_REGEX } from 'src/utils/utils';
@@ -12,7 +12,7 @@ import { EMAIL_REGEX } from 'src/utils/utils';
 })
 export class RegisterPageComponent implements OnInit {
 
-  registerForm!: FormGroup;
+  registerForm!: UntypedFormGroup;
   serverErrors!: Array<string>;
 
   constructor(
@@ -25,14 +25,14 @@ export class RegisterPageComponent implements OnInit {
   }
 
   createForm(): void {
-    this.registerForm = new FormGroup({
-      firstName: new FormControl(undefined, Validators.required),
-      lastName: new FormControl(undefined, Validators.required),
-      email: new FormControl(undefined, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]),
-      username: new FormControl(undefined, Validators.required),
-      passGroup: new FormGroup({
-        enterPassword: new FormControl(undefined, Validators.required),
-        repeatPassword: new FormControl(undefined, Validators.required)
+    this.registerForm = new UntypedFormGroup({
+      firstName: new UntypedFormControl(undefined, Validators.required),
+      lastName: new UntypedFormControl(undefined, Validators.required),
+      email: new UntypedFormControl(undefined, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]),
+      username: new UntypedFormControl(undefined, Validators.required),
+      passGroup: new UntypedFormGroup({
+        enterPassword: new UntypedFormControl(undefined, Validators.required),
+        repeatPassword: new UntypedFormControl(undefined, Validators.required)
       }, this.passMatchValidator)
     });
   }

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 
 import { EMAIL_REGEX } from './../../../../utils/utils';
 import { UserService } from './../../../shared/services/user.service';
@@ -17,7 +17,7 @@ export class ProfileModifyComponent implements OnInit, OnChanges {
   @Output() isEditMode = new EventEmitter<boolean>();
   @Output() updatedUser = new EventEmitter<User>();
 
-  profileForm!: FormGroup;
+  profileForm!: UntypedFormGroup;
   serverErrors!: Array<string>;
 
   constructor(
@@ -32,13 +32,13 @@ export class ProfileModifyComponent implements OnInit, OnChanges {
   }
 
   createForm(): void {
-    this.profileForm = new FormGroup({
-      firstName: new FormControl(undefined, Validators.required),
-      lastName: new FormControl(undefined, Validators.required),
-      email: new FormControl(undefined, 
+    this.profileForm = new UntypedFormGroup({
+      firstName: new UntypedFormControl(undefined, Validators.required),
+      lastName: new UntypedFormControl(undefined, Validators.required),
+      email: new UntypedFormControl(undefined, 
         [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]
       ),
-      username: new FormControl(undefined, Validators.required),
+      username: new UntypedFormControl(undefined, Validators.required),
     });
   }
 

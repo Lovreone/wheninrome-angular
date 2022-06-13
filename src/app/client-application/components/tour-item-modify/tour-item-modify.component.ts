@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { take, exhaustMap } from 'rxjs/operators';
 import { getSimpleDateString, SelectOption } from 'src/utils/utils';
@@ -20,7 +20,7 @@ export class TourItemModifyComponent implements OnInit, OnChanges {
   @Input() isLoading!: boolean;
   @Input() isNew!: boolean;
   
-  tourForm!: FormGroup;
+  tourForm!: UntypedFormGroup;
   cities!: Array<City>;
   citySelectOptions!: Array<SelectOption>;
   serverErrors!: Array<string>;
@@ -42,12 +42,12 @@ export class TourItemModifyComponent implements OnInit, OnChanges {
   }
 
   createForm(): void {
-    this.tourForm = new FormGroup({
-      name: new FormControl(undefined, [Validators.required]),
-      tourDate: new FormControl(undefined, Validators.required), 
-      startingLocation: new FormControl(undefined, Validators.required),
-      tourNotes: new FormControl(undefined),
-      cityId: new FormControl(undefined, Validators.required),
+    this.tourForm = new UntypedFormGroup({
+      name: new UntypedFormControl(undefined, [Validators.required]),
+      tourDate: new UntypedFormControl(undefined, Validators.required), 
+      startingLocation: new UntypedFormControl(undefined, Validators.required),
+      tourNotes: new UntypedFormControl(undefined),
+      cityId: new UntypedFormControl(undefined, Validators.required),
     });
   }
 
