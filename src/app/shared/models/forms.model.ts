@@ -6,3 +6,11 @@ export interface ProfileModifyForm {
     email: FormControl<string|null>,
     username: FormControl<string|null>
 }
+
+export interface TourItemModifyForm {
+    name: FormControl<string|null>,
+    tourDate: FormControl<string|null>,
+    startingLocation: FormControl<string|null>,
+    tourNotes: FormControl<string|null>,
+    cityId: FormControl<string|null>
+}
