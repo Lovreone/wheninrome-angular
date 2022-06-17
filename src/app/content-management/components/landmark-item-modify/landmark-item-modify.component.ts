@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, OnChanges, Input } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -21,7 +21,7 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
   @Input() isNew!: boolean;
   @Input() isLoading!: boolean;
 
-  landmarkForm!: FormGroup;
+  landmarkForm!: UntypedFormGroup;
   cities!: Array<City>;
   citySelectOptions!: Array<SelectOption>;
   serverErrors!: Array<string>;
@@ -50,20 +50,20 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
   }
 
   createForm(): void {
-    this.landmarkForm = new FormGroup({
-      name: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
-      slug: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
-      introText: new FormControl(undefined, [Validators.required, Validators.maxLength(50)]),
-      description: new FormControl(undefined),
-      entranceFee: new FormControl(undefined, Validators.min(0)),
-      officialWebsite: new FormControl(undefined, Validators.pattern(URL_REGEX)),
-      featuredImage: new FormControl(undefined),
-      howToArrive: new FormControl(undefined),
-      workingDays: new FormControl(undefined),
-      workingHours: new FormControl(undefined),
-      coordinates: new FormControl(undefined),
-      city: new FormControl(undefined, Validators.required),
-      isActive: new FormControl(true, Validators.required)
+    this.landmarkForm = new UntypedFormGroup({
+      name: new UntypedFormControl(undefined, [Validators.required, Validators.minLength(3)]),
+      slug: new UntypedFormControl(undefined, [Validators.required, Validators.minLength(3)]),
+      introText: new UntypedFormControl(undefined, [Validators.required, Validators.maxLength(50)]),
+      description: new UntypedFormControl(undefined),
+      entranceFee: new UntypedFormControl(undefined, Validators.min(0)),
+      officialWebsite: new UntypedFormControl(undefined, Validators.pattern(URL_REGEX)),
+      featuredImage: new UntypedFormControl(undefined),
+      howToArrive: new UntypedFormControl(undefined),
+      workingDays: new UntypedFormControl(undefined),
+      workingHours: new UntypedFormControl(undefined),
+      coordinates: new UntypedFormControl(undefined),
+      city: new UntypedFormControl(undefined, Validators.required),
+      isActive: new UntypedFormControl(true, Validators.required)
     });
   }
 

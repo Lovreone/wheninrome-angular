@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 
 import { CityService } from './../../../shared/services/city.service';
 import { City } from './../../../shared/models/city.model';
@@ -16,7 +16,7 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
   @Input() isLoading!: boolean;
   @Input() isNew!: boolean;
 
-  cityForm!: FormGroup;
+  cityForm!: UntypedFormGroup;
   serverErrors!: Array<string>;
 
   constructor(
@@ -33,15 +33,15 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
   }
 
   createForm(): void {
-    this.cityForm = new FormGroup({
-      name: new FormControl(undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
-      slug: new FormControl(undefined, [Validators.required, Validators.minLength(3)]),
-      country: new FormControl(undefined, Validators.minLength(3)),
-      featuredImage: new FormControl(undefined),
-      introText: new FormControl(undefined, [Validators.required, Validators.maxLength(50)]),
-      localCurrency: new FormControl(undefined),
-      description: new FormControl(undefined),
-      isActive: new FormControl(true, Validators.required),
+    this.cityForm = new UntypedFormGroup({
+      name: new UntypedFormControl(undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+      slug: new UntypedFormControl(undefined, [Validators.required, Validators.minLength(3)]),
+      country: new UntypedFormControl(undefined, Validators.minLength(3)),
+      featuredImage: new UntypedFormControl(undefined),
+      introText: new UntypedFormControl(undefined, [Validators.required, Validators.maxLength(50)]),
+      localCurrency: new UntypedFormControl(undefined),
+      description: new UntypedFormControl(undefined),
+      isActive: new UntypedFormControl(true, Validators.required),
     });
   }
 

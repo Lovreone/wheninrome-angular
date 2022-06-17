@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { take, exhaustMap } from 'rxjs/operators';
 import { getSimpleDateString, SelectOption } from 'src/utils/utils';
+import { TourItemModifyForm } from './../../../shared/models/forms.model';
 import { TourService } from 'src/app/shared/services/tour.service';
 import { AuthService } from './../../../shared/services/auth/auth.service';
 import { CityService } from './../../../shared/services/city.service';
@@ -20,7 +21,7 @@ export class TourItemModifyComponent implements OnInit, OnChanges {
   @Input() isLoading!: boolean;
   @Input() isNew!: boolean;
   
-  tourForm!: FormGroup;
+  tourForm!: FormGroup<TourItemModifyForm>;
   cities!: Array<City>;
   citySelectOptions!: Array<SelectOption>;
   serverErrors!: Array<string>;
@@ -43,18 +44,20 @@ export class TourItemModifyComponent implements OnInit, OnChanges {
 
   createForm(): void {
     this.tourForm = new FormGroup({
-      name: new FormControl(undefined, [Validators.required]),
-      tourDate: new FormControl(undefined, Validators.required), 
-      startingLocation: new FormControl(undefined, Validators.required),
-      tourNotes: new FormControl(undefined),
-      cityId: new FormControl(undefined, Validators.required),
+      name: new FormControl<string|null>(null, [Validators.required]),
+      tourDate: new FormControl<string|null>(null, Validators.required), 
+      startingLocation: new FormControl<string|null>(null, Validators.required),
+      tourNotes: new FormControl<string|null>(null),
+      cityId: new FormControl<string|null>(null, Validators.required),
     });
   }
 
   fillForm(): void {
     if (this.tour) {
       this.tourForm.get('name')?.setValue(this.tour.name);
-      this.tourForm.get('tourDate')?.setValue(getSimpleDateString(new Date(this.tour.tourDate)));
+      this.tourForm.get('tourDate')?.setValue(
+        getSimpleDateString(new Date(this.tour.tourDate))
+      );
       this.tourForm.get('startingLocation')?.setValue(this.tour.startingLocation);
       this.tourForm.get('tourNotes')?.setValue(this.tour.tourNotes);
       this.tourForm.get('cityId')?.setValue(this.tour.cityId);
@@ -64,18 +67,24 @@ export class TourItemModifyComponent implements OnInit, OnChanges {
   saveTour(): void {
     this.tourForm.disable();
     this.serverErrors = []; 
-    const tourData = this.tourForm.getRawValue() as Tour;
+    const formData = this.tourForm.getRawValue();
     this.authService.getUserProfile()
       .pipe(
         take(1),
         exhaustMap((userData) => {
-          tourData.userId = userData.userId;
-          tourData.tourDate = new Date(tourData.tourDate);
+          const tour: Tour = {
+            name: formData.name!,
+            tourDate: new Date(formData.tourDate!),
+            startingLocation: formData.startingLocation!,
+            tourNotes: formData.tourNotes!,
+            userId: userData.userId,
+            cityId: formData.cityId!,
+          }
           if (this.isNew) {
-            return this.tourService.createTour(tourData).pipe(take(1));
+            return this.tourService.createTour(tour).pipe(take(1));
           } else {
-            tourData.id = this.tour.id;
-            return this.tourService.updateTour(tourData).pipe(take(1));
+            tour.id = this.tour.id;
+            return this.tourService.updateTour(tour).pipe(take(1));
           }  
         })
       ).subscribe(

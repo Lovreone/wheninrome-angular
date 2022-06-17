@@ -2,6 +2,7 @@ import { Component, Input, OnInit, OnChanges, Output, EventEmitter } from '@angu
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { EMAIL_REGEX } from './../../../../utils/utils';
+import { ProfileModifyForm } from 'src/app/shared/models/forms.model';
 import { UserService } from './../../../shared/services/user.service';
 import { User } from './../../../shared/models/user.model';
 
@@ -17,7 +18,7 @@ export class ProfileModifyComponent implements OnInit, OnChanges {
   @Output() isEditMode = new EventEmitter<boolean>();
   @Output() updatedUser = new EventEmitter<User>();
 
-  profileForm!: FormGroup;
+  profileForm!: FormGroup<ProfileModifyForm>;
   serverErrors!: Array<string>;
 
   constructor(
@@ -33,12 +34,12 @@ export class ProfileModifyComponent implements OnInit, OnChanges {
 
   createForm(): void {
     this.profileForm = new FormGroup({
-      firstName: new FormControl(undefined, Validators.required),
-      lastName: new FormControl(undefined, Validators.required),
-      email: new FormControl(undefined, 
-        [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]
-      ),
-      username: new FormControl(undefined, Validators.required),
+      firstName: new FormControl<string|null>(null, Validators.required),
+      lastName: new FormControl<string|null>(null, Validators.required),
+      email: new FormControl<string|null>(null, [
+        Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)
+      ]),
+      username: new FormControl<string|null>(null, Validators.required),
     });
   }
 
@@ -47,7 +48,7 @@ export class ProfileModifyComponent implements OnInit, OnChanges {
       this.profileForm.get('firstName')?.setValue(this.user.firstName);
       this.profileForm.get('lastName')?.setValue(this.user.lastName);
       this.profileForm.get('email')?.setValue(this.user.email);
-      this.profileForm.get('username')?.setValue(this.user.username);
+      this.profileForm.get('username')?.setValue(this.user.username!);
     } 
   }
 
