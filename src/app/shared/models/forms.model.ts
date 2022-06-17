@@ -14,3 +14,8 @@ export interface TourItemModifyForm {
     tourNotes: FormControl<string|null>,
     cityId: FormControl<string|null>
 }
+
+export interface LoginForm {
+    email: FormControl<string|null>,
+    password: FormControl<string|null>,
+}

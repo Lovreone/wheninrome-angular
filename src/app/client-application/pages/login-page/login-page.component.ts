@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UntypedFormGroup, Validators, UntypedFormControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { LoginForm } from './../../../shared/models/forms.model';
 import { EMAIL_REGEX } from 'src/utils/utils';
 import { AuthService } from './../../../shared/services/auth/auth.service';
 import { UserLoginData } from './../../../shared/models/user.model';
@@ -12,7 +13,7 @@ import { UserLoginData } from './../../../shared/models/user.model';
 })
 export class LoginPageComponent implements OnInit {
 
-  loginForm!: UntypedFormGroup;
+  loginForm!: FormGroup<LoginForm>;
   serverErrors!: Array<string>;
 
   constructor(
@@ -25,13 +26,13 @@ export class LoginPageComponent implements OnInit {
   }
 
   createForm(): void {
-    this.loginForm = new UntypedFormGroup({
-      email: new UntypedFormControl(undefined, [
+    this.loginForm = new FormGroup({
+      email: new FormControl<string|null>(null, [
         Validators.required, 
         Validators.email, 
-        Validators.pattern(EMAIL_REGEX)]
-      ),
-      password: new UntypedFormControl(undefined, Validators.required)
+        Validators.pattern(EMAIL_REGEX)
+      ]),
+      password: new FormControl<string|null>(null, Validators.required)
     });
   }
 
@@ -45,7 +46,7 @@ export class LoginPageComponent implements OnInit {
   loginUser(): void {
     this.loginForm.disable();
     this.serverErrors = [];
-    const loginData: UserLoginData = this.loginForm.getRawValue();
+    const loginData = this.loginForm.getRawValue() as UserLoginData;
     this.authService.login(loginData)
       .subscribe(
         (user) => {
