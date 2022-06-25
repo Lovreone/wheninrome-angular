@@ -44,7 +44,10 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
         Validators.required, 
         Validators.minLength(3)
       ]),
-      country: new FormControl<string|null>(null, Validators.minLength(3)),
+      country: new FormControl<string|null>(null, [
+        Validators.required,
+        Validators.minLength(3)
+      ]),
       featuredImage: new FormControl<string|null>(null),
       introText: new FormControl<string|null>(null, [
         Validators.required, Validators.maxLength(50)

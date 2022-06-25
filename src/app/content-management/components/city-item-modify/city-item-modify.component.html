@@ -71,12 +71,15 @@
     </div><br>
     
     <!-- COUNTRY field -->
-    <label for="country">Country:</label><br>
+    <label for="country"><b>Country*:</b></label><br>
     <input type="text" id="country" placeholder="Country"
         formControlName="country"
         [ngClass]="{ 'field-invalid': isFieldInvalid('country') }"><br>
     <!-- COUNTRY validation messages -->
     <div *ngIf="isFieldInvalid('country')" class="error-message">
+        <div *ngIf="country?.errors?.required">
+            Country is required.
+        </div>
         <div *ngIf="country?.errors?.minlength">
             Country must be at least {{ country?.errors?.minlength?.requiredLength }} characters long.
         </div>
