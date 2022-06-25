@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, OnChanges, Input } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { LandmarkItemModifyForm } from './../../../shared/models/forms.model';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -21,7 +22,7 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
   @Input() isNew!: boolean;
   @Input() isLoading!: boolean;
 
-  landmarkForm!: UntypedFormGroup;
+  landmarkForm!: FormGroup<LandmarkItemModifyForm>;
   cities!: Array<City>;
   citySelectOptions!: Array<SelectOption>;
   serverErrors!: Array<string>;
@@ -50,20 +51,29 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
   }
 
   createForm(): void {
-    this.landmarkForm = new UntypedFormGroup({
-      name: new UntypedFormControl(undefined, [Validators.required, Validators.minLength(3)]),
-      slug: new UntypedFormControl(undefined, [Validators.required, Validators.minLength(3)]),
-      introText: new UntypedFormControl(undefined, [Validators.required, Validators.maxLength(50)]),
-      description: new UntypedFormControl(undefined),
-      entranceFee: new UntypedFormControl(undefined, Validators.min(0)),
-      officialWebsite: new UntypedFormControl(undefined, Validators.pattern(URL_REGEX)),
-      featuredImage: new UntypedFormControl(undefined),
-      howToArrive: new UntypedFormControl(undefined),
-      workingDays: new UntypedFormControl(undefined),
-      workingHours: new UntypedFormControl(undefined),
-      coordinates: new UntypedFormControl(undefined),
-      city: new UntypedFormControl(undefined, Validators.required),
-      isActive: new UntypedFormControl(true, Validators.required)
+    this.landmarkForm = new FormGroup({
+      name: new FormControl<string|null>(null, [
+        Validators.required, 
+        Validators.minLength(3)
+      ]),
+      slug: new FormControl<string|null>(null, [
+        Validators.required, 
+        Validators.minLength(3)
+      ]),
+      introText: new FormControl<string|null>(null, [
+        Validators.required, 
+        Validators.maxLength(50)
+      ]),
+      description: new FormControl<string|null>(null),
+      entranceFee: new FormControl<number|null>(null, Validators.min(0)),
+      officialWebsite: new FormControl<string|null>(null, Validators.pattern(URL_REGEX)),
+      featuredImage: new FormControl<string|null>(null),
+      howToArrive: new FormControl<string|null>(null),
+      workingDays: new FormControl<string|null>(null),
+      workingHours: new FormControl<string|null>(null),
+      coordinates: new FormControl<string|null>(null),
+      city: new FormControl<string|null>(null, Validators.required),
+      isActive: new FormControl<boolean|null>(true, Validators.required)
     });
   }
 
@@ -74,12 +84,12 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
       this.landmarkForm.get('introText')?.setValue(this.landmark.introText);
       this.landmarkForm.get('description')?.setValue(this.landmark.description);
       this.landmarkForm.get('entranceFee')?.setValue(this.landmark.entranceFee);
-      this.landmarkForm.get('officialWebsite')?.setValue(this.landmark.officialWebsite);
-      this.landmarkForm.get('featuredImage')?.setValue(this.landmark.featuredImage);
-      this.landmarkForm.get('howToArrive')?.setValue(this.landmark.howToArrive);
-      this.landmarkForm.get('workingDays')?.setValue(this.landmark.workingDays);
-      this.landmarkForm.get('workingHours')?.setValue(this.landmark.workingHours);
-      this.landmarkForm.get('coordinates')?.setValue(this.landmark.coordinates);
+      this.landmarkForm.get('officialWebsite')?.setValue(this.landmark.officialWebsite || null);
+      this.landmarkForm.get('featuredImage')?.setValue(this.landmark.featuredImage || null);
+      this.landmarkForm.get('howToArrive')?.setValue(this.landmark.howToArrive || null);
+      this.landmarkForm.get('workingDays')?.setValue(this.landmark.workingDays || null);
+      this.landmarkForm.get('workingHours')?.setValue(this.landmark.workingHours || null);
+      this.landmarkForm.get('coordinates')?.setValue(this.landmark.coordinates || null);
       this.landmarkForm.get('city')?.setValue(this.landmark.city.id);
       this.landmarkForm.get('isActive')?.setValue(this.landmark.isActive);
     }
@@ -109,18 +119,18 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
     const landmarkCity = this.cities
       .find(city => city.id === formValue.city);
     const nestedCityData: NestedCity = {
-      id: formValue.city,
+      id: formValue.city!,
       name: landmarkCity?.name!,
       slug: landmarkCity?.slug!,
       isActive: landmarkCity?.isActive!
     }
     const landmark: Landmark = {
-      id: formValue.id,
-      name: formValue.name,
-      slug: formValue.slug,
-      introText: formValue.introText,
-      description: formValue.description,
-      entranceFee: formValue.entranceFee,
+      id: this.landmark?.id,
+      name: formValue.name!,
+      slug: formValue.slug!,
+      introText: formValue.introText!,
+      description: formValue.description!,
+      entranceFee: formValue.entranceFee!,
       officialWebsite: formValue.officialWebsite,
       featuredImage: formValue.featuredImage,
       howToArrive: formValue.howToArrive,
@@ -128,7 +138,7 @@ export class LandmarkItemModifyComponent implements OnInit, OnChanges, OnDestroy
       workingHours: formValue.workingHours,
       coordinates: formValue.coordinates,
       city: nestedCityData,
-      isActive: formValue.isActive
+      isActive: formValue.isActive!
     }
     this.isNew ? 
       this.saveNew(landmark) :

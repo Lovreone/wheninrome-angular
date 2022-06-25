@@ -51,3 +51,19 @@ export interface CityItemModifyForm {
     description: FormControl<string|null>,
     isActive: FormControl<boolean|null>,
 }
+
+export interface LandmarkItemModifyForm {
+    name: FormControl<string|null>,
+    slug: FormControl<string|null>,
+    introText: FormControl<string|null>,
+    description: FormControl<string|null>,
+    entranceFee: FormControl<number|null>,
+    officialWebsite: FormControl<string|null>,
+    featuredImage: FormControl<string|null>,
+    howToArrive: FormControl<string|null>,
+    workingDays: FormControl<string|null>,
+    workingHours: FormControl<string|null>,
+    coordinates: FormControl<string|null>,
+    city: FormControl<string|null>,
+    isActive: FormControl<boolean|null>
+}

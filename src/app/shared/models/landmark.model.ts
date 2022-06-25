@@ -5,12 +5,12 @@ export interface Landmark {
     introText: string;
     description: string;
     entranceFee: number;
-    officialWebsite?: string;
-    featuredImage?: string;
-    howToArrive?: string;
-    workingDays?: string;
-    workingHours?: string;
-    coordinates?: string;
+    officialWebsite?: string|null;
+    featuredImage?: string|null;
+    howToArrive?: string|null;
+    workingDays?: string|null;
+    workingHours?: string|null;
+    coordinates?: string|null;
     city: NestedCity;
     isActive: boolean;
     createdAt?: Date;
