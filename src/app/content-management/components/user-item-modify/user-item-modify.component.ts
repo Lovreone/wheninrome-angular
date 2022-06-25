@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UserItemModifyForm } from './../../../shared/models/forms.model';
 import { Router } from '@angular/router';
 import { EMAIL_REGEX } from './../../../../utils/utils';
 import { UserService } from './../../../shared/services/user.service';
@@ -15,7 +16,7 @@ export class UserItemModifyComponent implements OnInit, OnChanges {
   @Input() user!: User;
   @Input() isLoading!: boolean;
 
-  userForm!: UntypedFormGroup;
+  userForm!: FormGroup<UserItemModifyForm>;
   serverErrors!: Array<string>;
 
   constructor(
@@ -32,14 +33,14 @@ export class UserItemModifyComponent implements OnInit, OnChanges {
   }
 
   createForm(): void {
-    this.userForm = new UntypedFormGroup({
-      firstName: new UntypedFormControl(undefined, Validators.required),
-      lastName: new UntypedFormControl(undefined, Validators.required),
-      email: new UntypedFormControl(undefined, 
+    this.userForm = new FormGroup({
+      firstName: new FormControl<string|null>(null, Validators.required),
+      lastName: new FormControl<string|null>(null, Validators.required),
+      email: new FormControl<string|null>(null, 
         [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]
       ),
-      username: new UntypedFormControl(undefined, Validators.required),
-      isActive: new UntypedFormControl(true, Validators.required),
+      username: new FormControl<string|null>(null, Validators.required),
+      isActive: new FormControl<boolean|null>(true, Validators.required),
     });
   }
 
@@ -48,8 +49,8 @@ export class UserItemModifyComponent implements OnInit, OnChanges {
       this.userForm.get('firstName')?.setValue(this.user.firstName);
       this.userForm.get('lastName')?.setValue(this.user.lastName);
       this.userForm.get('email')?.setValue(this.user.email);
-      this.userForm.get('username')?.setValue(this.user.username);
-      this.userForm.get('isActive')?.setValue(this.user.isActive);
+      this.userForm.get('username')?.setValue(this.user.username!);
+      this.userForm.get('isActive')?.setValue(this.user.isActive!);
     } 
   }
 

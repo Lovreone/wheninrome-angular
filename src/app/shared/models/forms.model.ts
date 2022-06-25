@@ -32,3 +32,11 @@ export interface PassGroup {
     enterPassword: FormControl<string|null>,
     repeatPassword: FormControl<string|null>
 }
+
+export interface UserItemModifyForm {
+    firstName: FormControl<string|null>,
+    lastName: FormControl<string|null>,
+    email: FormControl<string|null>,
+    username: FormControl<string|null>,
+    isActive: FormControl<boolean|null>,
+}
