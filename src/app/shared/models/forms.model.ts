@@ -40,3 +40,14 @@ export interface UserItemModifyForm {
     username: FormControl<string|null>,
     isActive: FormControl<boolean|null>,
 }
+
+export interface CityItemModifyForm {
+    name: FormControl<string|null>,
+    slug: FormControl<string|null>,
+    country: FormControl<string|null>,
+    featuredImage: FormControl<string|null>,
+    introText: FormControl<string|null>,
+    localCurrency: FormControl<string|null>,
+    description: FormControl<string|null>,
+    isActive: FormControl<boolean|null>,
+}

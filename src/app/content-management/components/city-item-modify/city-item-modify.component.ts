@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { CityItemModifyForm } from './../../../shared/models/forms.model';
 
 import { CityService } from './../../../shared/services/city.service';
 import { City } from './../../../shared/models/city.model';
@@ -16,7 +17,7 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
   @Input() isLoading!: boolean;
   @Input() isNew!: boolean;
 
-  cityForm!: UntypedFormGroup;
+  cityForm!: FormGroup<CityItemModifyForm>;
   serverErrors!: Array<string>;
 
   constructor(
@@ -33,15 +34,24 @@ export class CityItemModifyComponent implements OnInit, OnChanges {
   }
 
   createForm(): void {
-    this.cityForm = new UntypedFormGroup({
-      name: new UntypedFormControl(undefined, [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
-      slug: new UntypedFormControl(undefined, [Validators.required, Validators.minLength(3)]),
-      country: new UntypedFormControl(undefined, Validators.minLength(3)),
-      featuredImage: new UntypedFormControl(undefined),
-      introText: new UntypedFormControl(undefined, [Validators.required, Validators.maxLength(50)]),
-      localCurrency: new UntypedFormControl(undefined),
-      description: new UntypedFormControl(undefined),
-      isActive: new UntypedFormControl(true, Validators.required),
+    this.cityForm = new FormGroup({
+      name: new FormControl<string|null>(null, [
+        Validators.required, 
+        Validators.minLength(3), 
+        Validators.maxLength(20)
+      ]),
+      slug: new FormControl<string|null>(null, [
+        Validators.required, 
+        Validators.minLength(3)
+      ]),
+      country: new FormControl<string|null>(null, Validators.minLength(3)),
+      featuredImage: new FormControl<string|null>(null),
+      introText: new FormControl<string|null>(null, [
+        Validators.required, Validators.maxLength(50)
+      ]),
+      localCurrency: new FormControl<string|null>(null),
+      description: new FormControl<string|null>(null),
+      isActive: new FormControl<boolean|null>(true, Validators.required),
     });
   }
 
