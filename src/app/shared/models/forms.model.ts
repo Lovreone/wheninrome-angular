@@ -1,4 +1,4 @@
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 export interface ProfileModifyForm {
     firstName: FormControl<string|null>,
@@ -18,4 +18,17 @@ export interface TourItemModifyForm {
 export interface LoginForm {
     email: FormControl<string|null>,
     password: FormControl<string|null>,
+}
+
+export interface RegisterForm {
+    firstName: FormControl<string|null>,
+    lastName: FormControl<string|null>,
+    email: FormControl<string|null>,
+    username: FormControl<string|null>,
+    passGroup: FormGroup<PassGroup>
+}
+
+export interface PassGroup {
+    enterPassword: FormControl<string|null>,
+    repeatPassword: FormControl<string|null>
 }

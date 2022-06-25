@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UntypedFormGroup, Validators, UntypedFormControl, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, Validators, FormControl, AbstractControl, ValidationErrors } from '@angular/forms';
+import { RegisterForm } from './../../../shared/models/forms.model';
 import { AuthService } from './../../../shared/services/auth/auth.service';
 import { UserRegisterData } from './../../../shared/models/user.model';
 import { EMAIL_REGEX } from 'src/utils/utils';
@@ -12,7 +13,7 @@ import { EMAIL_REGEX } from 'src/utils/utils';
 })
 export class RegisterPageComponent implements OnInit {
 
-  registerForm!: UntypedFormGroup;
+  registerForm!: FormGroup<RegisterForm>;
   serverErrors!: Array<string>;
 
   constructor(
@@ -25,14 +26,18 @@ export class RegisterPageComponent implements OnInit {
   }
 
   createForm(): void {
-    this.registerForm = new UntypedFormGroup({
-      firstName: new UntypedFormControl(undefined, Validators.required),
-      lastName: new UntypedFormControl(undefined, Validators.required),
-      email: new UntypedFormControl(undefined, [Validators.required, Validators.email, Validators.pattern(EMAIL_REGEX)]),
-      username: new UntypedFormControl(undefined, Validators.required),
-      passGroup: new UntypedFormGroup({
-        enterPassword: new UntypedFormControl(undefined, Validators.required),
-        repeatPassword: new UntypedFormControl(undefined, Validators.required)
+    this.registerForm = new FormGroup({
+      firstName: new FormControl<string|null>(null, Validators.required),
+      lastName: new FormControl<string|null>(null, Validators.required),
+      email: new FormControl<string|null>(null, [
+        Validators.required, 
+        Validators.email, 
+        Validators.pattern(EMAIL_REGEX)
+      ]),
+      username: new FormControl<string|null>(null, Validators.required),
+      passGroup: new FormGroup({
+        enterPassword: new FormControl<string|null>(null, Validators.required),
+        repeatPassword: new FormControl<string|null>(null, Validators.required)
       }, this.passMatchValidator)
     });
   }
